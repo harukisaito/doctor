@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
-	[SerializeField] private Transform target;
+	[SerializeField] private float speed;
 
-	private Vector2 desiredPos;
+	private Vector3 direction;
+	private float playerPosX;
+	private float lifeTime;
 
 	private void Start() {
-		desiredPos = target.localPosition;
-		Debug.Log(desiredPos);
+		playerPosX = GameManager.Instance.Player.transform.localPosition.x;
+		
+		if(playerPosX > transform.localPosition.x) {
+			direction = Vector2.right;
+		}
+		else if(playerPosX < transform.localPosition.x) {
+			direction = Vector2.left;
+		}
 	}
 
 	private void Update() {
-		transform.localPosition = Vector3.Lerp(transform.localPosition, desiredPos, 0.5f);
-		if(transform.localPosition.x > 50 || transform.localPosition.y > 50) {
+		transform.localPosition += direction * speed * Time.deltaTime;
+		lifeTime += Time.deltaTime;
+		if(lifeTime > 5) {
 			Destroy(gameObject);
 		}
 	}
