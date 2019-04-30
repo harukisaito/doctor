@@ -28,4 +28,8 @@ public class Projectile : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
+
+	private void OnTriggerEnter2D() {
+		Destroy(gameObject);
+	}
 }

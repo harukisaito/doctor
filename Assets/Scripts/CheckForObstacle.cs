@@ -11,10 +11,10 @@ public class CheckForObstacle : MonoBehaviour {
 
 	private bool obstacle;
 
-	private MovementController movementController;
+	// private MovementController movementController;
 
 	private void Start() {
-		movementController = GetComponent<MovementController>();
+		// movementController = GetComponent<MovementController>();
 		check.localPosition = new Vector2(checkOffset, -0.256f);
 	}
 

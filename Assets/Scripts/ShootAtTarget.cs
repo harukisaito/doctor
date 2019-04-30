@@ -12,6 +12,8 @@ public class ShootAtTarget : MonoBehaviour {
 	private Vector3 offset;
 	private CheckForTarget check;
 
+	public bool Shooting {get; set;}
+
 	private void Start() {
 		check = GetComponent<CheckForTarget>();
 		StartCoroutine(LookForTarget());
@@ -21,6 +23,10 @@ public class ShootAtTarget : MonoBehaviour {
 		for(;;) {
 			if(check.LookForTarget()) {
 				Shoot();
+				Shooting = true;
+			}
+			else {
+				Shooting = false;
 			}
 			yield return new WaitForSeconds(checkTime);
 		}

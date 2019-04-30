@@ -30,9 +30,6 @@ public class GroundCheck : MonoBehaviour {
 
 	private void Awake() {
 		GetMovementComponent();
-		if(groundCheck == null) {
-			Debug.LogError("Ground Check Transform is missing.");
-		}
 	}
 
 	private void FixedUpdate() {

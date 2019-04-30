@@ -2,33 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(DamageToEntity))]
 public class SwingAttack : MonoBehaviour {
 
 	[SerializeField] private KeyCode attackButton;
 	[SerializeField] private float attackTime;
 
-	private Collider2D circleCollider;
+	private Collider2D halfCircleCollider;
+	private SpriteRenderer spriteRenderer;
+	private MovementController movementController;
 
-	private void Start() {
-		circleCollider = GetComponent<Collider2D>();
-		circleCollider.enabled = false;
+	private float timer;
+	private bool isFacingRight;
+
+	private void Awake() {
+		halfCircleCollider = GetComponent<Collider2D>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
+		movementController = GetComponentInParent<MovementController>();
+		halfCircleCollider.enabled = false;
+		spriteRenderer.enabled = false;
+		isFacingRight = !movementController.IsFacingRight;
 	}
 
 	private void Update() {
-		if(Input.GetKeyDown(attackButton)) {
-			Debug.Log("HELLo");
-			circleCollider.enabled = true;
-			StartCoroutine(DeactivateCollider());
+		if(Input.GetKeyDown(attackButton) && !halfCircleCollider.enabled) {
+			halfCircleCollider.enabled = true;
+			spriteRenderer.enabled = true;
+			timer = 0;
+		}
+		if(timer <= attackTime && halfCircleCollider.enabled) {
+			timer += Time.deltaTime;
+			if(timer >= attackTime) {
+				timer = 0;
+				halfCircleCollider.enabled = false;
+				spriteRenderer.enabled = false;
+			}
+		}
+
+		if(isFacingRight && movementController.MovementDirection < 0) {
+			FlipCollider();
+		}
+		else if(!isFacingRight && movementController.MovementDirection > 0) {
+			FlipCollider();
 		}
 	}
 
-	private void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log(other.gameObject.name);
-		other.GetComponent<Enemy>().TakeDamage(100);
-	}
-
-	private IEnumerator DeactivateCollider() {
-		yield return new WaitForSeconds(attackTime);
-		circleCollider.enabled = false;
+	private void FlipCollider() {
+		isFacingRight = !isFacingRight;
+		Vector3 scale = transform.localScale;
+		scale.x = scale.x * -1;
+		transform.localScale = scale;
 	}
 }

@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour {
 
-	[SerializeField] private Transform player;
+	[SerializeField] private float offset = 5;
 
-	private Vector3 offset = new Vector3(0, 0, -5);
+	private Vector3 offsetVec;
+
 	private float smoothTime = 0.125f;
+	private bool visited;
 
 	private void Start() {
-		transform.localPosition = player.localPosition;
+		offsetVec = new Vector3(0, 0, -offset);
+		transform.localPosition = GameManager.Instance.Player.transform.localPosition;
 	}
 
 	private void FixedUpdate() {
-		// transform.LookAt(player);
-		Vector3 desiredPosition = player.localPosition + offset; 
-		Vector3 smoothedPosition = Vector3.Lerp(transform.localPosition, desiredPosition, smoothTime);
-		transform.localPosition = smoothedPosition;
+		if(GameManager.Instance.Player != null) {
+			Vector3 desiredPosition = GameManager.Instance.Player.transform.localPosition + offsetVec; 
+			Vector3 smoothedPosition = Vector3.Lerp(transform.localPosition, desiredPosition, smoothTime);
+			transform.localPosition = smoothedPosition;
+		}
 	}
 }

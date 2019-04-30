@@ -10,6 +10,8 @@ public class MovementController : MonoBehaviour {
 	[SerializeField] private float jumpingPower = 220f;
 	[SerializeField] private float dashingSpeed = 250f;
 	[SerializeField] private float dashPeriod = 0.15f;
+	[SerializeField] private float downForce;
+	[SerializeField] private float floatiness;
 
 	private Rigidbody2D body;
 	private SpriteRenderer spriteRenderer;
@@ -18,8 +20,8 @@ public class MovementController : MonoBehaviour {
 	private bool doubleJump;
 	private bool dashed;
 	private bool isFacingRight;
-
 	private float dashTime;
+	private float movementDirection;
 
 	public bool DoubleJump {
 		get { return doubleJump; }
@@ -31,9 +33,20 @@ public class MovementController : MonoBehaviour {
 		set { dashed = value; }
 	}
 
+	public bool IsDashing {get; set;}
+	public bool NoDownForce {get; set;}
+
 	public bool IsFacingRight {
-		get { return IsFacingRight; }
+		get { return isFacingRight; }
 		set { isFacingRight = value; }
+	}
+
+	public float MovementDirection {
+		get { return movementDirection; }
+	}
+
+	public Rigidbody2D Player {
+		get { return body; }
 	}
 
 	private void Start() {
@@ -44,14 +57,25 @@ public class MovementController : MonoBehaviour {
 		isFacingRight = true;
 	}
 
-	public void Move(bool sprint, float movementDirection) {
-		if(sprint) {
-			speed = 200f;
+	private void FixedUpdate() {
+		if(body.velocity.y < 0 && !groundCheck.IsGrounded) {
+			if(!NoDownForce) {
+				body.velocity += Vector2.down * downForce / body.velocity.y * body.velocity.y * Time.deltaTime;
+			}
+			else if(NoDownForce) {
+				body.velocity = Vector2.down * downForce * floatiness * Time.deltaTime;
+			}
 		}
-		else {
-			speed = 100f;
+	}
+
+	public void Move(float movementSpeedMultiplier, float movementDirection) {
+		this.movementDirection = movementDirection;
+		float movementSpeed = speed;
+		movementSpeed *= movementSpeedMultiplier;
+		if(body == null) {
+			body = GetComponent<Rigidbody2D>();
 		}
-		body.velocity = new Vector2(movementDirection * speed * Time.deltaTime, body.velocity.y);
+		body.velocity = new Vector2(movementDirection * movementSpeed * Time.deltaTime, body.velocity.y);
 
 		if(movementDirection > 0 && !isFacingRight) {
 			FlipSprite();
@@ -67,31 +91,30 @@ public class MovementController : MonoBehaviour {
 	}
 
 	public void Jump() {
-		body.AddForce(Vector2.up * jumpingPower);
 		if(doubleJump && !groundCheck.IsGrounded) {
-			doubleJump = false;
+			doubleJump = false;	
+			body.velocity = Vector2.zero;
 		}
+		body.AddForce(Vector2.up * jumpingPower);
 	}
 
 	public void Dash(Vector2 direction) {
 		StartCoroutine(DashCoroutine(direction));
 	}
 
-	public IEnumerator DashCoroutine(Vector2 direction) {	
+	private IEnumerator DashCoroutine(Vector2 direction) {	
+		IsDashing = true;
 		dashed = true;
 
 		while(dashTime >= 0) {
-			Debug.Log("DASH");	
 			float time = Time.deltaTime;
+
 			dashTime -= time;
 			body.velocity = direction * dashingSpeed * time;	
-			yield return null;
+			yield return new WaitForFixedUpdate();
 		}
+		body.velocity = Vector2.zero;
 		dashTime = dashPeriod;
+		IsDashing = false;
 	}
-
-	// public void DashForce(Vector2 direction) {
-	// 	dashed = true;
-	// 	body.AddForce(direction * dashingSpeed * Time.deltaTime);
-	// }
 }

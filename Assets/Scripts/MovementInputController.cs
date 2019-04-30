@@ -7,9 +7,10 @@ public class MovementInputController : MonoBehaviour {
 	[SerializeField] private KeyCode moveLeftKey;
 	[SerializeField] private KeyCode moveRightKey;
 	[SerializeField] private KeyCode sprintKey;
+	[SerializeField] private KeyCode floatKey;
 
 	private float movement;
-	private bool sprint;
+	private float movementSpeed;
 	private float buttonCoolDown;
 	private float buttonCoolDownTime = 0.2f;
 	private int buttonCount = 0;
@@ -24,14 +25,22 @@ public class MovementInputController : MonoBehaviour {
 	}
 
 	private void Update() {
+		MovementInput();
 		JumpInput();
-		SprintInput();
 		DashInput();
+		FloatInput();
 		ResetDashInput();
 	}
 	private void FixedUpdate() {
-		movement = Input.GetAxis("Horizontal");
-		movementController.Move(sprint, movement);
+		if(!movementController.IsDashing) {
+			if(Input.GetKey(sprintKey)) {
+				movementSpeed = 2.5f;
+			}
+			else {
+				movementSpeed = 1.5f;
+			}
+			movementController.Move(movementSpeed, movement);
+		}
 	}
 
 	private void JumpInput() { 
@@ -40,8 +49,8 @@ public class MovementInputController : MonoBehaviour {
 		}
 	}
 
-	private void SprintInput() {
-		sprint = Input.GetKey(sprintKey);
+	private void MovementInput() {
+		movement = Input.GetAxis("Horizontal");
 	}
 
 	private void DashInput() {
@@ -52,6 +61,12 @@ public class MovementInputController : MonoBehaviour {
 			else if(Input.GetKeyDown(moveRightKey)) {
 				DoubleTapToDash(Vector2.right);
 			}
+		}
+	}
+
+	private void FloatInput() {
+		if(!groundCheck.IsGrounded) {
+			movementController.NoDownForce = Input.GetKey(floatKey);
 		}
 	}
 
@@ -67,7 +82,6 @@ public class MovementInputController : MonoBehaviour {
 	private void DoubleTapToDash(Vector2 direction) {
 		if(buttonCoolDown > 0 && buttonCount == 1) { 
 			movementController.Dash(direction);
-			// movementController.DashForce(direction);
 		}
 		else {
 			buttonCoolDown = buttonCoolDownTime;
