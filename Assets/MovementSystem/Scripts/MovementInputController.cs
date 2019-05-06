@@ -71,9 +71,6 @@ public class MovementInputController : MonoBehaviour {
 
 	private void DuckInput() {
 		IsDucking = Input.GetKey(duckKey);
-		// if(IsDucking) {
-			// movementSpeed = 0;
-		// }
 	}
 
 	private void DashInput() {
