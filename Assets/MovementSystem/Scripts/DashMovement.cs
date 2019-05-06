@@ -18,7 +18,6 @@ public class DashMovement : MonoBehaviour {
 		entityCollider = GetComponent<CapsuleCollider2D>();
 		dashTime = dashPeriod;
 	}	
-
 	
 	public void Dash(Vector2 direction, Rigidbody2D body) {
 		StartCoroutine(DashCoroutine(direction, body));
