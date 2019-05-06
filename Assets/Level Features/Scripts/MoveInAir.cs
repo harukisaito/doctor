@@ -15,9 +15,12 @@ public class MoveInAir : MonoBehaviour {
 		if(!groundCheck.IsGrounded) {
 			if(platform != null) {
 				if(!platform.MoveRight) {
+					Debug.Log("Moving Left");
 					transform.localPosition += Vector3.left * platform.Speed * Time.deltaTime;
 				}
 				else if(platform.MoveRight) {
+					Debug.Log("Moving Right");
+					Debug.Log(platform.Speed);
 					transform.localPosition += Vector3.right * platform.Speed * Time.deltaTime;
 				}
 			}
