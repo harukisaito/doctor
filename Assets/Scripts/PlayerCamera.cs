@@ -13,14 +13,14 @@ public class PlayerCamera : MonoBehaviour {
 
 	private void Start() {
 		offsetVec = new Vector3(0, 0, -offset);
-		transform.localPosition = GameManager.Instance.Player.transform.localPosition;
+		transform.position = GameManager.Instance.Player.transform.position;
 	}
 
 	private void FixedUpdate() {
 		if(GameManager.Instance.Player != null) {
-			Vector3 desiredPosition = GameManager.Instance.Player.transform.localPosition + offsetVec; 
-			Vector3 smoothedPosition = Vector3.Lerp(transform.localPosition, desiredPosition, smoothTime);
-			transform.localPosition = smoothedPosition;
+			Vector3 desiredPosition = GameManager.Instance.Player.transform.position + offsetVec; 
+			Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothTime);
+			transform.position = smoothedPosition;
 		}
 	}
 }
