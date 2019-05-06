@@ -8,12 +8,17 @@ public class MovementInputController : MonoBehaviour {
 	[SerializeField] private KeyCode moveRightKey;
 	[SerializeField] private KeyCode sprintKey;
 	[SerializeField] private KeyCode floatKey;
+	[SerializeField] private KeyCode duckKey;
 
 	private float movement;
 	private float movementSpeed;
 	private float buttonCoolDown;
 	private float buttonCoolDownTime = 0.2f;
 	private int buttonCount = 0;
+
+	public bool IsDucking {get; set;}
+	public bool Sprint {get; set;}
+
 
 	private MovementController movementController;
 	private GroundCheck groundCheck;
@@ -26,6 +31,8 @@ public class MovementInputController : MonoBehaviour {
 
 	private void Update() {
 		MovementInput();
+		SprintInput();
+		DuckInput();
 		JumpInput();
 		DashInput();
 		FloatInput();
@@ -33,13 +40,12 @@ public class MovementInputController : MonoBehaviour {
 	}
 	private void FixedUpdate() {
 		if(!movementController.IsDashing) {
-			if(Input.GetKey(sprintKey)) {
-				movementSpeed = 2.5f;
+			if(IsDucking) {
+				movementController.Duck();
 			}
 			else {
-				movementSpeed = 1.5f;
+				movementController.Move(movementSpeed, movement);
 			}
-			movementController.Move(movementSpeed, movement);
 		}
 	}
 
@@ -51,6 +57,23 @@ public class MovementInputController : MonoBehaviour {
 
 	private void MovementInput() {
 		movement = Input.GetAxis("Horizontal");
+	}
+
+	private void SprintInput() {
+		Sprint = Input.GetKey(sprintKey);
+		if(Sprint) {
+			movementSpeed = 3f;
+		}
+		else {
+			movementSpeed = 1.5f;
+		}
+	}
+
+	private void DuckInput() {
+		IsDucking = Input.GetKey(duckKey);
+		// if(IsDucking) {
+			// movementSpeed = 0;
+		// }
 	}
 
 	private void DashInput() {
