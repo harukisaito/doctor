@@ -11,6 +11,7 @@ public class GroundCheck : MonoBehaviour {
 	[SerializeField] private LayerMask whatIsGround; 
 
 	private MovementController movementController;
+	private Collider2D groundCollider;
 
 	private bool isGrounded;
 
@@ -27,6 +28,7 @@ public class GroundCheck : MonoBehaviour {
 			} 
 		}
 	}
+
 
 	private void Awake() {
 		GetMovementComponent();
