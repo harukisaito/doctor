@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(GroundCheck))]
 public class MovementController : MonoBehaviour {
 
 	[SerializeField] private float speed = 100f;
@@ -21,6 +20,8 @@ public class MovementController : MonoBehaviour {
 	private bool dashed;
 	private bool isFacingRight;
 	private float movementDirection;
+	private bool firstTime = true;
+	private Vector2 velocity;
 
 	public bool DoubleJump {
 		get { return doubleJump; }
@@ -35,6 +36,7 @@ public class MovementController : MonoBehaviour {
 	public bool IsDashing {get; set;}
 	public bool NoDownForce {get; set;}
 	public bool IsDucking {get; set;}
+	public Vector2 StartingVelocity {get; set;}
 
 	public bool IsFacingRight {
 		get { return isFacingRight; }
@@ -45,8 +47,8 @@ public class MovementController : MonoBehaviour {
 		get { return movementDirection; }
 	}
 
-	public Rigidbody2D Player {
-		get { return body; }
+	public Vector2 Velocity {
+		get { return velocity; }
 	}
 
 	private void Start() {
@@ -59,12 +61,14 @@ public class MovementController : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
-		if(body.velocity.y < 0 && !groundCheck.IsGrounded) {
-			if(!NoDownForce) {
-				body.velocity += Vector2.down * downForce / body.velocity.y * body.velocity.y * Time.deltaTime;
-			}
-			else if(NoDownForce) {
-				body.velocity = Vector2.down * downForce * floatiness * Time.deltaTime;
+		if(groundCheck != null) {
+			if(body.velocity.y < 0 && !groundCheck.IsGrounded) {
+				if(!NoDownForce) {
+					body.velocity += Vector2.down * downForce / body.velocity.y * body.velocity.y * Time.deltaTime;
+				}
+				else if(NoDownForce) {
+					body.velocity = Vector2.down * downForce * floatiness * Time.deltaTime;
+				}
 			}
 		}
 	}
@@ -81,9 +85,21 @@ public class MovementController : MonoBehaviour {
 		float movementSpeed = speed;
 		movementSpeed *= movementSpeedMultiplier;
 
-		body.velocity = new Vector2(movementDirection * movementSpeed * Time.deltaTime, body.velocity.y);
+		velocity = new Vector2(movementDirection * movementSpeed * Time.deltaTime, body.velocity.y);
+		if(firstTime) {
+			StartingVelocity = velocity;
+			firstTime = false;
+		}
+
+		body.velocity = velocity;
+		// Debug.Log("BODY IN MOVE = " + body.velocity);
 
 		FlipSprite();
+	}
+
+	public void AddVelocity(Vector2 velocity) {
+		body.velocity += velocity * 0.77f;
+		Debug.Log("BODY IN ADD = " + body.velocity);
 	}
 
 	public void Duck() {

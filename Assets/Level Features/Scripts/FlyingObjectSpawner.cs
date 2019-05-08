@@ -6,10 +6,11 @@ public class FlyingObjectSpawner : MonoBehaviour {
 
 	[SerializeField] private GameObject flyingObjPrefab;
 	[SerializeField] private float spawnRate = 1f; 
-	[SerializeField] private float speed = 1f;
 	[SerializeField] private bool moveRight;
+	[SerializeField] private float speed;
 	private GameObject flyingObjInstance;
 	private FlyingObject flyingObject;
+	private OneDirectionMovement movement;
 
 	private void Start() {
 		StartCoroutine(SpawnFlyingObject());
@@ -21,8 +22,10 @@ public class FlyingObjectSpawner : MonoBehaviour {
 			flyingObject = flyingObjInstance.GetComponent<FlyingObject>();
 			flyingObject.Length = Random.Range(3f, 6f);
 			flyingObject.Height = Random.Range(1f, 2f);
-			flyingObject.Speed = speed;
-			flyingObject.MovingRight = moveRight;
+
+			movement = flyingObjInstance.GetComponent<OneDirectionMovement>();
+			movement.MoveRight = moveRight;
+			movement.Speed = speed;
 			yield return new WaitForSeconds(flyingObject.Length * spawnRate);
 		}
 	}
