@@ -11,7 +11,7 @@ public class BuddyMovement : MonoBehaviour {
 	MovementController movementController;
 
 	private bool inTargetRange;
-	private float movementDirection;
+	private float movementDirectionX;
 
 	private void Start() {
 		movementController = GetComponent<MovementController>();
@@ -23,14 +23,14 @@ public class BuddyMovement : MonoBehaviour {
 		Vector2 playerPosition = GameManager.Instance.Player.transform.localPosition;
 
 		if(playerPosition.x < transform.localPosition.x) {
-			movementDirection = -1;
+			movementDirectionX = -1;
 		}
 		else if(playerPosition.x > transform.localPosition.x) {
-			movementDirection = 1;
+			movementDirectionX = 1;
 		}
 
 		if(!inTargetRange) {
-			movementController.Move(0.8f, movementDirection);
+			movementController.Move(0.8f, movementDirectionX, 0f, 0);
 		}
 	}
 }

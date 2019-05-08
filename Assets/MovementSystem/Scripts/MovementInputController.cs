@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MovementController))]
 public class MovementInputController : MonoBehaviour {
 
 	[SerializeField] private KeyCode moveLeftKey;
@@ -44,7 +45,7 @@ public class MovementInputController : MonoBehaviour {
 				movementController.Duck();
 			}
 			else {
-				movementController.Move(movementSpeed, movement);
+				movementController.Move(movementSpeed, movement, 1f, 0);
 			}
 		}
 	}

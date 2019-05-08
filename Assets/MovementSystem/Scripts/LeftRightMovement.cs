@@ -10,7 +10,7 @@ public class LeftRightMovement : MonoBehaviour {
 	private GroundCheck groundCheck;
 	private ShootAtTarget shooter;
 
-	private float movementDirection = 1;
+	private float movementDirectionX = 1;
 
 	private float tempDir;
 
@@ -24,23 +24,23 @@ public class LeftRightMovement : MonoBehaviour {
 	private void FixedUpdate() {
 		bool obstacle = check.LookForObstacle();
 		if(!obstacle) {
-			movementDirection *= -1;
+			movementDirectionX *= -1;
 		}
 		if(groundCheck.IsGrounded && !shooter.Shooting) {
-			movementController.Move(1f, movementDirection);
+			movementController.Move(1f, movementDirectionX, 1f, 0);
 		}
 	}
 
 	private void OnCollisionEnter2D(Collision2D other) {
 		if(other.gameObject.tag == "Player") {
-			tempDir = movementDirection;
-			movementDirection = 0;
+			tempDir = movementDirectionX;
+			movementDirectionX = 0;
 		}
 	}
 
 	private void OnCollisionExit2D(Collision2D other) {
 		if(other.gameObject.tag == "Player") {
-			movementDirection = tempDir;
+			movementDirectionX = tempDir;
 		}
 	}
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MovementController : MonoBehaviour {
 
-	[SerializeField] private float speed = 100f;
+	[SerializeField] private float speedX = 100f;
+	[SerializeField] private float speedY = 100f;
 	[SerializeField] private float jumpingPower = 220f;
 	[SerializeField] private float downForce;
 	[SerializeField] private float floatiness;
@@ -16,6 +17,7 @@ public class MovementController : MonoBehaviour {
 	private DashMovement dashMovement;
 	private DuckMovement duckMovement;
 
+	private const float platformConst = 0.77f;
 	private bool doubleJump;
 	private bool dashed;
 	private bool isFacingRight;
@@ -73,7 +75,7 @@ public class MovementController : MonoBehaviour {
 		}
 	}
 
-	public void Move(float movementSpeedMultiplier, float movementDirection) {
+	public void Move(float movementSpeedMultiplierX, float movementDirectionX, float movementSpeedMultiplierY, float movementDirectionY) {
 		if(IsDucking) {
 			UnDuck();
 		}
@@ -81,24 +83,29 @@ public class MovementController : MonoBehaviour {
 			body = GetComponent<Rigidbody2D>();
 		}
 
-		this.movementDirection = movementDirection;
-		float movementSpeed = speed;
-		movementSpeed *= movementSpeedMultiplier;
+		movementDirection = movementDirectionX;
+		float movementSpeedX = speedX;
+		float movementSpeedY = speedY;
+		movementSpeedX *= movementSpeedMultiplierX;
+		movementSpeedY *= movementSpeedMultiplierY;
 
-		velocity = new Vector2(movementDirection * movementSpeed * Time.deltaTime, body.velocity.y);
+		velocity = new Vector2(
+			x: movementDirectionX * movementSpeedX * Time.deltaTime, 
+			y: movementDirectionY == 0 ? body.velocity.y : movementDirectionY * movementSpeedY * Time.deltaTime
+		);
 		if(firstTime) {
 			StartingVelocity = velocity;
 			firstTime = false;
 		}
 
 		body.velocity = velocity;
-		// Debug.Log("BODY IN MOVE = " + body.velocity);
+		Debug.Log("BODY IN MOVE = " + body.velocity);
 
 		FlipSprite();
 	}
 
 	public void AddVelocity(Vector2 velocity) {
-		body.velocity += velocity * 0.77f;
+		body.velocity += velocity * platformConst;
 		Debug.Log("BODY IN ADD = " + body.velocity);
 	}
 

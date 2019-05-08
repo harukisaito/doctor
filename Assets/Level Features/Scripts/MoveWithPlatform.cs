@@ -4,32 +4,19 @@ using UnityEngine;
 
 public class MoveWithPlatform : MonoBehaviour {
 
-	// private GroundCheck groundCheck;
 	private MovementController movementController;
 	private MovementController platform;
 
 	private bool onMovingGround;
 
 	void Start () {
-		// groundCheck = GetComponent<GroundCheck>();
 		movementController = GetComponent<MovementController>();
 	}
 	
 	void FixedUpdate () {
 		if(onMovingGround) {
 			movementController.AddVelocity(platform.StartingVelocity);
-			Debug.Log("PLATFORM = " + platform.Velocity);
-			// if(platform != null) {
-			// 	if(!platform.MoveRight) {
-			// 		Debug.Log("Moving Left");
-			// 		transform.localPosition += Vector3.left * platform.Speed * Time.fixedDeltaTime;
-			// 	}
-			// 	else if(platform.MoveRight) {
-			// 		Debug.Log("Moving Right");
-			// 		transform.localPosition += Vector3.right * platform.Speed * Time.fixedDeltaTime;
-			// 	}
-			// }
-			// movementController.AddVelocity(platform.Player.velocity);
+			// Debug.Log("PLATFORM = " + platform.Velocity);
 		}
 	}
 
@@ -37,11 +24,9 @@ public class MoveWithPlatform : MonoBehaviour {
 		if(other.gameObject.tag == "Flying Object") {
 			platform = other.gameObject.GetComponent<MovementController>();
 			onMovingGround = true;
-
-			// Debug.Log("PLATFORM = " + platform.StartingVelocity);
 		}
 		else if(other.gameObject.tag == "Ground") {
-			// onMovingGround = false;
+			onMovingGround = false;
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MovementController))]
 public class OneDirectionMovement : MonoBehaviour {
 
 	public bool MoveRight {get; set;}
@@ -10,7 +11,7 @@ public class OneDirectionMovement : MonoBehaviour {
 
 	private MovementController movementController;
 
-	private float movementDirection;
+	private float movementDirectionX;
 
 	private void Start() {
 		movementController = GetComponent<MovementController>();
@@ -18,11 +19,11 @@ public class OneDirectionMovement : MonoBehaviour {
 
 	private void FixedUpdate() {
 		if(MoveRight) {
-			movementDirection = 1;
+			movementDirectionX = 1;
 		}
 		else {
-			movementDirection = -1;
+			movementDirectionX = -1;
 		}
-		movementController.Move(Speed, movementDirection);
+		movementController.Move(Speed, movementDirectionX, 1f, 0);
 	}
 }
