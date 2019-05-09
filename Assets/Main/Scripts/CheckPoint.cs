@@ -12,7 +12,7 @@ public class CheckPoint : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		if(other.gameObject.tag == "Player") {
-			GameManager.Instance.CheckPoint = this;
+			SpawnManager.Instance.CheckPoint = this;
 		}
 	}
 }

@@ -19,10 +19,9 @@ public class Player : Entity {
 	public override bool IsInvincible {get; set;}
 	public override bool IsDead {
 		get { return isDead; }
-		set {
-			isDead = value; 
-		}
+		set { isDead = value; }
 	}
+
 
 	public override void TakeDamage(int damage) {
 		if(!IsInvincible) {

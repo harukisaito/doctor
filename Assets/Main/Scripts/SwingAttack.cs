@@ -8,7 +8,7 @@ public class SwingAttack : MonoBehaviour {
 	[SerializeField] private KeyCode attackButton;
 	[SerializeField] private float attackTime;
 
-	private Collider2D halfCircleCollider;
+	private Collider2D boxCollider;
 	private SpriteRenderer spriteRenderer;
 	private MovementController movementController;
 
@@ -16,25 +16,25 @@ public class SwingAttack : MonoBehaviour {
 	private bool isFacingRight;
 
 	private void Awake() {
-		halfCircleCollider = GetComponent<Collider2D>();
+		boxCollider = GetComponent<Collider2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		movementController = GetComponentInParent<MovementController>();
-		halfCircleCollider.enabled = false;
+		boxCollider.enabled = false;
 		spriteRenderer.enabled = false;
 		isFacingRight = !movementController.IsFacingRight;
 	}
 
 	private void Update() {
-		if(Input.GetKeyDown(attackButton) && !halfCircleCollider.enabled) {
-			halfCircleCollider.enabled = true;
+		if(Input.GetKeyDown(attackButton) && !boxCollider.enabled) {
+			boxCollider.enabled = true;
 			spriteRenderer.enabled = true;
 			timer = 0;
 		}
-		if(timer <= attackTime && halfCircleCollider.enabled) {
+		if(timer <= attackTime && boxCollider.enabled) {
 			timer += Time.deltaTime;
 			if(timer >= attackTime) {
 				timer = 0;
-				halfCircleCollider.enabled = false;
+				boxCollider.enabled = false;
 				spriteRenderer.enabled = false;
 			}
 		}
@@ -49,8 +49,8 @@ public class SwingAttack : MonoBehaviour {
 
 	private void FlipCollider() {
 		isFacingRight = !isFacingRight;
-		Vector3 scale = transform.localScale;
-		scale.x = scale.x * -1;
-		transform.localScale = scale;
+		Vector3 position = boxCollider.transform.localPosition;
+		position.x = position.x * -1;
+		boxCollider.transform.localPosition = position;
 	}
 }

@@ -99,14 +99,14 @@ public class MovementController : MonoBehaviour {
 		}
 
 		body.velocity = velocity;
-		Debug.Log("BODY IN MOVE = " + body.velocity);
+		// Debug.Log("BODY IN MOVE = " + body.velocity);
 
 		FlipSprite();
 	}
 
 	public void AddVelocity(Vector2 velocity) {
 		body.velocity += velocity * platformConst;
-		Debug.Log("BODY IN ADD = " + body.velocity);
+		// Debug.Log("BODY IN ADD = " + body.velocity);
 	}
 
 	public void Duck() {
