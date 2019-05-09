@@ -7,6 +7,9 @@ public class Enemy : Entity {
 	private int hp = 100;
 	private bool isDead;
 
+	public Keys Key {get; set;}
+	public override bool IsInvincible {get; set;}
+
 	public override int HP {
 		get { return hp; } 
 		set { 
@@ -16,7 +19,6 @@ public class Enemy : Entity {
 		}
 	}
 
-	public override bool IsInvincible {get; set;}
 	public override bool IsDead {
 		get { return isDead; }
 		set {
@@ -33,8 +35,15 @@ public class Enemy : Entity {
 		}
 	}
 
+	private void OnTriggerEnter2D(Collider2D other) {
+		if(other.gameObject.tag == "DeathFall") {
+			Die();
+		}
+	}
+
 	public override void Die() {
 		isDead = true;
 		gameObject.SetActive(false);
+		ObjectPoolManager.Instance.AddToObjectPool(Key, gameObject);
 	}
 }

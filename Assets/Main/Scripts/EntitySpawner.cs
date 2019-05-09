@@ -26,13 +26,21 @@ public class EntitySpawner : MonoBehaviour {
 		}
 	}
 
-	public void SpawnEnemy(int index, Vector2 spawnPosition) {
-		InstantiateEnemy(index, spawnPosition);
+	public void SpawnEnemy(Keys movementPattern, Vector2 spawnPosition) {
+		bool empty = ObjectPoolManager.Instance.CheckIfEmpty(movementPattern);
+		if(empty) {
+			InstantiateEnemy(movementPattern, spawnPosition);
+		} 
+		else {
+			GameManager.Instance.Enemy = 
+				ObjectPoolManager.Instance.RetrieveFromObjectPool(movementPattern).GetComponent<Enemy>();
+		}
 	}
 
-	private void InstantiateEnemy(int index, Vector2 spawnPosition) {
-		enemyInstance = Instantiate(enemyPrefabs[index], spawnPosition, Quaternion.identity);
-		GameManager.Instance.Enemy = enemyInstance.GetComponent<Enemy>();
+	private void InstantiateEnemy(Keys movementPattern, Vector2 spawnPosition) {
+		enemyInstance = Instantiate(enemyPrefabs[(int)movementPattern], spawnPosition, Quaternion.identity);
+		// GameManager.Instance.Enemy = 
+		enemyInstance.GetComponent<Enemy>().Key = movementPattern;
 	}
 
 }

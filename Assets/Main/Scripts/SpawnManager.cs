@@ -20,13 +20,6 @@ public class SpawnManager : MonoBehaviour {
 		set { checkPoint = value; }
 	}
 
-	private enum MovementPattern {
-		LeftRightMovement,
-		UpDownMovement,
-		WaveMovement,
-		ZigZagMovement
-	}
-
 	public static SpawnManager Instance;
 
 	private void Awake() {
@@ -41,11 +34,15 @@ public class SpawnManager : MonoBehaviour {
 	private void Start() {
 		spawner = GetComponent<EntitySpawner>();
 		SpawnPlayer(playerSpawn.position);
+		SpawnEnemies(Keys.UpDownEnemies, upDownSpawns);
+		SpawnEnemies(Keys.WaveEnemies, waveSpawns);
+		// SpawnEnemies(MovementPattern.UpDownMovement, upDownSpawns);
+		// SpawnEnemies(MovementPattern.UpDownMovement, upDownSpawns);
 	}
 
-	private void SpawnEnemies(MovementPattern pattern, Transform[] spawns) {
+	private void SpawnEnemies(Keys movementPattern, Transform[] spawns) {
 		for(int i = 0; i < spawns.Length; i++) {
-			spawner.SpawnEnemy((int)pattern, spawns[i].position);
+			spawner.SpawnEnemy(movementPattern, spawns[i].position);
 		}
 	}
 

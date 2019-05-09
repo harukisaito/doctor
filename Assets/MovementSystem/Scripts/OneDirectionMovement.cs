@@ -24,6 +24,6 @@ public class OneDirectionMovement : MonoBehaviour {
 		else {
 			movementDirectionX = -1;
 		}
-		movementController.Move(Speed, movementDirectionX, 1f, 0);
+		movementController.Move(Speed, movementDirectionX, 0f, 0);
 	}
 }

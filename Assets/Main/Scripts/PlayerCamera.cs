@@ -29,7 +29,7 @@ public class PlayerCamera : MonoBehaviour {
 	}
 
 	private void Update() {
-		if(!groundCheck.IsGrounded) {
+		if(!groundCheck.IsGrounded && offsetVec.z > -10) {
 			offsetVec.z -= Time.deltaTime;
 		}
 		else if(movementController.Velocity.y <= 0 && offsetVec.z <= offset) {
