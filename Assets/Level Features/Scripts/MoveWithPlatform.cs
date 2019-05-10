@@ -16,7 +16,6 @@ public class MoveWithPlatform : MonoBehaviour {
 	void FixedUpdate () {
 		if(onMovingGround) {
 			movementController.AddVelocity(platform.StartingVelocity);
-			// Debug.Log("PLATFORM = " + platform.Velocity);
 		}
 	}
 

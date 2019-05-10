@@ -18,9 +18,6 @@ public class ObjectPoolManager : MonoBehaviour {
 		else {
 			Destroy(gameObject);
 		}
-	}
-
-	private void Start() {
 		leftRightEnemies = upDownEnemies = waveEnemies = zigZagEnemies = flyingObjects = projectiles = new Queue();
 
 		objectPool.Add(Keys.LeftRightEnemies, leftRightEnemies);

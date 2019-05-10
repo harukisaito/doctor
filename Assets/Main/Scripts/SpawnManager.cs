@@ -36,8 +36,8 @@ public class SpawnManager : MonoBehaviour {
 		SpawnPlayer(playerSpawn.position);
 		SpawnEnemies(Keys.UpDownEnemies, upDownSpawns);
 		SpawnEnemies(Keys.WaveEnemies, waveSpawns);
-		// SpawnEnemies(MovementPattern.UpDownMovement, upDownSpawns);
-		// SpawnEnemies(MovementPattern.UpDownMovement, upDownSpawns);
+		SpawnEnemies(Keys.LeftRightEnemies, leftRightSpawns);
+		SpawnEnemies(Keys.ZigZagEnemies, zigZagSpawns);
 	}
 
 	private void SpawnEnemies(Keys movementPattern, Transform[] spawns) {

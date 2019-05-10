@@ -28,12 +28,12 @@ public class FlyingObjectSpawner : MonoBehaviour {
 				flyingObjInstance = Instantiate(flyingObjPrefab, transform.position, Quaternion.identity);
 				flyingObject = flyingObjInstance.GetComponent<FlyingObject>();
 				flyingObject.Key = Keys.FlyingObjects;
-				flyingObject.Id = Random.Range(1f, 100f);
 			}
 			else {
 				flyingObjInstance = ObjectPoolManager.Instance.RetrieveFromObjectPool(Keys.FlyingObjects);
 				flyingObjInstance.transform.position = transform.position;
 				flyingObjInstance.SetActive(true);
+				flyingObject.AddedToPool = false;
 			}
 
 			movement = flyingObjInstance.GetComponent<OneDirectionMovement>();

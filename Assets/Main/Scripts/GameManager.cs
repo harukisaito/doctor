@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void Update() {
-		hpText.text = "HP = " + player.HP.ToString();
+		// hpText.text = "HP = " + player.HP.ToString();
 		if(Goal) {
 			timer += Time.deltaTime;
 			if(timer > 6) {
