@@ -5,20 +5,27 @@ using UnityEngine;
 [RequireComponent(typeof(MovementController))]
 public class MovementInputController : MonoBehaviour {
 
-	[SerializeField] private KeyCode moveLeftKey;
-	[SerializeField] private KeyCode moveRightKey;
+	[SerializeField] private KeyCode jumpKey;
 	[SerializeField] private KeyCode sprintKey;
 	[SerializeField] private KeyCode floatKey;
 	[SerializeField] private KeyCode duckKey;
+	[SerializeField] private KeyCode dashKey;
 
 	private float movement;
 	private float movementSpeed;
-	private float buttonCoolDown;
-	private float buttonCoolDownTime = 0.2f;
-	private int buttonCount = 0;
+	private bool isDucking;
 
-	public bool IsDucking {get; set;}
+	public bool IsDucking {
+		get { return isDucking; }
+		set {
+			isDucking = value;
+			if(isDucking == false) {
+				movementController.UnDuck();
+			}
+		}
+	}
 	public bool Sprint {get; set;}
+	public bool MoveDown {get; set;}
 
 
 	private MovementController movementController;
@@ -27,7 +34,6 @@ public class MovementInputController : MonoBehaviour {
 	private void Start() {
 		movementController = GetComponent<MovementController>();
 		groundCheck = GetComponent<GroundCheck>();
-		buttonCoolDown = buttonCoolDownTime;
 	}
 
 	private void Update() {
@@ -37,21 +43,18 @@ public class MovementInputController : MonoBehaviour {
 		JumpInput();
 		DashInput();
 		FloatInput();
-		ResetDashInput();
+		MoveDownInput();
 	}
 	private void FixedUpdate() {
 		if(!movementController.IsDashing) {
-			if(IsDucking) {
-				movementController.Duck();
-			}
-			else {
+			if(!IsDucking) {
 				movementController.Move(movementSpeed, movement, 1f, 0);
 			}
 		}
 	}
 
 	private void JumpInput() { 
-		if(Input.GetKeyDown(KeyCode.Space) && (groundCheck.IsGrounded || movementController.DoubleJump)) {
+		if(Input.GetKeyDown(jumpKey) && !IsDucking && (groundCheck.IsGrounded || movementController.DoubleJump)) {
 			movementController.Jump();
 		}
 	}
@@ -72,41 +75,33 @@ public class MovementInputController : MonoBehaviour {
 
 	private void DuckInput() {
 		IsDucking = Input.GetKey(duckKey);
+		if(IsDucking && groundCheck.IsGrounded) {
+			movementController.Duck();
+		}
 	}
 
 	private void DashInput() {
-		if(!groundCheck.IsGrounded && !movementController.Dashed) {
-			if(Input.GetKeyDown(moveLeftKey)) {
-				DoubleTapToDash(Vector2.left);
+		if(!groundCheck.IsGrounded && Input.GetKeyDown(dashKey) && !IsDucking) {
+			if(movementController.IsFacingRight) {
+				movementController.Dash(Vector2.right);
 			}
-			else if(Input.GetKeyDown(moveRightKey)) {
-				DoubleTapToDash(Vector2.right);
+			else {
+				movementController.Dash(Vector2.left);
 			}
 		}
 	}
 
 	private void FloatInput() {
-		if(!groundCheck.IsGrounded) {
+		if(!groundCheck.IsGrounded && !IsDucking) {
 			movementController.NoDownForce = Input.GetKey(floatKey);
 		}
 	}
 
-	private void ResetDashInput() {
-		if(buttonCoolDown > 0) {
-			buttonCoolDown -= 1 * Time.deltaTime;
-		}
-		else {
-			buttonCount = 0;
-		}
-	}
-
-	private void DoubleTapToDash(Vector2 direction) {
-		if(buttonCoolDown > 0 && buttonCount == 1) { 
-			movementController.Dash(direction);
-		}
-		else {
-			buttonCoolDown = buttonCoolDownTime;
-			buttonCount ++;
+	private void MoveDownInput() {
+		if(groundCheck.IsGrounded) {
+			if(IsDucking) {
+				MoveDown = Input.GetKeyDown(jumpKey);
+			}
 		}
 	}
 }

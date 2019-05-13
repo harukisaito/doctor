@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class DuckMovement : MonoBehaviour {
 
-	[SerializeField] private PhysicsMaterial2D noFriction;
-	[SerializeField] private PhysicsMaterial2D friction;
-
 	private CapsuleCollider2D entityCollider;
 	private CircleCollider2D duckCollider;
 
@@ -18,12 +15,11 @@ public class DuckMovement : MonoBehaviour {
 	public void Duck(Rigidbody2D body) {
 		entityCollider.enabled = false;
 		duckCollider.enabled = true;
-		body.sharedMaterial = friction;
+		body.velocity = new Vector2(0, body.velocity.y);
 	}
 
 	public void UnDuck(Rigidbody2D body) {
 		entityCollider.enabled = true;
 		duckCollider.enabled = false;
-		body.sharedMaterial = noFriction;
 	}
 }

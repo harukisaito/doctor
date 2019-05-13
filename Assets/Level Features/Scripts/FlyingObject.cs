@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FlyingObject : MonoBehaviour {
 
+    [SerializeField] private bool moveRight;
+    [SerializeField] private float speed;
+
     public Keys Key {get; set;}
 
     public float Id {get; set;}
@@ -14,6 +17,14 @@ public class FlyingObject : MonoBehaviour {
             gameObject.SetActive(false);
             ObjectPoolManager.Instance.AddToObjectPool(Key, gameObject);
             AddedToPool = true;
+        }
+    }
+
+    private void FixedUpdate() {
+        if(moveRight) {
+            transform.position += Vector3.right * speed * Time.deltaTime;
+        } else {
+            transform.position += Vector3.left * speed * Time.deltaTime;
         }
     }
 }

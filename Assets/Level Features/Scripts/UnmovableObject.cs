@@ -4,21 +4,15 @@ using UnityEngine;
 
 public class UnmovableObject : MonoBehaviour {
 
-	private Rigidbody2D body;
+	private DisablePlatformCollider disablePlatform;
 
-	private void Start () {
-		body = transform.parent.GetComponent<Rigidbody2D>();
+	private void Start() {
+		disablePlatform = GetComponentInParent<DisablePlatformCollider>();
 	}
 
-	private void OnCollisionEnter2D(Collision2D other) {
+	private void OnTriggerEnter2D(Collider2D other) {
 		if(other.gameObject.tag == "Player") {
-			body.bodyType = RigidbodyType2D.Static;
-		}
-	}
-
-	private void OnCollisionExit2D(Collision2D other) {
-		if(other.gameObject.tag == "Player") {
-			body.bodyType = RigidbodyType2D.Dynamic;
+			disablePlatform.DisableColliders();
 		}
 	}
 }

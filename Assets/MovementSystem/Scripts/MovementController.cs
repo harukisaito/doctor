@@ -18,6 +18,7 @@ public class MovementController : MonoBehaviour {
 	private DuckMovement duckMovement;
 
 	private const float platformConst = 0.77f;
+
 	private bool doubleJump;
 	private bool dashed;
 	private bool isFacingRight;
@@ -75,13 +76,13 @@ public class MovementController : MonoBehaviour {
 		}
 	}
 
+	// private void Update() {
+	// 	if(gameObject.tag == "Player") {
+	// 		Debug.Log(body.velocity);
+	// 	}
+	// }
+
 	public void Move(float movementSpeedMultiplierX, float movementDirectionX, float movementSpeedMultiplierY, float movementDirectionY) {
-		if(IsDucking) {
-			UnDuck();
-		}
-		if(body == null) {
-			body = GetComponent<Rigidbody2D>();
-		}
 
 		movementDirection = movementDirectionX;
 		float movementSpeedX = speedX;
@@ -93,28 +94,33 @@ public class MovementController : MonoBehaviour {
 			x: movementDirectionX * movementSpeedX * Time.deltaTime, 
 			y: movementDirectionY == 0 ? body.velocity.y : movementDirectionY * movementSpeedY * Time.deltaTime
 		);
-		if(firstTime) {
-			StartingVelocity = velocity;
-			firstTime = false;
-		}
+
+		SetStartingVelocity();
 
 		body.velocity = velocity;
-		// Debug.Log("BODY IN MOVE = " + body.velocity);
 
 		FlipSprite();
 	}
 
-	public void AddVelocity(Vector2 velocity) {
-		body.velocity += velocity * platformConst;
-		// Debug.Log("BODY IN ADD = " + body.velocity);
+	private void SetStartingVelocity() {
+		if(firstTime) {
+			StartingVelocity = velocity;
+			firstTime = false;
+		}
 	}
+
+	// public void AddVelocity(Vector2 velocity) {
+	// 	if(body.velocity.x < 10) {
+	// 		body.velocity += velocity * platformConst;
+	// 	}
+	// }
 
 	public void Duck() {
 		duckMovement.Duck(body);
 		IsDucking = true;
 	}
 
-	private void UnDuck() {
+	public void UnDuck() {
 		duckMovement.UnDuck(body);
 		IsDucking = false;
 	}
