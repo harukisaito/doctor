@@ -7,11 +7,16 @@ public class Projectile : MonoBehaviour {
 	[SerializeField] private float speed;
 
 	private Vector3 direction;
+	private Player player;
+	private Collider2D projectileCollider;
 	private float playerPosX;
 	private float lifeTime;
 
 	private void Start() {
-		playerPosX = GameManager.Instance.Player.transform.localPosition.x;
+		player = GameManager.Instance.Player;
+		playerPosX = player.transform.localPosition.x;
+
+		projectileCollider = GetComponent<Collider2D>();
 		
 		if(playerPosX > transform.localPosition.x) {
 			direction = Vector2.right;
@@ -19,17 +24,20 @@ public class Projectile : MonoBehaviour {
 		else if(playerPosX < transform.localPosition.x) {
 			direction = Vector2.left;
 		}
+
+
 	}
 
 	private void Update() {
 		transform.localPosition += direction * speed * Time.deltaTime;
 		lifeTime += Time.deltaTime;
 		if(lifeTime > 5) {
-			Destroy(gameObject);
+			ObjectPoolManager.Instance.AddToObjectPool(Keys.Projectiles, gameObject);
+			gameObject.SetActive(false);
 		}
 	}
 
-	private void OnTriggerEnter2D() {
+	private void OnTriggerEnter2D(Collider2D other) {
 		ObjectPoolManager.Instance.AddToObjectPool(Keys.Projectiles, gameObject);
 		ParticleManager.Instance.InstantiateParticles(transform.position);
 		gameObject.SetActive(false);

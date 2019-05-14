@@ -7,6 +7,7 @@ using UnityEngine;
 public class InvincibleWhenHit : MonoBehaviour {
 
 	[SerializeField] private float blinkingSpeed = 0.05f;
+	[SerializeField] private float invincibilityPeriod;
 
 	private Entity entity;
 	private SpriteRenderer spriteRenderer;
@@ -19,25 +20,30 @@ public class InvincibleWhenHit : MonoBehaviour {
 		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
-	public void StartInvincibility(float invicibilityPeriod) {
+	private IEnumerator StartInvincibility(float invicibilityPeriod) {
+		yield return null;
 		if(!GameManager.Instance.Player.IsDead) {
-			StartCoroutine(BlinkSpriteRenderer(invicibilityPeriod));
+			entity.IsInvincible = true;
+			Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
+
+			while(invicibilityPeriod >= elapsedTime) {
+				enable = !enable;
+				spriteRenderer.enabled = enable;
+				elapsedTime += blinkingSpeed;
+				yield return new WaitForSeconds(blinkingSpeed);
+			}
+
+			elapsedTime = 0;
+			enable = true;
+			entity.IsInvincible = false;
+			spriteRenderer.enabled = true;
+			Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), false);
 		}
 	}
 
-	private IEnumerator BlinkSpriteRenderer(float invicibilityPeriod) {
-		entity.IsInvincible = true;
-
-		while(invicibilityPeriod >= elapsedTime) {
-			enable = !enable;
-			spriteRenderer.enabled = enable;
-			elapsedTime += blinkingSpeed;
-			yield return new WaitForSeconds(blinkingSpeed);
+	private void OnTriggerEnter2D(Collider2D other) {
+		if(other.gameObject.CompareTag("EnemyAttack") || other.gameObject.CompareTag("Enemy")) {
+			StartCoroutine(StartInvincibility(invincibilityPeriod));
 		}
-
-		elapsedTime = 0;
-		enable = true;
-		entity.IsInvincible = false;
-		spriteRenderer.enabled = true;
 	}
 }

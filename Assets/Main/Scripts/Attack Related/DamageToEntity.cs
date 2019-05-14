@@ -5,11 +5,11 @@ using UnityEngine;
 public class DamageToEntity : MonoBehaviour {
 
 	[SerializeField] private int damage;
-	[SerializeField] private bool haveInvincibilityPeriod;
-	[SerializeField] private float invincibiltyPeriod = 0.5f;
+	// [SerializeField] private bool haveInvincibilityPeriod;
+	// [SerializeField] private float invincibiltyPeriod = 0.5f;
 
 	private Entity entity;
-	private InvincibleWhenHit invincibleEntity;
+	// private InvincibleWhenHit invincibleEntity;
 	// private MovementController movementController;
 
 	private void OnTriggerEnter2D(Collider2D other) {
@@ -17,14 +17,14 @@ public class DamageToEntity : MonoBehaviour {
 			entity = other.GetComponent<Entity>();
 			
 			entity.TakeDamage(damage);
-			
-			if(haveInvincibilityPeriod && !entity.IsInvincible) {
-				if(invincibleEntity == null) {
-					invincibleEntity = other.GetComponent<InvincibleWhenHit>();
-				}
-				invincibleEntity.StartInvincibility(invincibiltyPeriod);
-			}
+
 			ParticleManager.Instance.InstantiateParticles(other.transform.position);
+			// if(haveInvincibilityPeriod && !entity.IsInvincible) {
+			// 	if(invincibleEntity == null) {
+			// 		invincibleEntity = other.GetComponent<InvincibleWhenHit>();
+			// 	}
+			// 	invincibleEntity.StartInvincibility(invincibiltyPeriod);
+			// }
 			// if(other.gameObject.CompareTag("Player")) {
 				// movementController = other.GetComponent<MovementController>();
 				// if(other.gameObject.transform.position.x < transform.position.x) {
