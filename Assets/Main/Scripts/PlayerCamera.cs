@@ -9,20 +9,21 @@ public class PlayerCamera : MonoBehaviour {
 	private Vector3 offsetVec;
 	private GroundCheck groundCheck;
 	private MovementController movementController;
+	private Player player;
 
 	private float smoothTime = 0.125f;
-	private bool visited;
 
 	private void Start() {
 		groundCheck = SpawnManager.Instance.Spawner.PlayerInstance.GetComponent<GroundCheck>();
 		movementController = SpawnManager.Instance.Spawner.PlayerInstance.GetComponent<MovementController>();
-		offsetVec = new Vector3(3, 0, offset);
+		player = GameManager.Instance.Player;
 		transform.position = GameManager.Instance.Player.transform.position;
+		offsetVec = new Vector3(3, 0, offset);
 	}
 
 	private void FixedUpdate() {
-		if(GameManager.Instance.Player != null) {
-			Vector3 desiredPosition = GameManager.Instance.Player.transform.position + offsetVec; 
+		if(player != null) {
+			Vector3 desiredPosition = player.transform.position + offsetVec; 
 			Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothTime);
 			transform.position = smoothedPosition;
 		}
@@ -35,11 +36,13 @@ public class PlayerCamera : MonoBehaviour {
 		else if(movementController.Velocity.y <= 0 && offsetVec.z <= offset) {
 			offsetVec.z += Time.deltaTime * 3;
 		}
-		if(movementController.MovementDirection < 0) {
-			offsetVec = new Vector3(-3, 0, offset);
-		} else
-		if(movementController.MovementDirection > 0) {
-			offsetVec = new Vector3(3, 0, offset);
-		}
+		// if(movementController.MovementDirection < 0) {
+		// 	offsetVec = new Vector3(-3, 0, offset);
+		// 	smoothTime = 0.04f;
+		// } else
+		// if(movementController.MovementDirection > 0) {
+		// 	offsetVec = new Vector3(3, 0, offset);
+		// 	smoothTime = 0.04f;
+		// }
 	}
 }

@@ -21,7 +21,7 @@ public class ParticleManager : MonoBehaviour {
 		}
 	}
 
-	public void InstantiateParticles(Vector2 position, float emitPeriod) {
+	public void InstantiateParticles(Vector2 position) {
 		particleInstance = Instantiate(particlePrefab, position, Quaternion.identity);
 		particles = particleInstance.GetComponent<EmitParticles>();
 		particles.StartEmitPartices();

@@ -43,8 +43,8 @@ public class Enemy : Entity {
 
 	public override void Die() {
 		isDead = true;
-		ParticleManager.Instance.InstantiateParticles(transform.position, 0.2f);
-		gameObject.SetActive(false);
+		ParticleManager.Instance.InstantiateParticles(transform.position);
 		ObjectPoolManager.Instance.AddToObjectPool(Key, gameObject);
+		gameObject.SetActive(false);
 	}
 }

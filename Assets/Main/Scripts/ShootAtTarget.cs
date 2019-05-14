@@ -7,40 +7,43 @@ public class ShootAtTarget : MonoBehaviour {
 
 	[SerializeField] private GameObject projectilePrefab;
 	[SerializeField] private float offsetRadius;
-	[SerializeField] private float checkTime;
+	[SerializeField] private float fireRate;
 
 	private Vector3 offset;
 	private CheckForTarget check;
+	private Player player;
 
+	private bool shot = false;
 	public bool Shooting {get; set;}
 
 	private void Start() {
 		check = GetComponent<CheckForTarget>();
-		StartCoroutine(LookForTarget());
+		player = GameManager.Instance.Player;
 	}
 
-	private IEnumerator LookForTarget() {
-		for(;;) {
-			if(check.LookForTarget()) {
-				Shoot();
-				Shooting = true;
-			}
-			else {
-				Shooting = false;
-			}
-			yield return new WaitForSeconds(checkTime);
+	private void Update() {
+		if(check.TargetInRange && !shot) {
+			Shooting = true;
+			shot = true;
+			StartCoroutine(Shoot());
+		}
+		else if(!check.TargetInRange) {
+			Shooting = false;
 		}
 	}
 
-	public void Shoot() {
-		Vector2 playerPos = GameManager.Instance.Player.transform.localPosition;
-		if(playerPos.x > check.transform.position.x) {
-			offset = new Vector3(offsetRadius, 0);
-		}
-		else if(playerPos.x < check.transform.position.x) {
-			offset = new Vector3(-offsetRadius, 0);
-		}
 
-		Instantiate(projectilePrefab, check.transform.position + offset, Quaternion.identity);
+	private IEnumerator Shoot() {
+		while(Shooting) {
+			Vector2 playerPos = player.transform.localPosition;
+			if(playerPos.x > check.transform.position.x) {
+				offset = new Vector3(offsetRadius, 0);
+			}
+			else if(playerPos.x < check.transform.position.x) {
+				offset = new Vector3(-offsetRadius, 0);
+			}
+			Instantiate(projectilePrefab, check.transform.position + offset, Quaternion.identity);
+			yield return new WaitForSeconds(fireRate);
+		}
 	}
 }

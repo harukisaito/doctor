@@ -30,6 +30,8 @@ public class Projectile : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D() {
-		Destroy(gameObject);
+		ObjectPoolManager.Instance.AddToObjectPool(Keys.Projectiles, gameObject);
+		ParticleManager.Instance.InstantiateParticles(transform.position);
+		gameObject.SetActive(false);
 	}
 }

@@ -28,6 +28,9 @@ public class LeftRightMovement : MonoBehaviour {
 		}
 		if(groundCheck.IsGrounded && !shooter.Shooting) {
 			movementController.Move(1f, movementDirectionX, 1f, 0);
+		} 
+		else {
+			movementController.Move(0f, 0f, 0f, 0f);
 		}
 	}
 
