@@ -107,7 +107,7 @@ public class MovementController : MonoBehaviour {
 		);
 
 		SetStartingVelocity();
-
+	
 		body.velocity = velocity;
 
 		FlipSprite();
