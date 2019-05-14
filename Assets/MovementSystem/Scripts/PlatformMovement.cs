@@ -17,7 +17,6 @@ public class PlatformMovement : MonoBehaviour {
 		set {
 			moveDown = value;
 			if(moveDown == true) {
-				Debug.Log("DISABLE COLLIDERS");
 				Platform.DisableColliders();
 			}
 			moveDown = false;
@@ -32,9 +31,8 @@ public class PlatformMovement : MonoBehaviour {
 
 	private void OnCollisionStay2D(Collision2D other) {
 		if(groundCheck.IsGrounded) {
-			if(other.gameObject.tag == "Platform") {
+			if(other.gameObject.CompareTag("Platform")) {
 				if(movementInput.MoveDown) {
-					Debug.Log("MOVING DOWN");
 					Platform = other.gameObject.GetComponent<DisablePlatformCollider>();
 					MoveDown = true;
 				}

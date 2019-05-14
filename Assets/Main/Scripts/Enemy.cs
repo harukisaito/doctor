@@ -36,7 +36,7 @@ public class Enemy : Entity {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		if(other.gameObject.tag == "DeathFall") {
+		if(other.gameObject.CompareTag("DeathFall")) {
 			Die();
 		}
 	}

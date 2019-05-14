@@ -13,7 +13,7 @@ public class DamageToEntity : MonoBehaviour {
 	private MovementController movementController;
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		if(other.gameObject.tag == "Player" || (other.gameObject.tag == "Enemy" && this.gameObject.tag != "EnemyAttack")) {
+		if(other.gameObject.CompareTag("Player") || (other.gameObject.CompareTag("Enemy") && this.gameObject.tag != "EnemyAttack")) {
 			entity = other.GetComponent<Entity>();
 			
 			entity.TakeDamage(damage);
@@ -33,7 +33,7 @@ public class DamageToEntity : MonoBehaviour {
 				}
 			}
 		}
-		else if(other.gameObject.tag == "Untagged") {
+		else if(other.gameObject.CompareTag("Untagged")) {
 			Debug.LogWarning("CHECK THE TAG OF THE OTHER OBJECT");
 		}
 	}

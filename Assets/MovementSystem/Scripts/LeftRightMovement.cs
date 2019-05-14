@@ -32,14 +32,14 @@ public class LeftRightMovement : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D(Collision2D other) {
-		if(other.gameObject.tag == "Player") {
+		if(other.gameObject.CompareTag("Player")) {
 			tempDir = movementDirectionX;
 			movementDirectionX = 0;
 		}
 	}
 
 	private void OnCollisionExit2D(Collision2D other) {
-		if(other.gameObject.tag == "Player") {
+		if(other.gameObject.CompareTag("Player")) {
 			movementDirectionX = tempDir;
 		}
 	}

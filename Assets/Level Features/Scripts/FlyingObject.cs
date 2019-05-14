@@ -13,7 +13,7 @@ public class FlyingObject : MonoBehaviour {
     public bool AddedToPool {get; set;}
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.tag == "DeathFall" && !AddedToPool) {
+        if(other.gameObject.CompareTag("DeathFall") && !AddedToPool) {
             gameObject.SetActive(false);
             ObjectPoolManager.Instance.AddToObjectPool(Key, gameObject);
             AddedToPool = true;

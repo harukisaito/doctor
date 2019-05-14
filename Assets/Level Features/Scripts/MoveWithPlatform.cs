@@ -19,12 +19,12 @@ public class MoveWithPlatform : MonoBehaviour {
 	// }
 
 	private void OnCollisionEnter2D(Collision2D other) {
-		if(other.gameObject.tag == "Platform") {
+		if(other.gameObject.CompareTag("Platform")) {
 			// platform = other.gameObject.GetComponent<MovementController>();
 			transform.parent = other.transform;
 			onMovingGround = true;
 		}
-		else if(other.gameObject.tag == "Ground") {
+		else if(other.gameObject.CompareTag("Ground")) {
 			onMovingGround = false;
 			transform.parent = null;
 		}

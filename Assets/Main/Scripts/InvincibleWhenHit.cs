@@ -31,13 +31,13 @@ public class InvincibleWhenHit : MonoBehaviour {
 		while(invicibilityPeriod >= elapsedTime) {
 			enable = !enable;
 			spriteRenderer.enabled = enable;
-			elapsedTime += Time.deltaTime;
+			elapsedTime += blinkingSpeed;
 			yield return new WaitForSeconds(blinkingSpeed);
 		}
 
 		elapsedTime = 0;
 		enable = true;
 		entity.IsInvincible = false;
-		spriteRenderer.enabled = enable;
+		spriteRenderer.enabled = true;
 	}
 }

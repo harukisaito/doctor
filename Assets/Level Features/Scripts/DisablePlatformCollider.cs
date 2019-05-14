@@ -26,7 +26,7 @@ public class DisablePlatformCollider : MonoBehaviour {
 
 	public void DisableColliders() {
 		boxCollider.enabled = false;
-		// StartCoroutine(EnableColliders());
+		StartCoroutine(EnableColliders());
 	}
 
 	private IEnumerator EnableColliders() {

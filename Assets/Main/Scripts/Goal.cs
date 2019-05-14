@@ -7,7 +7,7 @@ public class Goal : MonoBehaviour {
 	private float timer;
 
 	private void OnCollisionEnter2D(Collision2D other) {
-		if(other.gameObject.tag == "Player") {
+		if(other.gameObject.CompareTag("Player")) {
 			GameManager.Instance.Goal = true;
 		}
 	}

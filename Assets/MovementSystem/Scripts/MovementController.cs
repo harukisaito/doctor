@@ -175,5 +175,7 @@ public class MovementController : MonoBehaviour {
 	private IEnumerator Disable() {
 		yield return new WaitForSeconds(0.1f);
 		DisableKnockback = false;
+		yield return new WaitForSeconds(1f);
+		KnockBacked = false;
 	}
 }
