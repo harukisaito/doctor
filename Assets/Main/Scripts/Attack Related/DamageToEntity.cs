@@ -24,6 +24,7 @@ public class DamageToEntity : MonoBehaviour {
 				}
 				invincibleEntity.StartInvincibility(invincibiltyPeriod);
 			}
+			ParticleManager.Instance.InstantiateParticles(other.transform.position);
 			// if(other.gameObject.CompareTag("Player")) {
 				// movementController = other.GetComponent<MovementController>();
 				// if(other.gameObject.transform.position.x < transform.position.x) {
