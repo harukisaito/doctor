@@ -12,20 +12,19 @@ public class MoveWithPlatform : MonoBehaviour {
 		movementController = GetComponent<MovementController>();
 	}
 	
-	void FixedUpdate () {
-		if(onMovingGround) {
-			// movementController.AddVelocity(platform.StartingVelocity);
-		}
-	}
+	// void FixedUpdate () {
+	// 	if(onMovingGround) {
+	// 		// movementController.AddVelocity(platform.StartingVelocity);
+	// 	}
+	// }
 
 	private void OnCollisionEnter2D(Collision2D other) {
 		if(other.gameObject.tag == "Platform") {
 			// platform = other.gameObject.GetComponent<MovementController>();
-			Debug.Log("PARENT");
 			transform.parent = other.transform;
 			onMovingGround = true;
 		}
-		else if(other.gameObject.tag == "Ground" || !other.gameObject.activeSelf) {
+		else if(other.gameObject.tag == "Ground") {
 			onMovingGround = false;
 			transform.parent = null;
 		}

@@ -10,11 +10,12 @@ public class DamageToEntity : MonoBehaviour {
 
 	private Entity entity;
 	private InvincibleWhenHit invincibleEntity;
+	private MovementController movementController;
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		if(other.gameObject.tag == "Player" || (other.gameObject.tag == "Enemy" && this.gameObject.tag != "EnemyAttack")) {
 			entity = other.GetComponent<Entity>();
-
+			
 			entity.TakeDamage(damage);
 			
 			if(haveInvincibilityPeriod && !entity.IsInvincible) {
@@ -23,9 +24,21 @@ public class DamageToEntity : MonoBehaviour {
 				}
 				invincibleEntity.StartInvincibility(invincibiltyPeriod);
 			}
+			if(other.gameObject.CompareTag("Player")) {
+				movementController = other.GetComponent<MovementController>();
+				if(other.gameObject.transform.position.x < transform.position.x) {
+					Knockback(KnockbackDirection.Left);
+				} else if(other.gameObject.transform.position.x > transform.position.x) {
+					Knockback(KnockbackDirection.Right);
+				}
+			}
 		}
 		else if(other.gameObject.tag == "Untagged") {
 			Debug.LogWarning("CHECK THE TAG OF THE OTHER OBJECT");
 		}
+	}
+
+	private void Knockback(KnockbackDirection direction) {
+		movementController.Knockback(direction, 3, 2);
 	}
 }

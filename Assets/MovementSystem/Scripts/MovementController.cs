@@ -8,7 +8,7 @@ public class MovementController : MonoBehaviour {
 	[SerializeField] private float speedX = 100f;
 	[SerializeField] private float speedY = 100f;
 	[SerializeField] private float jumpingPower = 220f;
-	[SerializeField] private float downForce;
+	[SerializeField] private float downForce = 8f;
 	[SerializeField] private float floatiness;
 
 	private Rigidbody2D body;
@@ -16,6 +16,7 @@ public class MovementController : MonoBehaviour {
 	private GroundCheck groundCheck;
 	private DashMovement dashMovement;
 	private DuckMovement duckMovement;
+	private KnockbackMovement knockbackMovement;
 
 	private const float platformConst = 0.77f;
 
@@ -25,6 +26,7 @@ public class MovementController : MonoBehaviour {
 	private float movementDirection;
 	private bool firstTime = true;
 	private Vector2 velocity;
+	private Vector2 knockback;
 
 	public bool DoubleJump {
 		get { return doubleJump; }
@@ -38,7 +40,10 @@ public class MovementController : MonoBehaviour {
 
 	public bool IsDashing {get; set;}
 	public bool NoDownForce {get; set;}
+	public bool PlatformForce {get; set;}
 	public bool IsDucking {get; set;}
+	public bool KnockBacked {get; set;}
+	public bool DisableKnockback {get; set;}
 	public Vector2 StartingVelocity {get; set;}
 
 	public bool IsFacingRight {
@@ -60,27 +65,33 @@ public class MovementController : MonoBehaviour {
 		groundCheck = GetComponent<GroundCheck>();
 		dashMovement = GetComponent<DashMovement>();
 		duckMovement = GetComponent<DuckMovement>();
+		knockbackMovement = GetComponent<KnockbackMovement>();
 		isFacingRight = true;
 	}
 
 	private void FixedUpdate() {
 		if(groundCheck != null) {
-			if(body.velocity.y < 0 && !groundCheck.IsGrounded) {
+			if(body.velocity.y < 0 && !groundCheck.IsGrounded && !KnockBacked) {
+				float yVelocity = body.velocity.y;
+				float deltaTime = Time.deltaTime;
+
 				if(!NoDownForce) {
-					body.velocity += Vector2.down * downForce / body.velocity.y * body.velocity.y * Time.deltaTime;
+					if(!PlatformForce) {
+						body.velocity += Vector2.down * downForce / yVelocity * yVelocity * deltaTime;
+					}
+					// else {
+						// body.velocity += Vector2.down * downForce * yVelocity * 10 * deltaTime;
+					// }
 				}
 				else if(NoDownForce) {
-					body.velocity = Vector2.down * downForce * floatiness * Time.deltaTime;
+					body.velocity = Vector2.down * downForce * floatiness * deltaTime;
 				}
+			}
+			else if(body.velocity.y > 0 && !groundCheck.IsGrounded) {
+				body.velocity += Vector2.down * downForce * Time.deltaTime;
 			}
 		}
 	}
-
-	// private void Update() {
-	// 	if(gameObject.tag == "Player") {
-	// 		Debug.Log(body.velocity);
-	// 	}
-	// }
 
 	public void Move(float movementSpeedMultiplierX, float movementDirectionX, float movementSpeedMultiplierY, float movementDirectionY) {
 
@@ -144,11 +155,25 @@ public class MovementController : MonoBehaviour {
 			doubleJump = false;	
 			body.velocity = Vector2.zero;
 		}
-		body.AddForce(Vector2.up * jumpingPower);
+		Vector2 velocity = body.velocity;
+		velocity.y += jumpingPower;
+		body.velocity = velocity;
 	}
 
 	public void Dash(Vector2 direction) {
 		dashMovement.Dash(direction, body);
 		dashed = true;
+	}
+
+	public void Knockback(KnockbackDirection direction, float forceAmount, float knockbackHeight) {
+		KnockBacked = true;
+		DisableKnockback = true;
+		knockbackMovement.Knockback(direction, body, forceAmount, knockbackHeight);
+		StartCoroutine(Disable());
+	}
+
+	private IEnumerator Disable() {
+		yield return new WaitForSeconds(0.1f);
+		DisableKnockback = false;
 	}
 }

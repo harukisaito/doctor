@@ -12,6 +12,7 @@ public class ParticleManager : MonoBehaviour {
 	public static ParticleManager Instance;
 
 	private void Awake() {
+		DontDestroyOnLoad(this);
 		if(Instance == null) {
 			Instance = this;
 		}

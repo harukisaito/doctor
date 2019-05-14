@@ -11,27 +11,17 @@ public class GroundCheck : MonoBehaviour {
 	[SerializeField] private LayerMask whatIsGround; 
 
 	private MovementController movementController;
-	private Collider2D groundCollider;
 
 	private bool isGrounded;
 
 	public bool IsGrounded {
 		get {return isGrounded;}
-		set {
-			isGrounded = value;
-			if(movementController == null) {
-				GetMovementComponent();
-			}
-			else if(value == true) {
-				movementController.DoubleJump = true;
-				movementController.Dashed = false;
-			} 
-		}
+		set {isGrounded = value;}
 	}
 
 
 	private void Awake() {
-		GetMovementComponent();
+		GetComponents();
 	}
 
 	private void FixedUpdate() {
@@ -40,10 +30,14 @@ public class GroundCheck : MonoBehaviour {
 		if(isGrounded) {
 			movementController.DoubleJump = true; 
 			movementController.Dashed = false;
+			movementController.PlatformForce = false;
+			if(!movementController.DisableKnockback) {
+				movementController.KnockBacked = false;
+			}
 		}
 	}
 
-	private void GetMovementComponent() {
+	private void GetComponents() {
 		movementController = GetComponent<MovementController>();
 	}
 }

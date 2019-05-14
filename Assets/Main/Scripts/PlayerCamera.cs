@@ -16,7 +16,7 @@ public class PlayerCamera : MonoBehaviour {
 	private void Start() {
 		groundCheck = SpawnManager.Instance.Spawner.PlayerInstance.GetComponent<GroundCheck>();
 		movementController = SpawnManager.Instance.Spawner.PlayerInstance.GetComponent<MovementController>();
-		offsetVec = new Vector3(0, 0, offset);
+		offsetVec = new Vector3(3, 0, offset);
 		transform.position = GameManager.Instance.Player.transform.position;
 	}
 

@@ -34,6 +34,7 @@ public class Player : Entity {
 
 	public override void Die() {
 		isDead = true;
+		transform.parent = null;
 		gameObject.SetActive(false);
 	}
 

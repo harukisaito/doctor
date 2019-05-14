@@ -4,24 +4,34 @@ using UnityEngine;
 
 public class DisablePlatformCollider : MonoBehaviour {
 
-	Collider2D[] colliders;
+	[SerializeField] private Collider2D boxCollider;
+	[SerializeField] private Collider2D boxColliderTrigger;
+
 
 	private void Start() {
-		colliders = GetComponentsInChildren<EdgeCollider2D>();
-		// why the fuck does getComponentsInChildren return components of the current gameobject as well.
+		Physics2D.IgnoreCollision(boxCollider, boxColliderTrigger);
+	}
+
+	private void OnTriggerEnter2D(Collider2D other) {
+		if(other.gameObject.CompareTag("Player")) {
+			Physics2D.IgnoreCollision(other, boxCollider, true);
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D other) {
+		if(other.gameObject.CompareTag("Player")) {
+			Physics2D.IgnoreCollision(other, boxCollider, false);
+		}
 	}
 
 	public void DisableColliders() {
-		EnableColliders(false);
+		boxCollider.enabled = false;
+		// StartCoroutine(EnableColliders());
 	}
 
-	public void EnableColliders() {
-		EnableColliders(true);
+	private IEnumerator EnableColliders() {
+		yield return new WaitForSeconds(0.3f);
+		boxCollider.enabled = true;
 	}
 
-	private void EnableColliders(bool enable) {
-		for(int i = 0; i < colliders.Length - 1; i++) {
-			colliders[i].enabled = enable;
-		}
-	}
 }

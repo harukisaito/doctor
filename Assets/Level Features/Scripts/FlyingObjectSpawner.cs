@@ -36,9 +36,9 @@ public class FlyingObjectSpawner : MonoBehaviour {
 				flyingObject.AddedToPool = false;
 			}
 
-			movement = flyingObjInstance.GetComponent<OneDirectionMovement>();
-			movement.MoveRight = moveRight;
-			movement.Speed = speed;
+			// movement = flyingObjInstance.GetComponent<OneDirectionMovement>();
+			// movement.MoveRight = moveRight;
+			// movement.Speed = speed;
 			yield return new WaitForSeconds(spawnRate);
 		}
 	}

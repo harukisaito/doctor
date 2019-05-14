@@ -6,17 +6,19 @@ public class PlatformMovement : MonoBehaviour {
 
 	private GroundCheck groundCheck;
 	private MovementInputController movementInput;
-	private DisablePlatformCollider platform;
 	private CircleCollider2D circleCollider;
 
 	private bool moveDown;
+
+	public DisablePlatformCollider Platform {get; set;}
 
 	public bool MoveDown {
 		get { return moveDown; } 
 		set {
 			moveDown = value;
 			if(moveDown == true) {
-				platform.DisableColliders();
+				Debug.Log("DISABLE COLLIDERS");
+				Platform.DisableColliders();
 			}
 			moveDown = false;
 		}
@@ -32,7 +34,8 @@ public class PlatformMovement : MonoBehaviour {
 		if(groundCheck.IsGrounded) {
 			if(other.gameObject.tag == "Platform") {
 				if(movementInput.MoveDown) {
-					platform = other.gameObject.GetComponent<DisablePlatformCollider>();
+					Debug.Log("MOVING DOWN");
+					Platform = other.gameObject.GetComponent<DisablePlatformCollider>();
 					MoveDown = true;
 				}
 			}

@@ -45,9 +45,10 @@ public class MovementInputController : MonoBehaviour {
 		FloatInput();
 		MoveDownInput();
 	}
+	
 	private void FixedUpdate() {
 		if(!movementController.IsDashing) {
-			if(!IsDucking) {
+			if(!IsDucking && !movementController.KnockBacked) {
 				movementController.Move(movementSpeed, movement, 1f, 0);
 			}
 		}
@@ -81,7 +82,7 @@ public class MovementInputController : MonoBehaviour {
 	}
 
 	private void DashInput() {
-		if(!groundCheck.IsGrounded && Input.GetKeyDown(dashKey) && !IsDucking) {
+		if(!groundCheck.IsGrounded && Input.GetKeyDown(dashKey) && !IsDucking && !movementController.Dashed) {
 			if(movementController.IsFacingRight) {
 				movementController.Dash(Vector2.right);
 			}
@@ -101,6 +102,7 @@ public class MovementInputController : MonoBehaviour {
 		if(groundCheck.IsGrounded) {
 			if(IsDucking) {
 				MoveDown = Input.GetKeyDown(jumpKey);
+				movementController.PlatformForce = true;
 			}
 		}
 	}

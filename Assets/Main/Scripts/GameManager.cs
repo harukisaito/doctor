@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
@@ -29,6 +28,7 @@ public class GameManager : MonoBehaviour {
 	private float timer;
 
 	private void Awake() {
+		DontDestroyOnLoad(this);
 		if(Instance == null) {
 			Instance = this;
 		}
@@ -42,8 +42,8 @@ public class GameManager : MonoBehaviour {
 		if(Goal) {
 			timer += Time.deltaTime;
 			if(timer > 6) {
-				SceneManager.LoadSceneAsync(0);
-				SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(0));
+				// SceneManager.LoadSceneAsync(0);
+				// SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(0));
 			}
 		}
 	}

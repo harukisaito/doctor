@@ -12,6 +12,7 @@ public class ObjectPoolManager : MonoBehaviour {
 	public static ObjectPoolManager Instance;
 
 	private void Awake() {
+		DontDestroyOnLoad(this);
 		if(Instance == null) {
 			Instance = this;
 		}
