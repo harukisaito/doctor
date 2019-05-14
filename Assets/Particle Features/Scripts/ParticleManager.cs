@@ -25,11 +25,5 @@ public class ParticleManager : MonoBehaviour {
 		particleInstance = Instantiate(particlePrefab, position, Quaternion.identity);
 		particles = particleInstance.GetComponent<EmitParticles>();
 		particles.StartEmitPartices();
-		StartCoroutine(StopParticles(emitPeriod));
-	}
-
-	private IEnumerator StopParticles(float emitPeriod) {
-		yield return new WaitForSeconds(emitPeriod);
-		particles.StopEmitParticles();
 	}
 }

@@ -35,5 +35,11 @@ public class PlayerCamera : MonoBehaviour {
 		else if(movementController.Velocity.y <= 0 && offsetVec.z <= offset) {
 			offsetVec.z += Time.deltaTime * 3;
 		}
+		if(movementController.MovementDirection < 0) {
+			offsetVec = new Vector3(-3, 0, offset);
+		} else
+		if(movementController.MovementDirection > 0) {
+			offsetVec = new Vector3(3, 0, offset);
+		}
 	}
 }
