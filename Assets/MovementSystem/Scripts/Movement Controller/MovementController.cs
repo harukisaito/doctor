@@ -44,6 +44,7 @@ public class MovementController : MonoBehaviour {
 	public bool IsDucking {get; set;}
 	public bool KnockBacked {get; set;}
 	public bool DisableKnockback {get; set;}
+	public bool Stop {get; set;}
 	public Vector2 StartingVelocity {get; set;}
 
 	public bool IsFacingRight {
@@ -107,8 +108,10 @@ public class MovementController : MonoBehaviour {
 		);
 
 		SetStartingVelocity();
-	
-		body.velocity = velocity;
+
+		if(!Stop) {
+			body.velocity = velocity;
+		}
 
 		FlipSprite();
 	}

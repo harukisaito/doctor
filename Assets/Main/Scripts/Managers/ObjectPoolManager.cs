@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ public class ObjectPoolManager : MonoBehaviour {
 
 	private Dictionary<Keys, Queue> objectPool = new Dictionary<Keys, Queue>();
 
-	private Queue leftRightEnemies, upDownEnemies, waveEnemies, zigZagEnemies;
+	private Queue leftRightEnemies, leftRightShootEnemies, upDownEnemies, waveEnemies, zigZagEnemies;
 	private Queue flyingObjects;
 	private Queue projectiles;
 	public static ObjectPoolManager Instance;
@@ -19,9 +20,10 @@ public class ObjectPoolManager : MonoBehaviour {
 		else {
 			Destroy(gameObject);
 		}
-		leftRightEnemies = upDownEnemies = waveEnemies = zigZagEnemies = flyingObjects = projectiles = new Queue();
+		leftRightEnemies = leftRightShootEnemies = upDownEnemies = waveEnemies = zigZagEnemies = flyingObjects = projectiles = new Queue();
 
 		objectPool.Add(Keys.LeftRightEnemies, leftRightEnemies);
+		objectPool.Add(Keys.LeftRightShootEnemies, leftRightShootEnemies);
 		objectPool.Add(Keys.UpDownEnemies, upDownEnemies);
 		objectPool.Add(Keys.WaveEnemies, waveEnemies);
 		objectPool.Add(Keys.ZigZagEnemies, zigZagEnemies);

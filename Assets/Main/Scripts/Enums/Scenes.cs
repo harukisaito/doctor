@@ -1,3 +1,3 @@
 ﻿public enum Scenes {
-	Introduction
+	Introduction = 1
 }

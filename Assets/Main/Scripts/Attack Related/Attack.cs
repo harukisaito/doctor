@@ -3,42 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(DamageToEntity))]
-public class SwingAttack : MonoBehaviour {
+public class Attack : MonoBehaviour {
 
-	[SerializeField] private KeyCode attackButton;
 	[SerializeField] private float attackTime;
 
-	private Collider2D boxCollider;
+	private Collider2D attackCollider;
 	private SpriteRenderer spriteRenderer;
 	private MovementController movementController;
 
-	private float timer;
 	private bool isFacingRight;
 
 	private void Awake() {
-		boxCollider = GetComponent<Collider2D>();
+		attackCollider = GetComponent<Collider2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		movementController = GetComponentInParent<MovementController>();
-		boxCollider.enabled = false;
-		spriteRenderer.enabled = false;
+		ActivateAttackCollider(false);
 		isFacingRight = !movementController.IsFacingRight;
 	}
 
 	private void Update() {
-		if(Input.GetKeyDown(attackButton) && !boxCollider.enabled) {
-			boxCollider.enabled = true;
-			spriteRenderer.enabled = true;
-			timer = 0;
-		}
-		if(timer <= attackTime && boxCollider.enabled) {
-			timer += Time.deltaTime;
-			if(timer >= attackTime) {
-				timer = 0;
-				boxCollider.enabled = false;
-				spriteRenderer.enabled = false;
-			}
-		}
-
 		if(isFacingRight && movementController.MovementDirection < 0) {
 			FlipCollider();
 		}
@@ -47,10 +30,26 @@ public class SwingAttack : MonoBehaviour {
 		}
 	}
 
+	public void ActivateAttack() {
+		ActivateAttackCollider(true);
+		StartCoroutine(DisableAttackCollider());
+	}
+
+	private void ActivateAttackCollider(bool enable) {
+		attackCollider.enabled = enable;
+		spriteRenderer.enabled = enable;
+	}
+
+	private IEnumerator DisableAttackCollider() {
+		yield return new WaitForSeconds(attackTime);
+		ActivateAttackCollider(false);
+	}
+
 	private void FlipCollider() {
 		isFacingRight = !isFacingRight;
-		Vector3 position = boxCollider.transform.localPosition;
+		spriteRenderer.flipX = !spriteRenderer.flipX;
+		Vector3 position = attackCollider.transform.localPosition;
 		position.x = position.x * -1;
-		boxCollider.transform.localPosition = position;
+		attackCollider.transform.localPosition = position;
 	}
 }

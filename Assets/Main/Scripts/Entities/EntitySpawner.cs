@@ -39,8 +39,6 @@ public class EntitySpawner : MonoBehaviour {
 
 	private void InstantiateEnemy(Keys movementPattern, Vector2 spawnPosition) {
 		enemyInstance = Instantiate(enemyPrefabs[(int)movementPattern], spawnPosition, Quaternion.identity);
-		// GameManager.Instance.Enemy = 
 		enemyInstance.GetComponent<Enemy>().Key = movementPattern;
 	}
-
 }

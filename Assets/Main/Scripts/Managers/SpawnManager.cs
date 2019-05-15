@@ -6,7 +6,7 @@ public class SpawnManager : MonoBehaviour {
 
 	[SerializeField] private Transform playerSpawn;
 
-	[SerializeField] private Transform[] leftRightSpawns, upDownSpawns, waveSpawns, zigZagSpawns;
+	[SerializeField] private Transform[] leftRightSpawns, leftRightShootSpawns, upDownSpawns, waveSpawns, zigZagSpawns;
 
 	private EntitySpawner spawner;
 	private CheckPoint checkPoint;
@@ -38,6 +38,7 @@ public class SpawnManager : MonoBehaviour {
 		SpawnEnemies(Keys.UpDownEnemies, upDownSpawns);
 		SpawnEnemies(Keys.WaveEnemies, waveSpawns);
 		SpawnEnemies(Keys.LeftRightEnemies, leftRightSpawns);
+		SpawnEnemies(Keys.LeftRightShootEnemies, leftRightShootSpawns);
 		SpawnEnemies(Keys.ZigZagEnemies, zigZagSpawns);
 	}
 

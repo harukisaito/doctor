@@ -12,12 +12,14 @@ public class ShootAtTarget : MonoBehaviour {
 	private Vector3 offset;
 	private CheckForTarget check;
 	private Player player;
+	private MovementController movementController;
 
 	private bool shot = false;
 	public bool Shooting {get; set;}
 
 	private void Start() {
 		check = GetComponent<CheckForTarget>();
+		movementController = GetComponent<MovementController>();
 		player = GameManager.Instance.Player;
 	}
 
@@ -25,10 +27,12 @@ public class ShootAtTarget : MonoBehaviour {
 		if(check.TargetInRange && !shot) {
 			Shooting = true;
 			shot = true;
+			movementController.Stop = true;
 			StartCoroutine(Shoot());
 		}
 		else if(!check.TargetInRange) {
 			Shooting = false;
+			movementController.Stop = false;
 		}
 	}
 

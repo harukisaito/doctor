@@ -10,6 +10,7 @@ public class MovementInputController : MonoBehaviour {
 	[SerializeField] private KeyCode floatKey;
 	[SerializeField] private KeyCode duckKey;
 	[SerializeField] private KeyCode dashKey;
+	[SerializeField] private KeyCode attackKey;
 
 	private float movement;
 	private float movementSpeed;
@@ -29,10 +30,12 @@ public class MovementInputController : MonoBehaviour {
 
 
 	private MovementController movementController;
+	private AttackController attackController;
 	private GroundCheck groundCheck;
 
 	private void Start() {
 		movementController = GetComponent<MovementController>();
+		attackController = GetComponent<AttackController>();
 		groundCheck = GetComponent<GroundCheck>();
 	}
 
@@ -44,6 +47,7 @@ public class MovementInputController : MonoBehaviour {
 		DashInput();
 		FloatInput();
 		MoveDownInput();
+		AttackInput();
 	}
 	
 	private void FixedUpdate() {
@@ -103,6 +107,17 @@ public class MovementInputController : MonoBehaviour {
 			if(IsDucking) {
 				MoveDown = Input.GetKeyDown(jumpKey);
 				movementController.PlatformForce = true;
+			}
+		}
+	}
+
+	private void AttackInput() {
+		if(Input.GetKeyDown(attackKey)) {
+			if(groundCheck.IsGrounded) {
+				attackController.Attack(AttackPattern.GroundAttack);
+			}
+			else {
+				attackController.Attack(AttackPattern.AirAttack);
 			}
 		}
 	}

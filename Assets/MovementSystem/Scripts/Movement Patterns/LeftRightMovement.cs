@@ -8,7 +8,6 @@ public class LeftRightMovement : MonoBehaviour {
 	private MovementController movementController;
 	private CheckForObstacle check;
 	private GroundCheck groundCheck;
-	private ShootAtTarget shooter;
 
 	private float movementDirectionX = 1;
 
@@ -18,7 +17,6 @@ public class LeftRightMovement : MonoBehaviour {
 		movementController = GetComponent<MovementController>();
 		check = GetComponent<CheckForObstacle>();
 		groundCheck = GetComponent<GroundCheck>();
-		shooter = GetComponent<ShootAtTarget>();
 	}
 
 	private void FixedUpdate() {
@@ -26,11 +24,8 @@ public class LeftRightMovement : MonoBehaviour {
 		if(!obstacle) {
 			movementDirectionX *= -1;
 		}
-		if(groundCheck.IsGrounded && !shooter.Shooting) {
+		if(groundCheck.IsGrounded) {
 			movementController.Move(1f, movementDirectionX, 1f, 0);
-		} 
-		else {
-			movementController.Move(0f, 0f, 0f, 0f);
 		}
 	}
 
