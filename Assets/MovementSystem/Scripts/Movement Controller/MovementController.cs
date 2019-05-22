@@ -27,6 +27,7 @@ public class MovementController : MonoBehaviour {
 	private bool firstTime = true;
 	private Vector2 velocity;
 	private Vector2 knockback;
+	private Vector2 down = Vector2.down;
 
 	public bool DoubleJump {
 		get { return doubleJump; }
@@ -40,7 +41,6 @@ public class MovementController : MonoBehaviour {
 
 	public bool IsDashing {get; set;}
 	public bool NoDownForce {get; set;}
-	public bool PlatformForce {get; set;}
 	public bool IsDucking {get; set;}
 	public bool KnockBacked {get; set;}
 	public bool DisableKnockback {get; set;}
@@ -72,29 +72,25 @@ public class MovementController : MonoBehaviour {
 
 	private void FixedUpdate() {
 		if(groundCheck != null) {
-			if(body.velocity.y < 0 && !groundCheck.IsGrounded && !KnockBacked) {
-				float yVelocity = body.velocity.y;
-				float deltaTime = Time.deltaTime;
-
+			float deltaTime = Time.deltaTime;
+			float yVelocity = body.velocity.y;
+			if(yVelocity < 0 && !groundCheck.IsGrounded) {
 				if(!NoDownForce) {
-					if(!PlatformForce) {
-						body.velocity += Vector2.down * downForce / yVelocity * yVelocity * deltaTime;
-					}
-					// else {
-						// body.velocity += Vector2.down * downForce * yVelocity * 10 * deltaTime;
-					// }
+					body.velocity += down * downForce * deltaTime;
 				}
 				else if(NoDownForce) {
-					body.velocity = Vector2.down * downForce * floatiness * deltaTime;
+					body.velocity = down * downForce * floatiness * deltaTime;
 				}
 			}
 			else if(body.velocity.y > 0 && !groundCheck.IsGrounded) {
-				body.velocity += Vector2.down * downForce * Time.deltaTime;
+				body.velocity += down * downForce * deltaTime;
 			}
 		}
 	}
 
-	public void Move(float movementSpeedMultiplierX, float movementDirectionX, float movementSpeedMultiplierY, float movementDirectionY) {
+	public void Move(
+		float movementSpeedMultiplierX, float movementDirectionX, 
+		float movementSpeedMultiplierY, float movementDirectionY) {
 
 		movementDirection = movementDirectionX;
 		float movementSpeedX = speedX;

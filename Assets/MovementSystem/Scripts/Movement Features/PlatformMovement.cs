@@ -35,6 +35,7 @@ public class PlatformMovement : MonoBehaviour {
 				if(movementInput.MoveDown) {
 					Platform = other.gameObject.GetComponent<DisablePlatformCollider>();
 					MoveDown = true;
+					
 				}
 			}
 		}

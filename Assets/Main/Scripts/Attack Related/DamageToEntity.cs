@@ -9,10 +9,10 @@ public class DamageToEntity : MonoBehaviour {
 	private Entity entity;
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log(other.gameObject.tag);
+		// Debug.Log(other.gameObject.tag);
 		if((other.gameObject.CompareTag("Player") && this.gameObject.tag != "PlayerAttack") 
 		|| (other.gameObject.CompareTag("Enemy") && this.gameObject.tag != "EnemyAttack")) {
-			Debug.Log("DAMAGE");
+			// Debug.Log("DAMAGE");
 			
 			entity = other.GetComponent<Entity>();
 			

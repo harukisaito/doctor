@@ -106,7 +106,6 @@ public class MovementInputController : MonoBehaviour {
 		if(groundCheck.IsGrounded) {
 			if(IsDucking) {
 				MoveDown = Input.GetKeyDown(jumpKey);
-				movementController.PlatformForce = true;
 			}
 		}
 	}

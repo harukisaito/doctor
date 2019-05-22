@@ -17,11 +17,11 @@ public class PlayerAnimations : MonoBehaviour {
 	}
 
 	private void Update() {
+		animator.SetBool("isDucking", movement.IsDucking); 
 		animator.SetBool("isGrounded", groundCheck.IsGrounded);
 		animator.SetFloat("yVelocity", movement.Velocity.y);
 		animator.SetFloat("xVelocity", Mathf.Abs(movement.Velocity.x));
 		animator.SetBool("isSprinting", movementInput.Sprint);
 		animator.SetBool("isDashing", movement.IsDashing);
-		animator.SetBool("isDucking", movement.IsDucking); 
 	}
 }
