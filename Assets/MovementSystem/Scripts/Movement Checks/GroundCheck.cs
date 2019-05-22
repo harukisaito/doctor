@@ -31,7 +31,7 @@ public class GroundCheck : MonoBehaviour {
 			movementController.DoubleJump = true; 
 			movementController.Dashed = false;
 			if(!movementController.DisableKnockback) {
-				movementController.KnockBacked = false;
+				movementController.KnockedBack = false;
 			}
 		}
 	}

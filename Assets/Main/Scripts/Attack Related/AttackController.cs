@@ -8,7 +8,6 @@ public class AttackController : MonoBehaviour {
 
 	public void Attack(AttackPattern attackPattern) {
 		int index = (int)attackPattern;
-		Debug.Log(index);
 		attacks[index].ActivateAttack();
 	}
 }

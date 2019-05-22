@@ -42,7 +42,7 @@ public class MovementController : MonoBehaviour {
 	public bool IsDashing {get; set;}
 	public bool NoDownForce {get; set;}
 	public bool IsDucking {get; set;}
-	public bool KnockBacked {get; set;}
+	public bool KnockedBack {get; set;}
 	public bool DisableKnockback {get; set;}
 	public bool Stop {get; set;}
 	public Vector2 StartingVelocity {get; set;}
@@ -150,12 +150,20 @@ public class MovementController : MonoBehaviour {
 	}
 
 	public void Jump() {
+		AddVelocity(1f);
+	}
+
+	public void MoveDown() {
+		AddVelocity(-0.05f);
+	}
+
+	private void AddVelocity(float direction) {
 		if(doubleJump && !groundCheck.IsGrounded) {
 			doubleJump = false;	
 			body.velocity = Vector2.zero;
 		}
 		Vector2 velocity = body.velocity;
-		velocity.y += jumpingPower;
+		velocity.y += jumpingPower * direction;
 		body.velocity = velocity;
 	}
 
@@ -165,7 +173,7 @@ public class MovementController : MonoBehaviour {
 	}
 
 	public void Knockback(KnockbackDirection direction, float forceAmount, float knockbackHeight) {
-		KnockBacked = true;
+		KnockedBack = true;
 		DisableKnockback = true;
 		knockbackMovement.Knockback(direction, body, forceAmount, knockbackHeight);
 		StartCoroutine(Disable());
@@ -175,6 +183,6 @@ public class MovementController : MonoBehaviour {
 		yield return new WaitForSeconds(0.1f);
 		DisableKnockback = false;
 		yield return new WaitForSeconds(1f);
-		KnockBacked = false;
+		KnockedBack = false;
 	}
 }
