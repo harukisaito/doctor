@@ -23,6 +23,8 @@ public class EntitySpawner : MonoBehaviour {
 		else {
 			playerInstance.SetActive(true);
 			playerInstance.transform.position = spawnPosition;
+			MovementController movementController = playerInstance.GetComponent<MovementController>();
+			movementController.IsStomping = false;
 		}
 	}
 

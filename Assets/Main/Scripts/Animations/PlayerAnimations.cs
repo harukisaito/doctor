@@ -24,4 +24,8 @@ public class PlayerAnimations : MonoBehaviour {
 		animator.SetBool("isSprinting", movementInput.Sprint);
 		animator.SetBool("isDashing", movement.IsDashing);
 	}
+
+	public void PlayAttackAnimation() {
+		animator.SetTrigger("attack");
+	}
 }

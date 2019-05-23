@@ -17,8 +17,7 @@ public class MovementController : MonoBehaviour {
 	private DashMovement dashMovement;
 	private DuckMovement duckMovement;
 	private KnockbackMovement knockbackMovement;
-
-	private const float platformConst = 0.77f;
+	private StompMovement stompMovement;
 
 	private bool doubleJump;
 	private bool dashed;
@@ -26,7 +25,6 @@ public class MovementController : MonoBehaviour {
 	private float movementDirection;
 	private bool firstTime = true;
 	private Vector2 velocity;
-	private Vector2 knockback;
 	private Vector2 down = Vector2.down;
 
 	public bool DoubleJump {
@@ -44,6 +42,7 @@ public class MovementController : MonoBehaviour {
 	public bool IsDucking {get; set;}
 	public bool KnockedBack {get; set;}
 	public bool DisableKnockback {get; set;}
+	public bool IsStomping {get; set;}
 	public bool Stop {get; set;}
 	public Vector2 StartingVelocity {get; set;}
 
@@ -67,6 +66,7 @@ public class MovementController : MonoBehaviour {
 		dashMovement = GetComponent<DashMovement>();
 		duckMovement = GetComponent<DuckMovement>();
 		knockbackMovement = GetComponent<KnockbackMovement>();
+		stompMovement = GetComponent<StompMovement>();
 		isFacingRight = true;
 	}
 
@@ -135,6 +135,11 @@ public class MovementController : MonoBehaviour {
 		IsDucking = false;
 	}
 
+	public void Stomp() {
+		IsStomping = true;
+		stompMovement.Stomp(body);
+	}
+
 	private void FlipSprite() {
 		if(movementDirection > 0 && !isFacingRight) {
 			Flip();
@@ -154,7 +159,7 @@ public class MovementController : MonoBehaviour {
 	}
 
 	public void MoveDown() {
-		AddVelocity(-0.05f);
+		AddVelocity(-0.035f);
 	}
 
 	private void AddVelocity(float direction) {

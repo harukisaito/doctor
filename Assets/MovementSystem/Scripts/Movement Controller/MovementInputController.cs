@@ -52,7 +52,7 @@ public class MovementInputController : MonoBehaviour {
 	
 	private void FixedUpdate() {
 		if(!movementController.IsDashing) {
-			if(!IsDucking && !movementController.KnockedBack) {
+			if(!IsDucking && !movementController.KnockedBack && !movementController.IsStomping) {
 				movementController.Move(movementSpeed, movement, 1f, 0);
 			}
 		}
@@ -80,8 +80,13 @@ public class MovementInputController : MonoBehaviour {
 
 	private void DuckInput() {
 		IsDucking = Input.GetKey(duckKey);
-		if(IsDucking && groundCheck.IsGrounded) {
-			movementController.Duck();
+		if(IsDucking) {
+			if(groundCheck.IsGrounded) {
+				movementController.Duck();
+			}
+			else {
+				movementController.Stomp();
+			}
 		}
 	}
 
