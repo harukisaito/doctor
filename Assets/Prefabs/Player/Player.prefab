@@ -88,6 +88,8 @@ GameObject:
   - component: {fileID: 114692241988205104}
   - component: {fileID: 114724893908692336}
   - component: {fileID: 114857169265363176}
+  - component: {fileID: 114159780503201806}
+  - component: {fileID: 114719976873011280}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -551,12 +553,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36f4692c3aee4433b1a7284d7aa3866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpKey: 32
-  sprintKey: 304
-  floatKey: 273
-  duckKey: 274
-  dashKey: 102
-  attackKey: 303
+  moveLeftKey: 337
+  moveRightKey: 338
+  jumpKey: 346
+  sprintKey: 343
+  floatKey: 335
+  duckKey: 347
+  dashKey: 348
+  attackKey: 344
 --- !u!114 &114032121641753014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -621,6 +625,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7c08a064f734d6d88f2d2093585681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114159780503201806
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742164263171938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9edd464d813a9467fbc779aacefae70c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSprite: {fileID: 1942415656433560, guid: fa82eb6b7a6164ddc8b0b085f5449aa5, type: 2}
+  dashSprite: {fileID: 1600263080050426, guid: 407d7983e99364f4692369bbfd0dfd7e, type: 2}
+  stompSprite: {fileID: 1850552185039886, guid: 8a54b24c2eec74f939c8140a8cc415f4,
+    type: 2}
+  trailLength: 0
 --- !u!114 &114294505196437150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -673,9 +693,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 4352
-  touchingGround: 0
-  isGrounded: 0
-  onPlatform: 0
+  groundedDelay: 0
 --- !u!114 &114690303326798210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -696,6 +714,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 840210cb18f60400bac4b18471e4d686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114719976873011280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742164263171938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88cb43071626f4a11bc083c1def03860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114724893908692336

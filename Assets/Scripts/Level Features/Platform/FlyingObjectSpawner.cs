@@ -23,14 +23,13 @@ public class FlyingObjectSpawner : MonoBehaviour {
 
 	private IEnumerator SpawnFlyingObject() {
 		for(;;) {
-			bool empty = ObjectPoolManager.Instance.CheckIfEmpty(Keys.FlyingObjects);
+			bool empty = ObjectPoolManager.Instance.CheckIfEmpty(FlyingObjects.Basic);
 			if(empty) {
 				flyingObjInstance = Instantiate(flyingObjPrefab, transform.position, Quaternion.identity);
 				flyingObject = flyingObjInstance.GetComponent<FlyingObject>();
-				flyingObject.Key = Keys.FlyingObjects;
 			}
 			else {
-				flyingObjInstance = ObjectPoolManager.Instance.RetrieveFromObjectPool(Keys.FlyingObjects);
+				flyingObjInstance = ObjectPoolManager.Instance.RetrieveFromObjectPool(FlyingObjects.Basic);
 				flyingObjInstance.transform.position = transform.position;
 				flyingObjInstance.SetActive(true);
 				flyingObject.AddedToPool = false;

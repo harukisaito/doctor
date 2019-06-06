@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour {
 
 	[SerializeField] private Transform[] leftRightSpawns, leftRightShootSpawns, upDownSpawns, waveSpawns, zigZagSpawns, shootSpawns, jumpSpawns;
 
+	private List<Transform[]> enemySpawns = new List<Transform[]>();
 	private EntitySpawner spawner;
 	private CheckPoint checkPoint;
 
@@ -36,19 +37,30 @@ public class SpawnManager : MonoBehaviour {
 
 	private void Start() {
 		spawner = GetComponent<EntitySpawner>();
+		AddEnemySpawns();
 		SpawnPlayer(playerSpawn.position);
 		if(spawnEnemies) {
-			SpawnEnemies(Keys.UpDownEnemies, upDownSpawns);
-			SpawnEnemies(Keys.WaveEnemies, waveSpawns);
-			SpawnEnemies(Keys.LeftRightEnemies, leftRightSpawns);
-			SpawnEnemies(Keys.LeftRightShootEnemies, leftRightShootSpawns);
-			SpawnEnemies(Keys.ZigZagEnemies, zigZagSpawns);
-			SpawnEnemies(Keys.ShootEnemies, shootSpawns);
-			SpawnEnemies(Keys.JumpEnemies, jumpSpawns);
+			SpawnAllEnemies();
 		}
 	}
 
-	private void SpawnEnemies(Keys movementPattern, Transform[] spawns) {
+	private void AddEnemySpawns() {
+		enemySpawns.Add(leftRightSpawns);
+		enemySpawns.Add(leftRightShootSpawns);
+		enemySpawns.Add(upDownSpawns);
+		enemySpawns.Add(waveSpawns);
+		enemySpawns.Add(zigZagSpawns);
+		enemySpawns.Add(shootSpawns);
+		enemySpawns.Add(jumpSpawns);
+	}
+
+	private void SpawnAllEnemies() {
+		foreach(Enemies enemyType in Enum.GetValues(typeof(Enemies))) {
+			SpawnEnemies(enemyType, enemySpawns[(int)enemyType]);
+		}
+	}
+
+	private void SpawnEnemies(Enemies movementPattern, Transform[] spawns) {
 		for(int i = 0; i < spawns.Length; i++) {
 			spawner.SpawnEnemy(movementPattern, spawns[i].position);
 		}

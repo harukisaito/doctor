@@ -28,7 +28,7 @@ public class EntitySpawner : MonoBehaviour {
 		}
 	}
 
-	public void SpawnEnemy(Keys movementPattern, Vector2 spawnPosition) {
+	public void SpawnEnemy(Enemies movementPattern, Vector2 spawnPosition) {
 		bool empty = ObjectPoolManager.Instance.CheckIfEmpty(movementPattern);
 		if(empty) {
 			InstantiateEnemy(movementPattern, spawnPosition);
@@ -39,7 +39,7 @@ public class EntitySpawner : MonoBehaviour {
 		}
 	}
 
-	private void InstantiateEnemy(Keys movementPattern, Vector2 spawnPosition) {
+	private void InstantiateEnemy(Enemies movementPattern, Vector2 spawnPosition) {
 		enemyInstance = Instantiate(enemyPrefabs[(int)movementPattern], spawnPosition, Quaternion.identity);
 		enemyInstance.GetComponent<Enemy>().Key = movementPattern;
 	}

@@ -19,74 +19,51 @@ public class MovementController : MonoBehaviour {
 	private KnockbackMovement knockbackMovement;
 	private StompMovement stompMovement;
 
-	private bool doubleJump;
-	private bool dashed;
-	private bool isFacingRight;
-	private float movementDirection;
 	private bool firstTime = true;
-	private Vector2 velocity;
 	private Vector2 down = Vector2.down;
 
-	public bool DoubleJump {
-		get { return doubleJump; }
-		set { doubleJump = value; }
-	}
-
-	public bool Dashed {
-		get { return dashed; }
-		set { dashed = value; }
-	}
-
-	public bool IsDashing {get; set;}
-	public bool NoDownForce {get; set;}
-	public bool IsDucking {get; set;}
+	public bool DoubleJump {get; set;}
+	public bool Dashed {get; set;}
+	public bool DownForce {get; set;}
 	public bool KnockedBack {get; set;}
 	public bool DisableKnockback {get; set;}
-	public bool IsStomping {get; set;}
 	public bool Stop {get; set;}
+	public bool IsJumping {get; set;}
+	public bool IsDashing {get; set;}
+	public bool IsDucking {get; private set;}
+	public bool IsStomping {get; set;}
+	public bool IsFacingRight {get; private set;}
+
+	public bool MovingDown {get; set;}
+
+	public float MovementDirection {get; private set;}
 	public Vector2 StartingVelocity {get; set;}
-
-	public bool IsFacingRight {
-		get { return isFacingRight; }
-		set { isFacingRight = value; }
-	}
-
-	public float MovementDirection {
-		get { return movementDirection; }
-	}
-
-	public Vector2 Velocity {
-		get { return velocity; }
-	}
+	public Vector2 Velocity {get; private set;}
 
 	private void Awake() {
 		GetComponents(); 
 	}
 
 	private void Start() {
-		isFacingRight = true;
+		IsFacingRight = true;
+		DownForce = true;
 	}
 
 	private void FixedUpdate() {
 		if(groundCheck != null) {
 			float deltaTime = Time.deltaTime;
 			float yVelocity = body.velocity.y;
-			if(gameObject.tag == "Player") {
-				// print(groundCheck.IsGrounded);
-			}
+
 			if(yVelocity < 0 && !groundCheck.IsGrounded) {
-				if(!NoDownForce) {
+				if(DownForce) {
 					body.velocity += down * downForce * deltaTime;
 				}
-				else if(NoDownForce) {
+				else if(!DownForce) {
 					body.velocity = down * downForce * floatiness * deltaTime;
 				}
 			}
-			else if(body.velocity.y > 0 && !groundCheck.IsGrounded) {
+			else if(yVelocity > 0 && !groundCheck.IsGrounded) {
 				body.velocity += down * downForce * deltaTime;
-				if(gameObject.tag == "Player") {
-					// print("downFOrce");
-				}
 			}
 		}
 	}
@@ -95,7 +72,7 @@ public class MovementController : MonoBehaviour {
 		float movementSpeedMultiplierX, float movementDirectionX, 
 		float movementSpeedMultiplierY, float movementDirectionY) {
 
-		movementDirection = movementDirectionX;
+		MovementDirection = movementDirectionX;
 
 		float movementSpeedX = speedX;
 		float movementSpeedY = speedY;
@@ -103,7 +80,7 @@ public class MovementController : MonoBehaviour {
 		movementSpeedX *= movementSpeedMultiplierX;
 		movementSpeedY *= movementSpeedMultiplierY;
 
-		velocity = new Vector2(
+		Velocity = new Vector2(
 			x: movementDirectionX * movementSpeedX * Time.deltaTime, 
 			y: movementDirectionY == 0 ? body.velocity.y : movementDirectionY * movementSpeedY * Time.deltaTime
 		);
@@ -111,7 +88,7 @@ public class MovementController : MonoBehaviour {
 		SetStartingVelocity();
 
 		if(!Stop) {
-			body.velocity = velocity;
+			body.velocity = Velocity;
 		}
 
 		FlipSprite();
@@ -119,16 +96,10 @@ public class MovementController : MonoBehaviour {
 
 	private void SetStartingVelocity() {
 		if(firstTime) {
-			StartingVelocity = velocity;
+			StartingVelocity = Velocity;
 			firstTime = false;
 		}
 	}
-
-	// public void AddVelocity(Vector2 velocity) {
-	// 	if(body.velocity.x < 10) {
-	// 		body.velocity += velocity * platformConst;
-	// 	}
-	// }
 
 	public void Duck() {
 		duckMovement.Duck(body);
@@ -146,32 +117,45 @@ public class MovementController : MonoBehaviour {
 	}
 
 	private void FlipSprite() {
-		if(movementDirection > 0 && !isFacingRight) {
+		if(MovementDirection > 0 && !IsFacingRight) {
 			Flip();
 		}
-		else if(movementDirection < 0 && isFacingRight) {
+		else if(MovementDirection < 0 && IsFacingRight) {
 			Flip();
 		}
 	}
 
 	private void Flip() {
-		isFacingRight = !isFacingRight;
-		spriteRenderer.flipX = !isFacingRight;
+		IsFacingRight = !IsFacingRight;
+		spriteRenderer.flipX = !IsFacingRight;
 	}
 
 	public void Jump(float jumpForce = 1f) {
+		groundCheck.CanJump = false;
+		IsJumping = true;
 		AddVelocity(jumpForce);
 	}
 
 	public void MoveDown() {
-		AddVelocity(-0.035f);
+		// AddVelocity(-0.035f);
+		MovingDown = true;
+		StartCoroutine(ResetMovingDown());
+	}
+
+	private IEnumerator ResetMovingDown() {
+		yield return null;
+		MovingDown = false;
 	}
 
 	private void AddVelocity(float direction) {
-		if(doubleJump && !groundCheck.IsGrounded) {
-			doubleJump = false;	
+		// print("JUMPING ===========================================");
+		// print("isGrounded? = " + groundCheck.IsGrounded);
+		if(DoubleJump && !groundCheck.IsGrounded) {
+			DoubleJump = false;	
 			body.velocity = Vector2.zero;
+			// print("DOUBLE JUMP");
 		}
+		// print("JUMP");
 		Vector2 velocity = body.velocity;
 		velocity.y += jumpingPower * direction;
 		body.velocity = velocity;
@@ -180,7 +164,7 @@ public class MovementController : MonoBehaviour {
 	public void Dash(Vector2 direction) {
 		if(!IsDashing) {
 			dashMovement.Dash(direction, body);
-			dashed = true;
+			Dashed = true;
 		}
 	}
 

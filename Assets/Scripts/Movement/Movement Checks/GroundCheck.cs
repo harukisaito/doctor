@@ -9,26 +9,39 @@ public class GroundCheck : MonoBehaviour {
 	[SerializeField] private Transform groundCheck;
 	[SerializeField] private float checkRadius = 0.1f;	
 	[SerializeField] private LayerMask whatIsGround; 
+	[SerializeField] private float groundedDelay;
 
 	private MovementController movementController;
-	private SpriteRenderer[] spriteRenderers;
-	private SpriteRenderer dropShadow;
+	private DropShadow dropShadow;
 
-	[SerializeField] private bool touchingGround;
-	[SerializeField] private bool isGrounded;
-	[SerializeField] private bool onPlatform;
+	private bool reset;
+	private bool physicsGrounded;
+	private bool isGrounded;
 
-	public bool  OnPlatform {
-		get { return onPlatform;}
-	 	set { print("VALUE = " + value);
-			 onPlatform = value;}
-	}
+	private bool inAir;
+	private bool inJump;
 	public bool IsGrounded {
-		get {return isGrounded;}
+		get {return physicsGrounded;}
 	}
 
-	public bool IsGroundedAnimation {
-		get {return touchingGround;}
+	public bool InAir {
+		set {
+			inAir = value;
+			if(dropShadow != null) {
+				dropShadow.EnableDropShadow = !value;
+			}
+		}
+	}
+
+	public bool CanJump {
+		get {
+			// print("in getter: grounded = " + isGrounded);
+			return isGrounded;}
+		set {
+			isGrounded = value;
+			inJump = true;
+			StartCoroutine(TurnCollisionsBackOn());
+		}
 	}
 
 
@@ -37,65 +50,57 @@ public class GroundCheck : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
-		touchingGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-		if(gameObject.tag == "Player") {
-			// print("ON PLATFORM = " + onPlatform);
-			// print("TOUCHING THE GROUND = " + touchingGround);
+		if(!movementController.IsDashing && !inJump) {
+			physicsGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+		} else physicsGrounded = false;
 
-		}
-
-		if(onPlatform) { // has touched a platform
-			if(touchingGround) { // physicsCheck has touched the ground
-				// if(onPlatform) { // collider on platform recognizes that the player is on the platform
-					ResetPlayerAbilites();
-
-					if(gameObject.tag == "Player") {
-						// print("IS GROUNDED");
-					}	
-				// }
-				// else isGrounded = false;
-			}
-			else isGrounded = false;
-		}
-		else { // is not on a platform
-			if(touchingGround) { // physicsCheck has touched the ground
-				ResetPlayerAbilites();
-				if(gameObject.tag == "Player") {
-					// print("IS GROUNDED");
-				}
-			}
-			else isGrounded = false;
-		}
-		if(gameObject.CompareTag("Player")) {
-			if(!touchingGround) {
-				dropShadow.enabled = false;
+		if(physicsGrounded) {
+			if(!reset) {
+				StartCoroutine(ResetPlayerAbilites());
 			}
 		}
+	}
+
+	private void OnDrawGizmos() {
+		Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
+	}
+
+	private void Update() {
+		if(!physicsGrounded) {
+			if(!inAir) {
+				reset = false;
+				isGrounded = false;
+				// print("isGrounded = " + isGrounded);
+				StopCoroutine(ResetPlayerAbilites());
+				InAir = true;
+			}
+		}
+	}
+
+	private IEnumerator TurnCollisionsBackOn() {
+		yield return new WaitForSeconds(0.3f);
+		inJump = false; 
 	}
 
 	private void GetComponents() {
 		movementController = GetComponent<MovementController>();
-		if(gameObject.CompareTag("Player")) {
-			spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-			foreach(var sR in spriteRenderers) {
-				if(sR.gameObject.CompareTag("Drop Shadow")) {
-					dropShadow = sR;
-					dropShadow.enabled = false;
-				}
-			}
-		}
+		dropShadow = GetComponent<DropShadow>();
 	}
 
-	private void ResetPlayerAbilites() {
-		if(gameObject.CompareTag("Player")) {
-			dropShadow.enabled = true;
-		}
-		isGrounded = true;
+
+	private IEnumerator ResetPlayerAbilites() {
+		InAir = false;
+		reset = true;
+		movementController.IsJumping = false;
 		movementController.IsStomping = false;
 		movementController.DoubleJump = true;
-		movementController.Dashed = false;
 		if(!movementController.DisableKnockback) {
 			movementController.KnockedBack = false;
 		}
+		yield return new WaitForSeconds(groundedDelay);
+		yield return new WaitForEndOfFrame();
+		movementController.Dashed = false;
+		isGrounded = true;
+		// print("isGrounded = " + isGrounded);
 	}
 }

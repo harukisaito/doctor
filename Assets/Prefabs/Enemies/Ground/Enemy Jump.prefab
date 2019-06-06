@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 114757120758980792}
   - component: {fileID: 114614541597158034}
   - component: {fileID: 114060151889085206}
+  - component: {fileID: 114505251271467834}
   m_Layer: 11
   m_Name: Enemy Jump
   m_TagString: Enemy
@@ -158,6 +159,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpCoolDown: 3
+--- !u!114 &114505251271467834
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1347795394623980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ebf6bdbd7e854b39b107748797c62f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheck: {fileID: 4083969357866514}
+  checkRadius: 0.1
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1048576
+  groundedDelay: 0
 --- !u!114 &114614541597158034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,8 +244,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1548414963
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 00fa7d7bc2aec4f14ae78c96fcfe540f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Enemy : Entity {
 
-	private int hp = 100;
+	[SerializeField] private int hp = 100;
+	[SerializeField] private bool isInvincible;
 	private bool isDead;
 
-	public Keys Key {get; set;}
-	public override bool IsInvincible {get; set;}
+	public Enemies Key {get; set;}
+	public override bool IsInvincible {
+		get {return isInvincible;}
+		set {isInvincible = true;}
+	}
 
 	public override int HP {
 		get { return hp; } 
@@ -27,7 +31,7 @@ public class Enemy : Entity {
 	}
 
 	public override void TakeDamage(int damage) {
-		if(!IsInvincible) {
+		if(!isInvincible) {
 			hp -= damage;
 			if(hp <= 0) {
 				Die();

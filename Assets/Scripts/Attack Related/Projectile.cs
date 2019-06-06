@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour {
 	}
 
 	private void AddToPool() {
-		ObjectPoolManager.Instance.AddToObjectPool(Keys.Projectiles, gameObject);
+		ObjectPoolManager.Instance.AddToObjectPool(Projectiles.Basic, gameObject);
 		gameObject.SetActive(false);
 	}
 

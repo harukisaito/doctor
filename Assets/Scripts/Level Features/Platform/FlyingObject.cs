@@ -7,15 +7,13 @@ public class FlyingObject : MonoBehaviour {
     [SerializeField] private bool moveRight;
     [SerializeField] private float speed;
 
-    public Keys Key {get; set;}
-
     public float Id {get; set;}
     public bool AddedToPool {get; set;}
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.CompareTag("DeathFall") && !AddedToPool) {
             gameObject.SetActive(false);
-            ObjectPoolManager.Instance.AddToObjectPool(Key, gameObject);
+            ObjectPoolManager.Instance.AddToObjectPool(FlyingObjects.Basic, gameObject);
             AddedToPool = true;
         }
     }

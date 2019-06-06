@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(MovementController))]
 public class MovementInputController : MonoBehaviour {
 
+	[SerializeField] private KeyCode moveLeftKey;
+	[SerializeField] private KeyCode moveRightKey;
+
 	[SerializeField] private KeyCode jumpKey;
 	[SerializeField] private KeyCode sprintKey;
 	[SerializeField] private KeyCode floatKey;
@@ -26,7 +29,6 @@ public class MovementInputController : MonoBehaviour {
 		}
 	}
 	public bool Sprint {get; set;}
-	public bool MoveDown {get; set;}
 
 
 	private MovementController movementController;
@@ -61,24 +63,35 @@ public class MovementInputController : MonoBehaviour {
 	}
 
 	private void JumpInput() { 
-		if(Input.GetKeyDown(jumpKey) && !IsDucking) {
-			if(groundCheck.IsGrounded || movementController.DoubleJump) {
+		if(Input.GetKeyDown(jumpKey) && !IsDucking && !movementController.IsDashing) {
+			if(groundCheck.CanJump || movementController.DoubleJump) { 
 				movementController.Jump();
 			}
 		}
 	}
 
 	private void MovementInput() {
-		movement = Input.GetAxis("Horizontal");
+		float move = Input.GetAxis("Horizontal");
+		if(move < -0) {
+			movement = -1;
+		} else
+		if(move > 0) {
+			movement = 1;
+		} else 
+		if (move == 0) {
+			movement = 0;
+		}
 	}
 
 	private void SprintInput() {
-		Sprint = Input.GetKey(sprintKey);
-		if(Sprint) {
-			movementSpeed = 3f;
-		}
-		else {
-			movementSpeed = 1.5f;
+		if(groundCheck.IsGrounded) {
+			Sprint = Input.GetKey(sprintKey);
+			if(Sprint) {
+				movementSpeed = 3f;
+			}
+			else {
+				movementSpeed = 1.5f;
+			}
 		}
 	}
 
@@ -107,15 +120,16 @@ public class MovementInputController : MonoBehaviour {
 
 	private void FloatInput() {
 		if(!groundCheck.IsGrounded && !IsDucking) {
-			movementController.NoDownForce = Input.GetKey(floatKey);
+			movementController.DownForce = !Input.GetKey(floatKey);
 		}
 	}
 
 	private void MoveDownInput() {
 		if(groundCheck.IsGrounded) {
 			if(IsDucking) {
-				MoveDown = Input.GetKeyDown(jumpKey);
-				movementController.MoveDown();
+				if(Input.GetKeyDown(jumpKey)) {
+					movementController.MoveDown();
+				}
 			}
 		}
 	}
