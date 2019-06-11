@@ -43,7 +43,9 @@ public class InvincibleWhenHit : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		if(other.gameObject.CompareTag("EnemyAttack") || other.gameObject.CompareTag("Enemy")) {
-			StartCoroutine(StartInvincibility(invincibilityPeriod));
+			if(!entity.IsDead) {
+				StartCoroutine(StartInvincibility(invincibilityPeriod));
+			}
 		}
 	}
 }

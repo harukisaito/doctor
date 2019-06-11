@@ -9,16 +9,19 @@ public class ObjectPoolManager : MonoBehaviour {
 	private Dictionary<FlyingObjects, Queue> flyingObjectPool = new Dictionary<FlyingObjects, Queue>();
 	private Dictionary<Projectiles, Queue> projectilePool = new Dictionary<Projectiles, Queue>();
 	private Dictionary<Trails, Queue> trailPool = new Dictionary<Trails, Queue>();
+	private Dictionary<Particles, Queue> particlePool = new Dictionary<Particles, Queue>();
 
 
 	private Queue leftRightEnemies, leftRightShootEnemies, upDownEnemies, waveEnemies, zigZagEnemies, shootEnemies, jumpEnemies;
 	private Queue flyingObjects;
 	private Queue projectiles;
 	private Queue jumpTrails, dashTrails, stompTrails;
-	public static ObjectPoolManager Instance;
+	private Queue attackParticles;
 
+
+	public static ObjectPoolManager Instance;
 	private void Awake() {
-		DontDestroyOnLoad(this);
+		// DontDestroyOnLoad(this);
 		if(Instance == null) {
 			Instance = this;
 		}
@@ -31,18 +34,19 @@ public class ObjectPoolManager : MonoBehaviour {
 	}
 
 	private void InstantiateQueues() {
-		leftRightEnemies = 
-		leftRightShootEnemies = 
-		upDownEnemies = 
-		waveEnemies = 
-		zigZagEnemies = 
-		shootEnemies = 
-		jumpEnemies = 
-		flyingObjects = 
-		projectiles = 
-		jumpTrails = 
-		dashTrails = 
+		leftRightEnemies = new Queue();
+		leftRightShootEnemies = new Queue();
+		upDownEnemies = new Queue();
+		waveEnemies = new Queue();
+		zigZagEnemies = new Queue();
+		shootEnemies = new Queue();
+		jumpEnemies = new Queue();
+		flyingObjects = new Queue();
+		projectiles = new Queue();
+		jumpTrails = new Queue();
+		dashTrails = new Queue();
 		stompTrails = new Queue();
+		attackParticles = new Queue();
 	}
 
 	private void AddToDictionary() {
@@ -61,6 +65,8 @@ public class ObjectPoolManager : MonoBehaviour {
 		trailPool.Add(Trails.Jump, jumpTrails);
 		trailPool.Add(Trails.Dash, dashTrails);
 		trailPool.Add(Trails.Stomp, stompTrails);
+
+		particlePool.Add(Particles.Attack, attackParticles);
 	}
 
 	public void AddToObjectPool(Enemies key, GameObject gameObject) {
@@ -74,6 +80,9 @@ public class ObjectPoolManager : MonoBehaviour {
 	}
 	public void AddToObjectPool(Trails key, GameObject gameObject) {
 		trailPool[key].Enqueue(gameObject);
+	}
+	public void AddToObjectPool(Particles key, GameObject gameObject) {
+		particlePool[key].Enqueue(gameObject);
 	}
 
 
@@ -92,6 +101,10 @@ public class ObjectPoolManager : MonoBehaviour {
 	}
 	public GameObject RetrieveFromObjectPool(Trails key) {
 		GameObject g = (GameObject)trailPool[key].Dequeue();
+		return g;
+	}
+	public GameObject RetrieveFromObjectPool(Particles key) {
+		GameObject g = (GameObject)particlePool[key].Dequeue();
 		return g;
 	}
 
@@ -117,6 +130,12 @@ public class ObjectPoolManager : MonoBehaviour {
 	}
 	public bool CheckIfEmpty(Trails key) {
 		if(trailPool[key].Count == 0) {
+			return true;
+		}
+		else return false;
+	}
+	public bool CheckIfEmpty(Particles key) {
+		if(particlePool[key].Count == 0) {
 			return true;
 		}
 		else return false;

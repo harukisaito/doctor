@@ -26,6 +26,7 @@ public class FlyingObjectSpawner : MonoBehaviour {
 			bool empty = ObjectPoolManager.Instance.CheckIfEmpty(FlyingObjects.Basic);
 			if(empty) {
 				flyingObjInstance = Instantiate(flyingObjPrefab, transform.position, Quaternion.identity);
+				SceneManagement.Instance.MoveToScene(flyingObjInstance, Scenes.LevelSakura);
 				flyingObject = flyingObjInstance.GetComponent<FlyingObject>();
 			}
 			else {

@@ -18,7 +18,7 @@ public class DamageToEntity : MonoBehaviour {
 			
 			entity.TakeDamage(damage);
 
-			ParticleManager.Instance.InstantiateParticles(other.transform.position);
+			ParticleManager.Instance.SpawnParticles(Particles.Attack, other.transform.position);
 		}
 		else if(other.CompareTag("Untagged")) {
 			// Debug.LogWarning("CHECK THE TAG OF THE OTHER OBJECT");

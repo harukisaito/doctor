@@ -1,3 +1,5 @@
 ﻿public enum Scenes {
-	Introduction = 1
+	Managers = 0,
+	StartMenu = 1,
+	LevelSakura = 2
 }

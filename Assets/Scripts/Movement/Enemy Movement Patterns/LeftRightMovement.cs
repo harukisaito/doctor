@@ -9,9 +9,7 @@ public class LeftRightMovement : MonoBehaviour {
 	private CheckForObstacle check;
 	private GroundCheck groundCheck;
 
-	private float movementDirectionX = 1;
-
-	private float tempDir;
+	private float movementDirectionX = -1;
 
 	private void Start() {
 		movementController = GetComponent<MovementController>();
@@ -22,25 +20,12 @@ public class LeftRightMovement : MonoBehaviour {
 	private void FixedUpdate() {
 		bool obstacle = check.LookForObstacle();
 		bool wall = check.LookForWall();
-		if(!obstacle || wall) {
+		if((!obstacle || wall) && groundCheck.IsGrounded) {
 			movementDirectionX *= -1;
 			check.CheckPositionX *= -1;
 		}
 		if(groundCheck.IsGrounded) {
 			movementController.Move(1f, movementDirectionX, 1f, 0);
-		}
-	}
-
-	private void OnCollisionEnter2D(Collision2D other) {
-		if(other.gameObject.CompareTag("Player")) {
-			tempDir = movementDirectionX;
-			movementDirectionX = 0;
-		}
-	}
-
-	private void OnCollisionExit2D(Collision2D other) {
-		if(other.gameObject.CompareTag("Player")) {
-			movementDirectionX = tempDir;
 		}
 	}
 }

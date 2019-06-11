@@ -14,6 +14,8 @@ public class SpawnManager : MonoBehaviour {
 	private EntitySpawner spawner;
 	private CheckPoint checkPoint;
 
+	public bool Spawned {get; private set;}
+
 	public EntitySpawner Spawner {
 		get { return spawner; }
 	}
@@ -26,7 +28,7 @@ public class SpawnManager : MonoBehaviour {
 	public static SpawnManager Instance;
 
 	private void Awake() {
-		DontDestroyOnLoad(this);
+		// DontDestroyOnLoad(this);
 		if(Instance == null) {
 			Instance = this;
 		}
@@ -38,10 +40,15 @@ public class SpawnManager : MonoBehaviour {
 	private void Start() {
 		spawner = GetComponent<EntitySpawner>();
 		AddEnemySpawns();
+	}
+
+	public void SpawnEntities() {
 		SpawnPlayer(playerSpawn.position);
 		if(spawnEnemies) {
 			SpawnAllEnemies();
 		}
+		PlayerCamera.Instance.Initialize();
+		Spawned = true;
 	}
 
 	private void AddEnemySpawns() {
@@ -71,14 +78,16 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	private void Update() {
-		if(GetPlayer().IsDead) {
-			if(checkPoint != null) {
-				SpawnPlayer(checkPoint.Position);
+		if(GetPlayer() != null) {
+			if(GetPlayer().IsDead) {
+				if(checkPoint != null) {
+					SpawnPlayer(checkPoint.Position);
+				}
+				else {
+					SpawnPlayer(playerSpawn.position);
+				}
+				GetPlayer().IsDead = false;
 			}
-			else {
-				SpawnPlayer(playerSpawn.position);
-			}
-			GetPlayer().IsDead = false;
 		}
 	}
 

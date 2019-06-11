@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Player : Entity {
 
-	private int hp = 100;
+	private int hp = 20;
 	private bool isDead = false;
 
 	public override int HP {
 		get { return hp; } 
 		set { 
 			hp = value;
-			TakeDamage(value); 
-
 		}
 	}
 
@@ -20,6 +18,10 @@ public class Player : Entity {
 	public override bool IsDead {
 		get { return isDead; }
 		set { isDead = value; }
+	}
+
+	private void OnEnable() {
+		hp = 20;
 	}
 
 

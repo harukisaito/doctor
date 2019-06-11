@@ -244,6 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25345f6ccedf243d9a8c95987879528d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 40
+  isInvincible: 0
 --- !u!114 &114755009422795992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,9 +262,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  touchingGround: 0
-  isGrounded: 0
-  onPlatform: 0
+  groundedDelay: 0
 --- !u!114 &114757120758980792
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -51,14 +51,14 @@ TagManager:
   - name: Platform
     uniqueID: 3501400469
     locked: 0
-  - name: Projectile
-    uniqueID: 2799300643
-    locked: 0
   - name: Ground
     uniqueID: 767617457
     locked: 0
   - name: Player
     uniqueID: 2746552333
+    locked: 0
+  - name: Projectile
+    uniqueID: 2799300643
     locked: 0
   - name: Foreground
     uniqueID: 1058833751

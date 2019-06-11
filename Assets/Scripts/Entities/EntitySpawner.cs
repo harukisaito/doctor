@@ -18,6 +18,7 @@ public class EntitySpawner : MonoBehaviour {
 	public void SpawnPlayer(Vector2 spawnPosition) {
 		if(playerInstance == null) {
 			playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+			SceneManagement.Instance.MoveToScene(playerInstance, Scenes.LevelSakura);
 			GameManager.Instance.Player = playerInstance.GetComponent<Player>();
 		} 
 		else {
@@ -34,13 +35,13 @@ public class EntitySpawner : MonoBehaviour {
 			InstantiateEnemy(movementPattern, spawnPosition);
 		} 
 		else {
-			GameManager.Instance.Enemy = 
-				ObjectPoolManager.Instance.RetrieveFromObjectPool(movementPattern).GetComponent<Enemy>();
+			enemyInstance = ObjectPoolManager.Instance.RetrieveFromObjectPool(movementPattern);
 		}
 	}
 
 	private void InstantiateEnemy(Enemies movementPattern, Vector2 spawnPosition) {
 		enemyInstance = Instantiate(enemyPrefabs[(int)movementPattern], spawnPosition, Quaternion.identity);
+		SceneManagement.Instance.MoveToScene(enemyInstance, Scenes.LevelSakura);
 		enemyInstance.GetComponent<Enemy>().Key = movementPattern;
 	}
 }

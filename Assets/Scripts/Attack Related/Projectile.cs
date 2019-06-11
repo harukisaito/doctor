@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		ParticleManager.Instance.InstantiateParticles(transform.position);
+		ParticleManager.Instance.SpawnParticles(Particles.Attack, transform.position);
 		AddToPool();
 	}
 

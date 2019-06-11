@@ -13,6 +13,7 @@ public class ShootAtTarget : MonoBehaviour {
 	private CheckForTarget check;
 	private Player player;
 	private MovementController movementController;
+	private Coroutine shoot;
 
 	private bool shot = false;
 	public bool Shooting {get; set;}
@@ -30,7 +31,7 @@ public class ShootAtTarget : MonoBehaviour {
 			if(movementController != null) {
 				movementController.Stop = true;
 			}
-			StartCoroutine(Shoot());
+			shoot = StartCoroutine(Shoot());
 		}
 		else if(!check.TargetInRange) {
 			Shooting = false;
@@ -38,21 +39,25 @@ public class ShootAtTarget : MonoBehaviour {
 			if(movementController != null) {
 				movementController.Stop = false;
 			}
-			StopCoroutine(Shoot());
+			if(shoot == null) {
+				return;
+			}
+			StopCoroutine(shoot);
 		}
 	}
 
 
 	private IEnumerator Shoot() {
 		while(Shooting) {
-			Vector2 playerPos = player.transform.localPosition;
+			Vector2 playerPos = player.transform.position;
 			if(playerPos.x > check.transform.position.x) {
 				offset = new Vector3(offsetRadius, 0);
 			}
 			else if(playerPos.x < check.transform.position.x) {
 				offset = new Vector3(-offsetRadius, 0);
 			}
-			Instantiate(projectilePrefab, check.transform.position + offset, Quaternion.identity);
+			GameObject instance = Instantiate(projectilePrefab, check.transform.position + offset, Quaternion.identity);
+			SceneManagement.Instance.MoveToScene(instance, Scenes.LevelSakura);
 			yield return new WaitForSeconds(fireRate);
 		}
 	}

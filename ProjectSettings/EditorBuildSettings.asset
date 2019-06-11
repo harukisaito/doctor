@@ -5,12 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Main.unity
-    guid: 8e3ec464e316546ce8bf2b2242229192
-  - enabled: 0
-    path: Assets/Scenes/Introduction Level.unity
-    guid: d09acc7abd29342479cedb4e7e7e3821
+  - enabled: 1
+    path: Assets/Scenes/Managers.unity
+    guid: 88cf1c0fe252e48daa4cde41f0e9966e
+  - enabled: 1
+    path: Assets/Scenes/Start Menu.unity
+    guid: 9acc182235222494bbaaa8767e83156e
   - enabled: 1
     path: Assets/Scenes/Level Sakura.unity
     guid: ee89ef7609f774c2f960560085476983

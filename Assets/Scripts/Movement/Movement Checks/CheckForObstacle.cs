@@ -26,7 +26,7 @@ public class CheckForObstacle : MonoBehaviour {
 
 	private void Start() {
 		checkPosition = new Vector2(-checkOffset, -0.256f);
-		check.localPosition = checkPosition;
+		check.position = checkPosition;
 	}
 
 	public bool LookForObstacle() {
@@ -37,5 +37,9 @@ public class CheckForObstacle : MonoBehaviour {
 	public bool LookForWall() {
 		wall = Physics2D.OverlapCircle(check.position, checkRadius, whatIsWall);
 		return wall;
+	}
+
+	private void OnDrawGizmos()	{
+		Gizmos.DrawWireSphere(check.position, checkRadius);
 	}
 }

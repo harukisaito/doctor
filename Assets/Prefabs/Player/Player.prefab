@@ -640,7 +640,7 @@ MonoBehaviour:
   dashSprite: {fileID: 1600263080050426, guid: 407d7983e99364f4692369bbfd0dfd7e, type: 2}
   stompSprite: {fileID: 1850552185039886, guid: 8a54b24c2eec74f939c8140a8cc415f4,
     type: 2}
-  trailLength: 0
+  trailLength: 0.5
 --- !u!114 &114294505196437150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -763,7 +763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5b374ec80944a088ad9342168ae9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
+  damage: 20
 --- !u!114 &114869122026085372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -775,7 +775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5b374ec80944a088ad9342168ae9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
+  damage: 20
 --- !u!114 &114922393229005460
 MonoBehaviour:
   m_ObjectHideFlags: 1

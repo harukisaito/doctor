@@ -5,10 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-	[SerializeField] private Player player;
-	[SerializeField] private Text hpText;
-
-	private Enemy enemy;
+	private Player player;
 
 	public bool Goal {get; set;}
 
@@ -17,18 +14,13 @@ public class GameManager : MonoBehaviour {
 		set { player = value; }
 	}
 
-	public Enemy Enemy {
-		get { return enemy; }
-		set { enemy = value; }
-	}
-
 	public static GameManager Instance;
 
 
 	private float timer;
 
 	private void Awake() {
-		DontDestroyOnLoad(this);
+		// DontDestroyOnLoad(this);
 		if(Instance == null) {
 			Instance = this;
 		}
