@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour {
 	private float timer;
 
 	private void Awake() {
-		// DontDestroyOnLoad(this);
 		if(Instance == null) {
 			Instance = this;
 		}

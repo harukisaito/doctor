@@ -28,7 +28,6 @@ public class SpawnManager : MonoBehaviour {
 	public static SpawnManager Instance;
 
 	private void Awake() {
-		// DontDestroyOnLoad(this);
 		if(Instance == null) {
 			Instance = this;
 		}

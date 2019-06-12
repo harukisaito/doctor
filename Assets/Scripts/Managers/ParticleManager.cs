@@ -7,12 +7,11 @@ public class ParticleManager : MonoBehaviour {
 	[SerializeField] private GameObject[] particles;
 
 	private GameObject particleInstance;
-	private EmitParticles particleEmitter;
+	private EmitParticles particleEmit;
 
 	public static ParticleManager Instance;
 
 	private void Awake() {
-		// DontDestroyOnLoad(this);
 		if(Instance == null) {
 			Instance = this;
 		}
@@ -29,10 +28,9 @@ public class ParticleManager : MonoBehaviour {
 		else {
 			particleInstance = ObjectPoolManager.Instance.RetrieveFromObjectPool(type);
 			particleInstance.transform.position = position;
-			// particleInstance.SetActive(true);
-			particleEmitter = particleInstance.GetComponent<EmitParticles>();
+			particleEmit = particleInstance.GetComponent<EmitParticles>();
 		}
-		particleEmitter.StartEmitPartices();
+		particleEmit.StartEmitPartices();
 		StartCoroutine(RetrieveParticles(type, particleInstance));
 	}
 
@@ -40,7 +38,7 @@ public class ParticleManager : MonoBehaviour {
 		int index = (int)type;
 		particleInstance = Instantiate(particles[index], position, Quaternion.identity);
 		SceneManagement.Instance.MoveToScene(particleInstance, Scenes.LevelSakura);
-		particleEmitter = particleInstance.GetComponent<EmitParticles>();
+		particleEmit = particleInstance.GetComponent<EmitParticles>();
 	}
 
 	private IEnumerator RetrieveParticles(Particles type, GameObject particle) {
