@@ -42,6 +42,10 @@ public class SpawnManager : MonoBehaviour {
 		AddEnemySpawns();
 	}
 
+	public void OnFinishedLoadingLevel(object source, EventArgs e) {
+		SpawnEntities();
+	}
+
 	public void SpawnEntities() {
 		SpawnPlayer(playerSpawn.position);
 		if(spawnEnemies) {

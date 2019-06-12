@@ -34,8 +34,6 @@ public class GameManager : MonoBehaviour {
 		if(Goal) {
 			timer += Time.deltaTime;
 			if(timer > 6) {
-				// SceneManager.LoadSceneAsync(0);
-				// SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(0));
 			}
 		}
 	}

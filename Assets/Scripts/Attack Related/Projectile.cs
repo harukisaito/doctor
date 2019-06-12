@@ -8,13 +8,10 @@ public class Projectile : MonoBehaviour {
 
 	private Vector3 direction;
 	private Transform player;
-	private Collider2D projectileCollider;
-	private float playerPosX;
 	private float lifeTime;
 
 	private void Start() {
 		SetDirection();
-		projectileCollider = GetComponent<Collider2D>();
 	}
 
 	private void Update() {

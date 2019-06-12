@@ -18,5 +18,5 @@ public class JumpMovement : MonoBehaviour {
 			movementController.Jump();
 			yield return new WaitForSeconds(jumpCoolDown);
 		}
-	} 
+	}
 }

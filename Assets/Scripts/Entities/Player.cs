@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class Player : Entity {
 
 	private int hp = 20;
 	private bool isDead = false;
+
+	public EventHandler PlayerDeath;
 
 	public override int HP {
 		get { return hp; } 
@@ -35,6 +38,7 @@ public class Player : Entity {
 	}
 
 	public override void Die() {
+		OnPlayerDeath();
 		isDead = true;
 		transform.parent = null;
 		gameObject.SetActive(false);
@@ -43,6 +47,13 @@ public class Player : Entity {
 	private void OnTriggerEnter2D(Collider2D other) {
 		if(other.gameObject.CompareTag("DeathFall")) {
 			Die();
+		}
+	}
+
+	protected virtual void OnPlayerDeath() {
+		print("hello");
+		if(PlayerDeath != null) {
+			PlayerDeath(this, EventArgs.Empty);
 		}
 	}
 }

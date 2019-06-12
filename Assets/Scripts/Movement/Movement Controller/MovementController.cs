@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -148,14 +149,10 @@ public class MovementController : MonoBehaviour {
 	}
 
 	private void AddVelocity(float direction) {
-		// print("JUMPING ===========================================");
-		// print("isGrounded? = " + groundCheck.IsGrounded);
 		if(DoubleJump && !groundCheck.IsGrounded) {
 			DoubleJump = false;	
 			body.velocity = Vector2.zero;
-			// print("DOUBLE JUMP");
 		}
-		// print("JUMP");
 		Vector2 velocity = body.velocity;
 		velocity.y += jumpingPower * direction;
 		body.velocity = velocity;
@@ -190,5 +187,14 @@ public class MovementController : MonoBehaviour {
 		duckMovement = GetComponent<DuckMovement>();
 		knockbackMovement = GetComponent<KnockbackMovement>();
 		stompMovement = GetComponent<StompMovement>();
+	}
+
+	public void OnPlayerDeath(object source, EventArgs e) {
+		IsJumping = false;
+		IsDashing = false;
+		IsDucking = false;
+		IsStomping = false;
+		spriteRenderer.enabled = true;
+		dashMovement.ResetColliderOrientation();
 	}
 }

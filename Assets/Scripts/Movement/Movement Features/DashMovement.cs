@@ -46,4 +46,8 @@ public class DashMovement : MonoBehaviour {
 		entityCollider.direction = direction;
 		entityCollider.size= new Vector2(entityCollider.size.y, entityCollider.size.x);
 	}
+
+	public void ResetColliderOrientation() {
+		ChangeCapsuelOrientation(CapsuleDirection2D.Vertical);
+	}
 }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class MoveWithPlatform : MonoBehaviour {
 
-	private MovementController movementController;
-	private MovementController platform;
+	// private MovementController movementController;
+	// private MovementController platform;
 	private bool onMovingGround;
 
 	void Start () {
-		movementController = GetComponent<MovementController>();
+		// movementController = GetComponent<MovementController>();
 	}
 	
 	// void FixedUpdate () {

@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4988477885297466}
   - component: {fileID: 212472890569624484}
   - component: {fileID: 95532389711373852}
+  - component: {fileID: 114018090696922322}
   m_Layer: 0
   m_Name: Stomp Trail
   m_TagString: Untagged
@@ -58,6 +59,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114018090696922322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1850552185039886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca958322aedb4ff29e58f72750479ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
 --- !u!212 &212472890569624484
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -88,7 +101,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1548414963
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 472d5317740134977a266daaf986dea4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.522}

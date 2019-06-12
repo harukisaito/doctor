@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,7 @@ public class TrailEffect : MonoBehaviour {
 	[SerializeField] private GameObject stompSprite;
 	[SerializeField] private float trailLength;
 
-	private Queue jumpInstances, dashInstances, stompInstances;
 	private Coroutine jumpCoroutine, dashCoroutine, stompCoroutine;
-	private List<Queue> instances = new List<Queue>();
 	private List<GameObject> sprites = new List<GameObject>();
 
 	private MovementController movementController;
@@ -21,10 +20,6 @@ public class TrailEffect : MonoBehaviour {
 
 	private void Awake() {
 		movementController = GetComponent<MovementController>();
-		jumpInstances = dashInstances = stompInstances = new Queue();
-		instances.Add(jumpInstances);
-		instances.Add(dashInstances);
-		instances.Add(stompInstances);
 		sprites.Add(jumpSprite);
 		sprites.Add(dashSprite);
 		sprites.Add(stompSprite);
@@ -48,31 +43,16 @@ public class TrailEffect : MonoBehaviour {
 				instance.transform.position = transform.position;
 				instance.GetComponent<SpriteRenderer>().flipX = !movementController.IsFacingRight;
 				instance.SetActive(true);
-				instances[(int)key].Enqueue(instance);
 			}
-			RemoveSprite(key);
 		}
 	}
 
 	private void InstantiateSprites(Trails key) {
-		int index = (int)key;
-		GameObject instance = Instantiate(sprites[index], transform.position, Quaternion.identity);
+		GameObject instance = Instantiate(sprites[(int)key], transform.position, Quaternion.identity);
 		SceneManagement.Instance.MoveToScene(instance, Scenes.LevelSakura);
 		instance.GetComponent<SpriteRenderer>().flipX = !movementController.IsFacingRight;
-		instances[index].Enqueue(instance);
 	}
 
-	private void RemoveSprite(Trails key) {
-		int index = (int)key;
-		GameObject instance = (GameObject)instances[index].Dequeue();
-		StartCoroutine(AddToObjectPool(key, instance));
-	}
-
-	private IEnumerator AddToObjectPool(Trails key, GameObject trail) {
-		yield return new WaitForSeconds(trailLength);
-		trail.SetActive(false);
-		ObjectPoolManager.Instance.AddToObjectPool(key, trail);
-	}
 
 	// private void Jump() {
 	// 	if(movementController.IsJumping) {

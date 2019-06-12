@@ -13,8 +13,8 @@ public class FlyingObjectSpawner : MonoBehaviour {
 	private FlyingObject flyingObject;
 	private OneDirectionMovement movement;
 
-	private int num = 4;
-	private int num2 = 1;
+	// private int num = 4;
+	// private int num2 = 1;
 
 
 	private void Start() {
