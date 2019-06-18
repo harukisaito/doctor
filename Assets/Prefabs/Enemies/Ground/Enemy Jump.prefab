@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114614541597158034}
   - component: {fileID: 114060151889085206}
   - component: {fileID: 114505251271467834}
+  - component: {fileID: 95403137146495198}
   m_Layer: 11
   m_Name: Enemy Jump
   m_TagString: Enemy
@@ -147,6 +148,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.512, y: 0.512}
   m_EdgeRadius: 0
+--- !u!95 &95403137146495198
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1347795394623980}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4758c43f3e1674bef9cb60f273b1f56b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114060151889085206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -247,7 +265,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1548414963
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 00fa7d7bc2aec4f14ae78c96fcfe540f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

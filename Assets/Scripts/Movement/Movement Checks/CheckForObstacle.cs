@@ -25,7 +25,7 @@ public class CheckForObstacle : MonoBehaviour {
 	}
 
 	private void Start() {
-		checkPosition = new Vector2(-checkOffset, -0.256f);
+		checkPosition = new Vector2(-checkOffset, check.localPosition.y);
 		check.position = checkPosition;
 	}
 

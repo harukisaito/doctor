@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,9 @@ public class DashMovement : MonoBehaviour {
 
 	private MovementController movementController;
 	private CapsuleCollider2D entityCollider;
+
+	public EventHandler DashStart;
+	public EventHandler DashEnd;
 
 	private float dashTime;
 
@@ -23,7 +27,8 @@ public class DashMovement : MonoBehaviour {
 		StartCoroutine(DashCoroutine(direction, body));
 	}
 
-	private IEnumerator DashCoroutine(Vector2 direction, Rigidbody2D body) {	
+	private IEnumerator DashCoroutine(Vector2 direction, Rigidbody2D body) {
+		OnDashStart();
 		movementController.IsDashing = true;
 
 		ChangeCapsuelOrientation(CapsuleDirection2D.Horizontal);
@@ -40,14 +45,26 @@ public class DashMovement : MonoBehaviour {
 		movementController.IsDashing = false;
 
 		ChangeCapsuelOrientation(CapsuleDirection2D.Vertical);
+		OnDashEnd();
 	}
 
 	private void ChangeCapsuelOrientation(CapsuleDirection2D direction) {
 		entityCollider.direction = direction;
-		entityCollider.size= new Vector2(entityCollider.size.y, entityCollider.size.x);
+		entityCollider.size = new Vector2(entityCollider.size.y, entityCollider.size.x);
 	}
 
 	public void ResetColliderOrientation() {
 		ChangeCapsuelOrientation(CapsuleDirection2D.Vertical);
+	}
+
+	protected virtual void OnDashStart() {
+		if(DashStart != null) {
+			DashStart(this, EventArgs.Empty);
+		}
+	}
+	protected virtual void OnDashEnd() {
+		if(DashEnd != null) {
+			DashEnd(this, EventArgs.Empty);
+		}
 	}
 }

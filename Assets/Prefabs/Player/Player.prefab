@@ -26,6 +26,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1102364697321660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4302525844761388}
+  - component: {fileID: 96077976265735118}
+  m_Layer: 9
+  m_Name: Dash Trail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1111054968029390
 GameObject:
   m_ObjectHideFlags: 0
@@ -37,6 +53,7 @@ GameObject:
   - component: {fileID: 212405775374401320}
   - component: {fileID: 114032121641753014}
   - component: {fileID: 114860756945997886}
+  - component: {fileID: 114519957926749494}
   - component: {fileID: 60979081434399256}
   - component: {fileID: 50106625967555812}
   m_Layer: 16
@@ -46,22 +63,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1734180295666840
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4321617282330780}
-  - component: {fileID: 96278156634139630}
-  m_Layer: 9
-  m_Name: Trail Renderer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &1742164263171938
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +91,7 @@ GameObject:
   - component: {fileID: 114857169265363176}
   - component: {fileID: 114159780503201806}
   - component: {fileID: 114719976873011280}
+  - component: {fileID: 114817558780728240}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -159,19 +161,19 @@ Transform:
   - {fileID: 4992437810179790}
   - {fileID: 4323942038939114}
   - {fileID: 4076321157708970}
-  - {fileID: 4321617282330780}
+  - {fileID: 4302525844761388}
   - {fileID: 4720034419526430}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4321617282330780
+--- !u!4 &4302525844761388
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1734180295666840}
+  m_GameObject: {fileID: 1102364697321660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: -0.3, z: 0}
+  m_LocalPosition: {x: 0.233, y: -0.287, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4103076163141752}
@@ -452,13 +454,13 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!96 &96278156634139630
+--- !u!96 &96077976265735118
 TrailRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1734180295666840}
+  m_GameObject: {fileID: 1102364697321660}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -509,8 +511,8 @@ TrailRenderer:
       m_RotationOrder: 0
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0, b: 0, a: 1}
-      key1: {r: 0, g: 0, b: 0, a: 0.5647059}
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 0.5647059}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -536,8 +538,8 @@ TrailRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 3
-    numCornerVertices: 5
-    numCapVertices: 10
+    numCornerVertices: 1
+    numCapVertices: 1
     alignment: 0
     textureMode: 0
   m_MinVertexDistance: 0.1
@@ -636,7 +638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9edd464d813a9467fbc779aacefae70c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpSprite: {fileID: 1942415656433560, guid: fa82eb6b7a6164ddc8b0b085f5449aa5, type: 2}
+  jumpSprite: {fileID: 0}
   dashSprite: {fileID: 1600263080050426, guid: 407d7983e99364f4692369bbfd0dfd7e, type: 2}
   stompSprite: {fileID: 1850552185039886, guid: 8a54b24c2eec74f939c8140a8cc415f4,
     type: 2}
@@ -677,6 +679,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashPeriod: 0.35
   dashingSpeed: 300
+--- !u!114 &114519957926749494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1111054968029390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4fc4c9c4c9bd4ba1a6b86be59d07413, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114603357281048010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -738,6 +751,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b812620775db745078bdaff5a75a3c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114817558780728240
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742164263171938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a1c604c18b774f29bef8d426fa6aa9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashTrail: {fileID: 96077976265735118}
 --- !u!114 &114857169265363176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -817,9 +842,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1548414963
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8399e9648715e49fe8a8ec9f9b159da6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 55e5710e5a49a4d30a7ec9d8ae92e2d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -940,7 +965,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1548414963
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a24ff5d3d67a2402580bb6ad7ea55488, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.628}

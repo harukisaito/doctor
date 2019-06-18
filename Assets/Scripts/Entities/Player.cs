@@ -9,6 +9,7 @@ public class Player : Entity {
 	private bool isDead = false;
 
 	public EventHandler PlayerDeath;
+	private Coroutine invincibility;
 
 	public override int HP {
 		get { return hp; } 
@@ -21,10 +22,6 @@ public class Player : Entity {
 	public override bool IsDead {
 		get { return isDead; }
 		set { isDead = value; }
-	}
-
-	private void OnEnable() {
-		hp = 20;
 	}
 
 
@@ -51,9 +48,25 @@ public class Player : Entity {
 	}
 
 	protected virtual void OnPlayerDeath() {
-		print("hello");
+		hp = 20;
+		if(invincibility != null) {
+			StopCoroutine(invincibility);
+		}
 		if(PlayerDeath != null) {
 			PlayerDeath(this, EventArgs.Empty);
 		}
+	}
+
+	public void OnDashStart(object source, EventArgs e) {
+		IsInvincible = true;
+	}
+
+	public void OnDashEnd(object source, EventArgs e) {
+		invincibility = StartCoroutine(DisableInvincibility());
+	}
+
+	private IEnumerator DisableInvincibility() {
+		yield return new WaitForSeconds(0.2f);
+		IsInvincible = false;
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class GroundCheck : MonoBehaviour {
 
 	private MovementController movementController;
 	private DropShadow dropShadow;
+
+	public EventHandler Landed;
 
 	private bool reset;
 	private bool physicsGrounded;
@@ -89,18 +92,39 @@ public class GroundCheck : MonoBehaviour {
 
 
 	private IEnumerator ResetPlayerAbilites() {
+		ResetMovementStates();
+		yield return new WaitForSeconds(groundedDelay);
+		yield return new WaitForEndOfFrame();
+		SetGrounded();
+		// print("isGrounded = " + isGrounded);
+	}
+
+	public void OnPlayerDeath(object source, EventArgs e) {
+		ResetMovementStates();
+		SetGrounded();
+	}
+
+	private void ResetMovementStates() {
 		InAir = false;
 		reset = true;
+		inJump = false;
 		movementController.IsJumping = false;
 		movementController.IsStomping = false;
 		movementController.DoubleJump = true;
 		if(!movementController.DisableKnockback) {
 			movementController.KnockedBack = false;
 		}
-		yield return new WaitForSeconds(groundedDelay);
-		yield return new WaitForEndOfFrame();
+	}
+
+	private void SetGrounded() {
+		OnLanded();
 		movementController.Dashed = false;
 		isGrounded = true;
-		// print("isGrounded = " + isGrounded);
+	}
+
+	protected virtual void OnLanded() {
+		if(Landed != null) {
+			Landed(this, EventArgs.Empty);
+		}
 	}
 }

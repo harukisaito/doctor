@@ -41,6 +41,8 @@ public class MovementController : MonoBehaviour {
 	public Vector2 StartingVelocity {get; set;}
 	public Vector2 Velocity {get; private set;}
 
+	public EventHandler Jumped;
+
 	private void Awake() {
 		GetComponents(); 
 	}
@@ -132,6 +134,7 @@ public class MovementController : MonoBehaviour {
 	}
 
 	public void Jump(float jumpForce = 1f) {
+		OnJumped();
 		groundCheck.CanJump = false;
 		IsJumping = true;
 		AddVelocity(jumpForce);
@@ -196,5 +199,11 @@ public class MovementController : MonoBehaviour {
 		IsStomping = false;
 		spriteRenderer.enabled = true;
 		dashMovement.ResetColliderOrientation();
+	}
+
+	protected virtual void OnJumped() {
+		if(Jumped != null) {
+			Jumped(this, EventArgs.Empty);
+		}
 	}
 }
