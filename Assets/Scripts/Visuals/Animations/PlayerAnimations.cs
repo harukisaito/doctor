@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour {
 
+	[SerializeField] private Animator attackAnimator;
+
 	private Animator animator;
 	private GroundCheck groundCheck;
 	private MovementController movement;
@@ -19,6 +21,7 @@ public class PlayerAnimations : MonoBehaviour {
 	private void Update() {
 		animator.SetBool("isDucking", movement.IsDucking); 
 		animator.SetBool("isGrounded", groundCheck.IsGrounded);
+		attackAnimator.SetBool("isGrounded", groundCheck.IsGrounded);
 		animator.SetFloat("yVelocity", movement.Velocity.y);
 		animator.SetFloat("xVelocity", Mathf.Abs(movement.Velocity.x));
 		animator.SetBool("isSprinting", movementInput.Sprint);
@@ -27,5 +30,6 @@ public class PlayerAnimations : MonoBehaviour {
 
 	public void PlayAttackAnimation() {
 		animator.SetTrigger("attack");
+		attackAnimator.SetTrigger("attack");
 	}
 }

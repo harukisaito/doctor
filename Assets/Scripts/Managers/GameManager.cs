@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,9 @@ public class GameManager : MonoBehaviour {
 
 	private Player player;
 
-	public bool Goal {get; set;}
+	public float Timer {get; private set;}
+	private Coroutine coroutine;
+	private WaitForSeconds second = new WaitForSeconds(1f);
 
 	public Player Player {
 		get { return player; }
@@ -16,8 +19,6 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance;
 
-
-	private float timer;
 
 	private void Awake() {
 		if(Instance == null) {
@@ -28,12 +29,18 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	private void Update() {
-		// hpText.text = "HP = " + player.HP.ToString();
-		if(Goal) {
-			timer += Time.deltaTime;
-			if(timer > 6) {
-			}
+	public void OnFinishedLoadingLevel(object src, EventArgs e) {
+		coroutine = StartCoroutine(StartTimer());
+	}
+
+	public void OnFinish(object src, EventArgs e) {
+		StopCoroutine(coroutine);
+	}
+
+	private IEnumerator StartTimer() {
+		while(true) {
+			Timer ++;
+			yield return second;
 		}
 	}
 }

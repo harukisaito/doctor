@@ -14,6 +14,7 @@ public class ShootAtTarget : MonoBehaviour {
 	private Player player;
 	private MovementController movementController;
 	private Coroutine shoot;
+	private GameObject projectileInstance;
 
 	private bool shot = false;
 	public bool Shooting {get; set;}
@@ -56,9 +57,24 @@ public class ShootAtTarget : MonoBehaviour {
 			else if(playerPos.x < check.transform.position.x) {
 				offset = new Vector3(-offsetRadius, 0);
 			}
-			GameObject instance = Instantiate(projectilePrefab, check.transform.position + offset, Quaternion.identity);
-			SceneManagement.Instance.MoveToScene(instance, Scenes.LevelSakura);
+			SpawnProjectile();
+			SceneManagement.Instance.MoveToScene(projectileInstance, Scenes.LevelSakura);
 			yield return new WaitForSeconds(fireRate);
 		}
+	}
+	private void SpawnProjectile() {
+		bool empty = ObjectPoolManager.Instance.CheckIfEmpty(Projectiles.Basic);
+		if(empty) {
+			InstantiateProjectile();
+		}
+		else {
+			projectileInstance = ObjectPoolManager.Instance.RetrieveFromObjectPool(Projectiles.Basic);
+			projectileInstance.transform.position = check.transform.position + offset;
+			projectileInstance.SetActive(true);
+		}
+	}
+
+	private void InstantiateProjectile() {
+		projectileInstance = Instantiate(projectilePrefab, check.transform.position + offset, Quaternion.identity);
 	}
 }

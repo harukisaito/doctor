@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114804475204807954}
   - component: {fileID: 114337416523859874}
   - component: {fileID: 95737221446342244}
+  - component: {fileID: 114007997347971932}
   m_Layer: 11
   m_Name: Enemy Up Down
   m_TagString: Enemy
@@ -109,6 +110,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114007997347971932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1543615170608442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3233423f3fb64ca0b56316a14594184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114303942555295476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5b374ec80944a088ad9342168ae9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 1
 --- !u!114 &114448297046267452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -161,8 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25345f6ccedf243d9a8c95987879528d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 20
-  isInvincible: 0
+  hp: 10
+  isInvincible: 1
 --- !u!212 &212336463074732412
 SpriteRenderer:
   m_ObjectHideFlags: 1

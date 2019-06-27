@@ -10,6 +10,8 @@ public class SceneManagement : MonoBehaviour {
 	public bool ChangingScene {get; private set;}
 
 	public EventHandler FinishedLoadingLevel;
+	public EventHandler FinishedLoadingEndMenu;
+	public EventHandler FinishedLoadingStartMenu;
 	public static SceneManagement Instance;
 
 	private void Awake() {
@@ -48,6 +50,12 @@ public class SceneManagement : MonoBehaviour {
 		if(CurrentScene == Scenes.LevelSakura) {
 			OnFinishedLoadingLevel();
 		}
+		if(CurrentScene == Scenes.EndMenu) {
+			OnFinishedLoadingEndMenu();
+		}
+		if(CurrentScene == Scenes.StartMenu) {
+			OnFinishedLoadingStartMenu();
+		}
 		
 		SceneManager.SetActiveScene(GetScene(CurrentScene));
 		ChangingScene = false;
@@ -64,6 +72,16 @@ public class SceneManagement : MonoBehaviour {
 	protected virtual void OnFinishedLoadingLevel() {
 		if(FinishedLoadingLevel != null) {
 			FinishedLoadingLevel(this, EventArgs.Empty);
+		}
+	}
+	protected virtual void OnFinishedLoadingEndMenu() {
+		if(FinishedLoadingEndMenu != null) {
+			FinishedLoadingEndMenu(this, EventArgs.Empty);
+		}
+	}
+	protected virtual void OnFinishedLoadingStartMenu() {
+		if(FinishedLoadingStartMenu != null) {
+			FinishedLoadingStartMenu(this, EventArgs.Empty);
 		}
 	}
 }

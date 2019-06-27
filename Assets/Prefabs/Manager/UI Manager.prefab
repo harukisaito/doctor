@@ -51,3 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da43e72370e6447a888d545958407d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time: {fileID: 114612907124298656, guid: de17c5439da4647f3b84e2d8650896dc, type: 2}
+  hp: {fileID: 114087996313124434, guid: 679dd48a4955c4d1392c1d3c6f1fc594, type: 2}
+  healthBar: {fileID: 114839386824957958, guid: ede8c257e65e74cce9153e3163fcb2e6,
+    type: 2}

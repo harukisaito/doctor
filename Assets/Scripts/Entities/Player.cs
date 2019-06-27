@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Player : Entity {
 
-	private int hp = 20;
+	private int hp = 5;
 	private bool isDead = false;
 
 	public EventHandler PlayerDeath;
+	public EventHandler PlayerDamage;
 	private Coroutine invincibility;
 
 	public override int HP {
@@ -18,16 +19,23 @@ public class Player : Entity {
 		}
 	}
 
+	public override Particles ParticleTypeDamage {get; set;}
 	public override bool IsInvincible {get; set;}
 	public override bool IsDead {
 		get { return isDead; }
 		set { isDead = value; }
 	}
 
+	private void Start() {
+		ParticleTypeDamage = Particles.PlayerDamage;
+	}
+
 
 	public override void TakeDamage(int damage) {
 		if(!IsInvincible) {
 			hp -= damage;
+			OnPlayerDamage();
+			AudioManager.Instance.Play("Player Damage");
 			if(hp <= 0) {
 				Die();
 			}
@@ -36,6 +44,7 @@ public class Player : Entity {
 
 	public override void Die() {
 		OnPlayerDeath();
+		AudioManager.Instance.Play("Death");
 		isDead = true;
 		transform.parent = null;
 		gameObject.SetActive(false);
@@ -48,7 +57,7 @@ public class Player : Entity {
 	}
 
 	protected virtual void OnPlayerDeath() {
-		hp = 20;
+		hp = 5;
 		if(invincibility != null) {
 			StopCoroutine(invincibility);
 		}
@@ -56,6 +65,12 @@ public class Player : Entity {
 			PlayerDeath(this, EventArgs.Empty);
 		}
 	}
+
+	protected virtual void OnPlayerDamage() {
+		if(PlayerDamage != null) {
+			PlayerDamage(this, EventArgs.Empty);
+		}
+	} 
 
 	public void OnDashStart(object source, EventArgs e) {
 		IsInvincible = true;

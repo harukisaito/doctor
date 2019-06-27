@@ -8,20 +8,67 @@ public class DamageToEntity : MonoBehaviour {
 
 	private Entity entity;
 
+	private Quaternion enemyRotation;
+	private Quaternion playerRightRotation;
+	private Quaternion playerLeftRotation;
+
+	private void Start() {
+		enemyRotation = Quaternion.Euler(0, 0, 135);
+		playerRightRotation = Quaternion.Euler(0, 0, 315);
+		playerLeftRotation = Quaternion.Euler(0, 0, 135);
+	}
+
 	private void OnTriggerEnter2D(Collider2D other) {
-		// Debug.Log(other.gameObject.tag);
 		if((other.CompareTag("Player") && this.gameObject.tag != "PlayerAttack") 
-		|| (other.CompareTag("Enemy") && this.gameObject.tag != "EnemyAttack")) {
-			// Debug.Log("DAMAGE");
-			
+		|| (other.CompareTag("Enemy") && this.gameObject.tag != "EnemyAttack")
+		|| (other.CompareTag("EnemyAttack") && this.gameObject.CompareTag("PlayerAttack"))) {
+				   
 			entity = other.GetComponent<Entity>();
 			
+			if(entity == null) {
+				SpawnParticlesProjectile(other);
+				return;
+			}
+
 			entity.TakeDamage(damage);
 
-			ParticleManager.Instance.SpawnParticles(Particles.Attack, other.transform.position);
+			SpawnParticles(other);
+
 		}
 		else if(other.CompareTag("Untagged")) {
 			// Debug.LogWarning("CHECK THE TAG OF THE OTHER OBJECT");
 		}
 	}
+
+	private void SpawnParticlesProjectile(Collider2D other) {
+		ParticleManager.Instance.SpawnParticles(Particles.ProjectileDestrucion, other.transform.position, Quaternion.identity);
+	}
+
+	private void SpawnParticles(Collider2D other) {
+		float otherX = other.transform.position.x;
+		float thisX = transform.position.x;
+		Quaternion rotation;
+
+		if(entity.ParticleTypeDamage == Particles.PlayerDamage) {
+			if(otherX < thisX) {
+				rotation = playerLeftRotation;
+			}
+			else {
+				rotation = playerRightRotation;
+			}
+		}
+		else {
+			if(otherX < thisX) {
+				rotation = enemyRotation;
+			}
+			else {
+				rotation = Quaternion.identity;
+			}
+		}
+		ParticleManager.Instance.SpawnParticles(entity.ParticleTypeDamage, other.transform.position, rotation);
+		entity = null;
+	}
+
+	
+
 }

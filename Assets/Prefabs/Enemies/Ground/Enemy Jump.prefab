@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 114060151889085206}
   - component: {fileID: 114505251271467834}
   - component: {fileID: 95403137146495198}
+  - component: {fileID: 114604809727336346}
   m_Layer: 11
   m_Name: Enemy Jump
   m_TagString: Enemy
@@ -194,6 +195,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1048576
   groundedDelay: 0
+--- !u!114 &114604809727336346
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1347795394623980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3233423f3fb64ca0b56316a14594184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114614541597158034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,8 +233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25345f6ccedf243d9a8c95987879528d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 20
-  isInvincible: 0
+  hp: 10
+  isInvincible: 1
 --- !u!114 &114757120758980792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -234,7 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5b374ec80944a088ad9342168ae9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 1
 --- !u!212 &212221659713833438
 SpriteRenderer:
   m_ObjectHideFlags: 1

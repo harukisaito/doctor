@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,9 @@ public class ParticleManager : MonoBehaviour {
 	[SerializeField] private GameObject[] particles;
 
 	private GameObject particleInstance;
+	private WaitForSeconds waitTime = new WaitForSeconds(0.5f);
 	private EmitParticles particleEmit;
+	private Queue particleInstances = new Queue();
 
 	public static ParticleManager Instance;
 
@@ -20,30 +23,45 @@ public class ParticleManager : MonoBehaviour {
 		}
 	}
 
-	public void SpawnParticles(Particles type, Vector2 position) {
+	public void SpawnParticles(Particles type, Vector2 position, Quaternion rotation) {
 		bool empty = ObjectPoolManager.Instance.CheckIfEmpty(type);
 		if(empty) {
-			InstantiateParticles(type, position);
+			InstantiateParticles(type, position, rotation);
 		}
 		else {
 			particleInstance = ObjectPoolManager.Instance.RetrieveFromObjectPool(type);
+			particleInstances.Enqueue(particleInstance);
 			particleInstance.transform.position = position;
-			particleEmit = particleInstance.GetComponent<EmitParticles>();
+			particleInstance.transform.rotation = rotation;
+			particleInstance.GetComponent<EmitParticles>().StartEmitParticles();
 		}
-		particleEmit.StartEmitPartices();
-		StartCoroutine(RetrieveParticles(type, particleInstance));
+		StartCoroutine(RetrieveParticles(type));
 	}
 
-	private void InstantiateParticles(Particles type, Vector2 position) {
+	private void InstantiateParticles(Particles type, Vector2 position, Quaternion rotation) {
 		int index = (int)type;
-		particleInstance = Instantiate(particles[index], position, Quaternion.identity);
+		particleInstance = Instantiate(particles[index], position, rotation);
+		particleInstances.Enqueue(particleInstance);
 		SceneManagement.Instance.MoveToScene(particleInstance, Scenes.LevelSakura);
 		particleEmit = particleInstance.GetComponent<EmitParticles>();
 	}
 
-	private IEnumerator RetrieveParticles(Particles type, GameObject particle) {
-		yield return new WaitForSeconds(5f);
-		ObjectPoolManager.Instance.AddToObjectPool(type, particle);
+	private IEnumerator RetrieveParticles(Particles type) {
+		yield return waitTime;
+		AddToObjectPool(type);
+	}
+
+	public void OnFinishAnimation(object src, EventArgs e) {
+		particleInstances.Clear();
+		StopAllCoroutines();
+	}
+
+	private void AddToObjectPool(Particles type) {
+		if(particleInstances != null) {
+			GameObject particle = (GameObject)particleInstances.Dequeue();
+			particle.GetComponent<EmitParticles>().StopEmitParticles();
+			ObjectPoolManager.Instance.AddToObjectPool(type, particle);
+		}
 	}
 
 }

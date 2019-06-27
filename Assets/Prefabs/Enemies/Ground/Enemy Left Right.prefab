@@ -60,6 +60,8 @@ GameObject:
   - component: {fileID: 61682735091636054}
   - component: {fileID: 95953516354177960}
   - component: {fileID: 114983531529477766}
+  - component: {fileID: 114107202246301014}
+  - component: {fileID: 114650429109139782}
   m_Layer: 11
   m_Name: Enemy Left Right
   m_TagString: Enemy
@@ -255,6 +257,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114107202246301014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1347795394623980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3233423f3fb64ca0b56316a14594184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114321333961350220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -271,6 +284,17 @@ MonoBehaviour:
   jumpingPower: 220
   downForce: 0
   floatiness: 0
+--- !u!114 &114650429109139782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1347795394623980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b812620775db745078bdaff5a75a3c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114672874265573754
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25345f6ccedf243d9a8c95987879528d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 40
+  hp: 2
   isInvincible: 0
 --- !u!114 &114755009422795992
 MonoBehaviour:
@@ -323,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5b374ec80944a088ad9342168ae9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 1
 --- !u!114 &114902549126416508
 MonoBehaviour:
   m_ObjectHideFlags: 1

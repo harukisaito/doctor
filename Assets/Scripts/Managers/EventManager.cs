@@ -12,6 +12,9 @@ public class EventManager : MonoBehaviour {
 	private DashAttack dashAttack;
 	private TrailRender trailRender;
 	private CameraShake cameraShake;
+	private PlayerParticles playerParticles;
+	private Goal goal;
+	private Attack[] attacks;
 
 	public static EventManager Instance;
 	private void Awake() {
@@ -26,20 +29,30 @@ public class EventManager : MonoBehaviour {
 	private void Start() {
 		SceneManagement.Instance.FinishedLoadingLevel += SpawnManager.Instance.OnFinishedLoadingLevel;
 		SceneManagement.Instance.FinishedLoadingLevel += OnFinishedLoadingLevel;
+		SceneManagement.Instance.FinishedLoadingLevel += GameManager.Instance.OnFinishedLoadingLevel;
+		SceneManagement.Instance.FinishedLoadingLevel += ManagerCamera.Instance.OnFinishedLoadingLevel;
+		SceneManagement.Instance.FinishedLoadingLevel += UIManager.Instance.OnFinishedLoadingLevel;
+
+		SceneManagement.Instance.FinishedLoadingEndMenu += UIManager.Instance.OnFinishedLoadingEndMenu;
+		SceneManagement.Instance.FinishedLoadingStartMenu += ManagerCamera.Instance.OnFinishedLoadingStartMenu;
+		SceneManagement.Instance.FinishedLoadingEndMenu += ManagerCamera.Instance.OnFinishedLoadingEndMenu;
 	}
 
 	private void OnFinishedLoadingLevel(object source, EventArgs e) {
-		player = GameManager.Instance.Player;
-		movementController = player.GetComponent<MovementController>();
-		groundCheck = player.GetComponent<GroundCheck>();
-		dashMovement = player.GetComponent<DashMovement>();
-		dashAttack = player.GetComponentInChildren<DashAttack>();
-		trailRender = player.GetComponentInChildren<TrailRender>();
-		cameraShake = PlayerCamera.Instance.GetComponentInChildren<CameraShake>();
+		GetReferences();
 
 		player.PlayerDeath += movementController.OnPlayerDeath;
 		player.PlayerDeath += groundCheck.OnPlayerDeath;
 		player.PlayerDeath += trailRender.OnPlayerDeath;
+		player.PlayerDeath += UIManager.Instance.OnPlayerDeath;
+
+		foreach(var a in attacks) {
+			player.PlayerDeath += a.OnPlayerDeath;
+		}
+
+		player.PlayerDamage += UIManager.Instance.OnPlayerDamage;
+
+		groundCheck.Landed += playerParticles.OnLanded;
 
 		dashMovement.DashStart += dashAttack.OnDashStart;
 		dashMovement.DashEnd += dashAttack.OnDashEnd;
@@ -47,6 +60,27 @@ public class EventManager : MonoBehaviour {
 		dashMovement.DashEnd += player.OnDashEnd;
 		dashMovement.DashStart += trailRender.OnDashStart;
 		dashMovement.DashEnd += trailRender.OnDashEnd;
-		// dashMovement.DashStart += cameraShake.OnDashStart;
+
+		goal.Finish += SpawnManager.Instance.OnFinish;
+		goal.Finish += ObjectPoolManager.Instance.OnFinish;
+		// goal.Finish += ObjectPoolManager.Instance.OnFinishedLoadingLevel;
+		goal.Finish += GameManager.Instance.OnFinish;
+
+		goal.FinishAnimation += ParticleManager.Instance.OnFinishAnimation;
+		goal.FinishAnimation += ManagerCamera.Instance.OnFinishAnimation;
+		goal.FinishAnimation += playerParticles.OnFinishAnimation;
+	}
+
+	private void GetReferences() {
+		player = GameManager.Instance.Player;
+		goal = Goal.Instance;
+		movementController = player.GetComponent<MovementController>();
+		groundCheck = player.GetComponent<GroundCheck>();
+		dashMovement = player.GetComponent<DashMovement>();
+		dashAttack = player.GetComponentInChildren<DashAttack>();
+		trailRender = player.GetComponentInChildren<TrailRender>();
+		playerParticles = player.GetComponent<PlayerParticles>();
+		cameraShake = PlayerCamera.Instance.GetComponentInChildren<CameraShake>();
+		attacks = player.GetComponentsInChildren<Attack>();
 	}
 }

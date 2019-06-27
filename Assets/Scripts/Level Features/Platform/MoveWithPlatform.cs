@@ -6,6 +6,8 @@ public class MoveWithPlatform : MonoBehaviour {
 
 	// private MovementController movementController;
 	// private MovementController platform;
+
+
 	private bool onMovingGround;
 
 	void Start () {

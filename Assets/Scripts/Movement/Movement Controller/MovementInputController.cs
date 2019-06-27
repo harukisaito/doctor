@@ -17,7 +17,9 @@ public class MovementInputController : MonoBehaviour {
 
 	private float movement;
 	private float movementSpeed;
+	private float attackCoolDown;
 	private bool isDucking;
+	private bool attacked;
 
 	public bool IsDucking {
 		get { return isDucking; }
@@ -29,6 +31,7 @@ public class MovementInputController : MonoBehaviour {
 		}
 	}
 	public bool Sprint {get; set;}
+	public bool EnableInput {get; set;}
 
 
 	private MovementController movementController;
@@ -39,17 +42,21 @@ public class MovementInputController : MonoBehaviour {
 		movementController = GetComponent<MovementController>();
 		attackController = GetComponent<AttackController>();
 		groundCheck = GetComponent<GroundCheck>();
+		EnableInput = true;
 	}
 
 	private void Update() {
-		MovementInput();
-		SprintInput();
-		DuckInput();
-		JumpInput();
-		DashInput();
-		FloatInput();
-		MoveDownInput();
-		AttackInput();
+		if(EnableInput) {
+			MovementInput();
+			SprintInput();
+			DuckInput();
+			JumpInput();
+			DashInput();
+			AttackInput();
+			AttackCoolDown();
+			// FloatInput();
+			// MoveDownInput();
+		}
 	}
 	
 	private void FixedUpdate() {
@@ -85,11 +92,14 @@ public class MovementInputController : MonoBehaviour {
 
 	private void SprintInput() {
 		if(groundCheck.IsGrounded) {
-			Sprint = Input.GetKey(sprintKey);
-			if(Sprint) {
+			float value;
+			value = Input.GetAxis("Sprint");
+			if(value > 0) {
 				movementSpeed = 3f;
+				Sprint = true;
 			}
 			else {
+				Sprint = false;
 				movementSpeed = 1.5f;
 			}
 		}
@@ -101,9 +111,9 @@ public class MovementInputController : MonoBehaviour {
 			if(groundCheck.IsGrounded) {
 				movementController.Duck();
 			}
-			else {
-				movementController.Stomp();
-			}
+			// else {
+			// 	movementController.Stomp();
+			// }
 		}
 	}
 
@@ -118,30 +128,46 @@ public class MovementInputController : MonoBehaviour {
 		}
 	}
 
-	private void FloatInput() {
-		if(!groundCheck.IsGrounded && !IsDucking) {
-			movementController.DownForce = !Input.GetKey(floatKey);
-		}
-	}
+	// private void FloatInput() {
+	// 	if(!groundCheck.IsGrounded && !IsDucking) {
+	// 		movementController.DownForce = !Input.GetKey(floatKey);
+	// 	}
+	// }
 
-	private void MoveDownInput() {
-		if(groundCheck.IsGrounded) {
-			if(IsDucking) {
-				if(Input.GetKeyDown(jumpKey)) {
-					movementController.MoveDown();
+	// private void MoveDownInput() {
+	// 	if(groundCheck.IsGrounded) {
+	// 		if(IsDucking) {
+	// 			if(Input.GetKeyDown(jumpKey)) {
+	// 				movementController.MoveDown();
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	private void AttackInput() {
+		float value = Input.GetAxis("Attack");
+		if(!IsDucking) {
+			if(value > 0 && attackCoolDown == 0) {
+				attacked = true;
+				if(groundCheck.IsGrounded) {
+					attackController.Attack(AttackPattern.GroundAttack);
+					AudioManager.Instance.Play("Weapon Swing");
+				}
+				else {
+					attackController.Attack(AttackPattern.AirAttack);
+					AudioManager.Instance.Play("Weapon Swing 2");
 				}
 			}
 		}
 	}
 
-	private void AttackInput() {
-		if(Input.GetKeyDown(attackKey)) {
-			if(groundCheck.IsGrounded) {
-				attackController.Attack(AttackPattern.GroundAttack);
-			}
-			else {
-				attackController.Attack(AttackPattern.AirAttack);
-			}
+	private void AttackCoolDown() {
+		if(attacked) {
+			attackCoolDown += Time.deltaTime;
+		}
+		if(attackCoolDown >= 0.4f) {
+			attacked = false;
+			attackCoolDown = 0;
 		}
 	}
 }

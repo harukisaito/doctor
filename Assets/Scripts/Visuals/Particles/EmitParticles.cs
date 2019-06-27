@@ -6,10 +6,19 @@ public class EmitParticles : MonoBehaviour {
 
 	private ParticleSystem particles;
 
-	public void StartEmitPartices() {
+	public void StartEmitParticles() {
+		GetComponent();
+		particles.Play();
+	}
+
+	public void StopEmitParticles() {
+		GetComponent();
+		particles.Stop();
+	}
+
+	private void GetComponent() {
 		if(particles == null) {
 			particles = GetComponent<ParticleSystem>();
 		}
-		particles.Play();
 	}
-}
+} 

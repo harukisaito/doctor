@@ -14,16 +14,22 @@ public class Projectile : MonoBehaviour {
 		SetDirection();
 	}
 
+	private void OnEnable() {
+		SetDirection();
+		lifeTime = 0f;
+	}
+
 	private void Update() {
 		transform.localPosition += direction * speed * Time.deltaTime;
 		lifeTime += Time.deltaTime;
 		if(lifeTime > 5) {
+			lifeTime = 0;
 			AddToPool();
 		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		ParticleManager.Instance.SpawnParticles(Particles.Attack, transform.position);
+		AudioManager.Instance.Play("Projectile");
 		AddToPool();
 	}
 

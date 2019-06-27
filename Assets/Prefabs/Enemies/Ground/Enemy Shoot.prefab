@@ -22,12 +22,15 @@ GameObject:
   - component: {fileID: 212221659713833438}
   - component: {fileID: 50746994441475638}
   - component: {fileID: 58856212471102544}
-  - component: {fileID: 95043104244628454}
   - component: {fileID: 114565106413727926}
   - component: {fileID: 114458963055790168}
   - component: {fileID: 114749374555015422}
   - component: {fileID: 114757120758980792}
   - component: {fileID: 114831662822734990}
+  - component: {fileID: 114459642846644232}
+  - component: {fileID: 114613303032318758}
+  - component: {fileID: 114923110920020172}
+  - component: {fileID: 114428803427590072}
   m_Layer: 11
   m_Name: Enemy Shoot
   m_TagString: Enemy
@@ -112,7 +115,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 0.5
 --- !u!61 &61581058173508986
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -138,23 +141,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.512, y: 1.3}
   m_EdgeRadius: 0
---- !u!95 &95043104244628454
-Animator:
-  serializedVersion: 3
+--- !u!114 &114428803427590072
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1347795394623980}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c98f140c5901d401b9baccb18a37b3ac, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d5f2c16086ba4839b128dbecda66301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114458963055790168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -170,6 +167,17 @@ MonoBehaviour:
     type: 2}
   offsetRadius: 0.75
   fireRate: 1
+--- !u!114 &114459642846644232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1347795394623980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3233423f3fb64ca0b56316a14594184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114565106413727926
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -186,6 +194,17 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &114613303032318758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1347795394623980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b812620775db745078bdaff5a75a3c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114749374555015422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25345f6ccedf243d9a8c95987879528d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 60
+  hp: 2
   isInvincible: 0
 --- !u!114 &114757120758980792
 MonoBehaviour:
@@ -210,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5b374ec80944a088ad9342168ae9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 1
 --- !u!114 &114831662822734990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -224,6 +243,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frequency: 2
   amplitude: 0.5
+--- !u!114 &114923110920020172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1347795394623980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d76470212aa446687aac894acea489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedX: 100
+  speedY: 100
+  jumpingPower: 220
+  downForce: 8
+  floatiness: 0
 --- !u!212 &212221659713833438
 SpriteRenderer:
   m_ObjectHideFlags: 1

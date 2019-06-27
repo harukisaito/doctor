@@ -66,12 +66,19 @@ public class SpawnManager : MonoBehaviour {
 
 	private void SpawnAllEnemies() {
 		foreach(Enemies enemyType in Enum.GetValues(typeof(Enemies))) {
-			SpawnEnemies(enemyType, enemySpawns[(int)enemyType]);
+			StartCoroutine(SpawnEnemies(enemyType, enemySpawns[(int)enemyType]));
 		}
 	}
 
-	private void SpawnEnemies(Enemies movementPattern, Transform[] spawns) {
+	private IEnumerator SpawnEnemies(Enemies movementPattern, Transform[] spawns) {
 		for(int i = 0; i < spawns.Length; i++) {
+			if(movementPattern == Enemies.Jump || movementPattern == Enemies.UpDown) {
+				yield return new WaitForSeconds(0.3f);
+			}
+			else {
+				yield return null;
+			}
+
 			spawner.SpawnEnemy(movementPattern, spawns[i].position);
 		}
 	}
@@ -96,5 +103,9 @@ public class SpawnManager : MonoBehaviour {
 
 	private Player GetPlayer() {
 		return GameManager.Instance.Player;
+	}
+
+	public void OnFinish(object src, EventArgs e) {
+		Spawned = false;
 	}
 }

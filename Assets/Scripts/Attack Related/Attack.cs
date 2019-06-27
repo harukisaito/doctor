@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,6 +39,10 @@ public class Attack : MonoBehaviour {
 	private void ActivateAttackCollider(bool enable) {
 		attackCollider.enabled = enable;
 		spriteRenderer.enabled = enable;
+	}
+
+	public void OnPlayerDeath(object src, EventArgs e) {
+		ActivateAttackCollider(false);
 	}
 
 	private IEnumerator DisableAttackCollider() {

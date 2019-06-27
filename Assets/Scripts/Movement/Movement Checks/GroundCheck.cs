@@ -73,8 +73,6 @@ public class GroundCheck : MonoBehaviour {
 			if(!inAir) {
 				reset = false;
 				isGrounded = false;
-				// print("isGrounded = " + isGrounded);
-				StopCoroutine(ResetPlayerAbilites());
 				InAir = true;
 			}
 		}
@@ -116,8 +114,14 @@ public class GroundCheck : MonoBehaviour {
 		}
 	}
 
+	private void OnCollisionEnter2D(Collision2D other) {
+		if(other.gameObject.CompareTag("Ground")) {
+			OnLanded();
+		}
+	}
+
 	private void SetGrounded() {
-		OnLanded();
+		// OnLanded();
 		movementController.Dashed = false;
 		isGrounded = true;
 	}

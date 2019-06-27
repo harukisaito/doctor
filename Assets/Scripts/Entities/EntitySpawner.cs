@@ -7,7 +7,7 @@ public class EntitySpawner : MonoBehaviour {
 	[SerializeField] private GameObject playerPrefab;
 	[SerializeField] private GameObject[] enemyPrefabs;
 
-
+	private List<GameObject> enemyInstances = new List<GameObject>();
 	private GameObject playerInstance;
 	private GameObject enemyInstance;
 
@@ -41,7 +41,16 @@ public class EntitySpawner : MonoBehaviour {
 
 	private void InstantiateEnemy(Enemies movementPattern, Vector2 spawnPosition) {
 		enemyInstance = Instantiate(enemyPrefabs[(int)movementPattern], spawnPosition, Quaternion.identity);
+		AddToList(enemyInstance);
 		SceneManagement.Instance.MoveToScene(enemyInstance, Scenes.LevelSakura);
-		enemyInstance.GetComponent<Enemy>().Key = movementPattern;
+		Enemy entity = enemyInstance.GetComponent<Enemy>();
+		if(entity == null) {
+			entity = enemyInstance.GetComponentInChildren<Enemy>();
+		}
+		entity.Key = movementPattern;
+	}
+
+	private void AddToList(GameObject gameObjectToAdd) {
+		enemyInstances.Add(gameObjectToAdd);
 	}
 }

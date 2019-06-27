@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 114749374555015422}
   - component: {fileID: 114757120758980792}
   - component: {fileID: 61994419922351986}
+  - component: {fileID: 114908099491205212}
   m_Layer: 11
   m_Name: Enemy Left Right Shoot
   m_TagString: Enemy
@@ -277,6 +278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25345f6ccedf243d9a8c95987879528d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 100
+  isInvincible: 0
 --- !u!114 &114755009422795992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,9 +296,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  touchingGround: 0
-  isGrounded: 0
-  onPlatform: 0
+  groundedDelay: 0
 --- !u!114 &114757120758980792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -328,6 +329,17 @@ MonoBehaviour:
   whatIsWall:
     serializedVersion: 2
     m_Bits: 131072
+--- !u!114 &114908099491205212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1347795394623980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3233423f3fb64ca0b56316a14594184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212221659713833438
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -358,7 +370,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1548414963
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 00fa7d7bc2aec4f14ae78c96fcfe540f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

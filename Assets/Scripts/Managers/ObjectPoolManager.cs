@@ -11,12 +11,19 @@ public class ObjectPoolManager : MonoBehaviour {
 	private Dictionary<Trails, Queue> trailPool = new Dictionary<Trails, Queue>();
 	private Dictionary<Particles, Queue> particlePool = new Dictionary<Particles, Queue>();
 
+	private List<Queue> pools = new List<Queue>();
 
-	private Queue leftRightEnemies, leftRightShootEnemies, upDownEnemies, waveEnemies, zigZagEnemies, shootEnemies, jumpEnemies;
+	private Queue leftRightEnemies, leftRightShootEnemies, 
+		upDownEnemies, waveEnemies, zigZagEnemies, 
+		shootEnemies, jumpEnemies;
 	private Queue flyingObjects;
 	private Queue projectiles;
 	private Queue jumpTrails, dashTrails, stompTrails;
-	private Queue attackParticles;
+	private Queue runningParticles, jumpParticles, 
+		leftRightEnemyParticles, shootEnemyParticles, jumpEnemyParticles, upDownEnemyParticles, 
+		playerDamageParticles,
+		leftRightDeathParticles, shootEnemyDeathParticles, jumpEnemyDeathParticles, upDownEnemyDeathParticles,
+		projectileDestructionParticles;
 
 
 	public static ObjectPoolManager Instance;
@@ -29,6 +36,7 @@ public class ObjectPoolManager : MonoBehaviour {
 		}
 
 		InstantiateQueues();
+		AddToPoolList();
 		AddToDictionary();
 	}
 
@@ -45,7 +53,45 @@ public class ObjectPoolManager : MonoBehaviour {
 		jumpTrails = new Queue();
 		dashTrails = new Queue();
 		stompTrails = new Queue();
-		attackParticles = new Queue();
+		runningParticles = new Queue();
+		jumpParticles = new Queue();
+		leftRightEnemyParticles = new Queue();
+		shootEnemyParticles = new Queue();
+		jumpEnemyParticles = new Queue();
+		upDownEnemyParticles = new Queue();
+		playerDamageParticles = new Queue();
+		leftRightDeathParticles = new Queue();
+		shootEnemyDeathParticles = new Queue();
+		jumpEnemyDeathParticles = new Queue();
+		upDownEnemyDeathParticles = new Queue();
+		projectileDestructionParticles = new Queue();
+	}
+
+	private void AddToPoolList() {
+		pools.Add(leftRightEnemies);
+		pools.Add(leftRightShootEnemies);
+		pools.Add(upDownEnemies);
+		pools.Add(waveEnemies);
+		pools.Add(zigZagEnemies);
+		pools.Add(shootEnemies);
+		pools.Add(jumpEnemies);
+		pools.Add(flyingObjects);
+		pools.Add(projectiles);
+		pools.Add(jumpTrails);
+		pools.Add(dashTrails);
+		pools.Add(stompTrails);
+		pools.Add(runningParticles);
+		pools.Add(jumpParticles);
+		pools.Add(leftRightEnemyParticles);
+		pools.Add(shootEnemyParticles);
+		pools.Add(jumpEnemyParticles);
+		pools.Add(upDownEnemyParticles);
+		pools.Add(playerDamageParticles);
+		pools.Add(leftRightDeathParticles);
+		pools.Add(shootEnemyDeathParticles);
+		pools.Add(jumpEnemyDeathParticles);
+		pools.Add(upDownEnemyDeathParticles);
+		pools.Add(projectileDestructionParticles);
 	}
 
 	private void AddToDictionary() {
@@ -65,7 +111,18 @@ public class ObjectPoolManager : MonoBehaviour {
 		trailPool.Add(Trails.Dash, dashTrails);
 		trailPool.Add(Trails.Stomp, stompTrails);
 
-		particlePool.Add(Particles.Attack, attackParticles);
+		particlePool.Add(Particles.Running, runningParticles);
+		particlePool.Add(Particles.Fall, jumpParticles);
+		particlePool.Add(Particles.LeftRightEnemyDamage, leftRightEnemyParticles);
+		particlePool.Add(Particles.ShootEnemyDamage, shootEnemyParticles);
+		particlePool.Add(Particles.JumpEnemyDamage, jumpEnemyParticles);
+		particlePool.Add(Particles.UpDownEnemyDamage, upDownEnemyParticles);
+		particlePool.Add(Particles.PlayerDamage, playerDamageParticles);
+		particlePool.Add(Particles.LeftRightEnemyDeath, leftRightDeathParticles);
+		particlePool.Add(Particles.ShootEnemyDeath, shootEnemyDeathParticles);
+		particlePool.Add(Particles.JumpEnemyDeath, jumpEnemyDeathParticles);
+		particlePool.Add(Particles.UpDownEnemyDeath, upDownEnemyDeathParticles);
+		particlePool.Add(Particles.ProjectileDestrucion, projectileDestructionParticles);
 	}
 
 	public void AddToObjectPool(Enemies key, GameObject gameObject) {
@@ -139,4 +196,17 @@ public class ObjectPoolManager : MonoBehaviour {
 		}
 		else return false;
 	}
+
+	private void ResetPools() {
+		foreach(Queue q in pools) {
+			q.Clear();
+		}
+	}
+
+	public void OnFinish(object src, EventArgs e) {
+		ResetPools();
+	}
+	// public void OnFinishedLoadingLevel(object src, EventArgs e) {
+		// ResetPools();
+	// }
 }
