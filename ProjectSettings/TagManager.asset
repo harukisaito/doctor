@@ -33,9 +33,9 @@ TagManager:
   - Projectile
   - Collide Only Ground
   - Collide Only Enemies
-  - 
-  - 
-  - 
+  - Collide Only Enemy Platform
+  - Enemy Platform
+  - Collide Only Player
   - 
   - 
   - 

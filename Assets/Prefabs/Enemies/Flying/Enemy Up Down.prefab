@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4322445017294068}
   - component: {fileID: 212336463074732412}
   - component: {fileID: 50843973749074592}
-  - component: {fileID: 61107456828789620}
+  - component: {fileID: 58826158293106676}
   - component: {fileID: 114303942555295476}
   - component: {fileID: 114448297046267452}
   - component: {fileID: 114804475204807954}
@@ -68,8 +68,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61107456828789620
-BoxCollider2D:
+--- !u!58 &58826158293106676
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -80,19 +80,9 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.512, y: 0.512}
-    newSize: {x: 0.512, y: 0.512}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0.01, y: -0.03}
   serializedVersion: 2
-  m_Size: {x: 0.512, y: 0.512}
-  m_EdgeRadius: 0
+  m_Radius: 0.37
 --- !u!95 &95737221446342244
 Animator:
   serializedVersion: 3
@@ -207,7 +197,7 @@ SpriteRenderer:
   m_SortingLayerID: -1548414963
   m_SortingLayer: -3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 00fa7d7bc2aec4f14ae78c96fcfe540f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fa3b82b3eb9e749a8a7031a6dd24d128, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

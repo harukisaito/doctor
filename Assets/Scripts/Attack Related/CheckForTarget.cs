@@ -15,17 +15,14 @@ public class CheckForTarget : MonoBehaviour {
 	}
 
 	private IEnumerator LookForTarget() {
-		for(;;) {
-			TargetInRange = Physics2D.OverlapCircle(transform.localPosition, enemyCheckRadius, whatIsTarget);
-			// Debug.Log(TargetInRange);
+		while(true) {
+			TargetInRange = Physics2D.OverlapCircle(transform.position, enemyCheckRadius, whatIsTarget);
 			yield return new WaitForSeconds(checkFrequency);
 		}
-		
 	}
 
 	private void OnDrawGizmos() {
 		Gizmos.color = Color.green;
 		Gizmos.DrawWireSphere(transform.localPosition, enemyCheckRadius);
-		// Physics2D.OverlapCircle(transform.localPosition, enemyCheckRadius, whatIsTarget);
 	}
 }

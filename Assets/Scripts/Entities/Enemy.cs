@@ -57,10 +57,18 @@ public class Enemy : Entity {
 			damageAnimation.IndicateDamage();
 			PlayDamageSound(Key);
 			hp -= damage;
+			isInvincible = true;
+			StartCoroutine(ResetInvincibility());
+
 			if(hp <= 0) {
 				Die();
 			}
 		}
+	}
+
+	private IEnumerator ResetInvincibility() {
+		yield return new WaitForSeconds(0.288f);
+		isInvincible = false;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
@@ -83,11 +91,11 @@ public class Enemy : Entity {
 	private void PlayDamageSound(Enemies key) {
 		if(key == Enemies.LeftRight) {
 			AudioManager.Instance.Play("Left Right Enemy");
-		}
-		else if(key == Enemies.Shoot) {
+		} else 
+		if(key == Enemies.Shoot) {
 			AudioManager.Instance.Play("Shoot Enemy");
-		}
-		else if(key == Enemies.Jump || key == Enemies.UpDown) {
+		} else 
+		if(key == Enemies.Jump || key == Enemies.UpDown) {
 			AudioManager.Instance.Play("Up Down");
 		}
 	} 

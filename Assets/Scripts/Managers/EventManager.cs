@@ -7,6 +7,7 @@ public class EventManager : MonoBehaviour {
 
 	private Player player;
 	private MovementController movementController;
+	private MovementInputController movementInput;
 	private GroundCheck groundCheck;
 	private DashMovement dashMovement;
 	private DashAttack dashAttack;
@@ -69,12 +70,20 @@ public class EventManager : MonoBehaviour {
 		goal.FinishAnimation += ParticleManager.Instance.OnFinishAnimation;
 		goal.FinishAnimation += ManagerCamera.Instance.OnFinishAnimation;
 		goal.FinishAnimation += playerParticles.OnFinishAnimation;
+
+		GameManager.Instance.Pause += movementInput.OnPause;
+		GameManager.Instance.UnPause += movementInput.OnUnPause;
+		GameManager.Instance.Pause += AudioManager.Instance.OnPause;
+		GameManager.Instance.UnPause += AudioManager.Instance.OnUnPause;
+		GameManager.Instance.Pause += UIManager.Instance.OnPause;
+		GameManager.Instance.UnPause += UIManager.Instance.OnUnPause;
 	}
 
 	private void GetReferences() {
 		player = GameManager.Instance.Player;
 		goal = Goal.Instance;
 		movementController = player.GetComponent<MovementController>();
+		movementInput = player.GetComponent<MovementInputController>();
 		groundCheck = player.GetComponent<GroundCheck>();
 		dashMovement = player.GetComponent<DashMovement>();
 		dashAttack = player.GetComponentInChildren<DashAttack>();

@@ -798,8 +798,8 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: Footstep
-    clip: {fileID: 8300000, guid: bc1c11a60c94e439d84d64c56fdd354f, type: 3}
+  - name: Pause
+    clip: {fileID: 8300000, guid: 657578e4be6b64dbf9b09deada272e55, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -871,6 +871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7c55b49e704948b2bba1237aed52f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseKey: 339
 --- !u!4 &1987278917
 Transform:
   m_ObjectHideFlags: 0

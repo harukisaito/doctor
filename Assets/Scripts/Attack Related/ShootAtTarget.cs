@@ -12,34 +12,33 @@ public class ShootAtTarget : MonoBehaviour {
 	private Vector3 offset;
 	private CheckForTarget check;
 	private Player player;
-	private MovementController movementController;
+	// private MovementController movementController;
 	private Coroutine shoot;
 	private GameObject projectileInstance;
 
-	private bool shot = false;
 	public bool Shooting {get; set;}
 
 	private void Start() {
 		check = GetComponent<CheckForTarget>();
-		movementController = GetComponent<MovementController>();
+		// movementController = GetComponent<MovementController>();
 		player = GameManager.Instance.Player;
+		// Shooting = true;
+		// StartCoroutine(Shoot());
 	}
 
 	private void Update() {
-		if(check.TargetInRange && !shot) {
+		if(check.TargetInRange && !Shooting) {
 			Shooting = true;
-			shot = true;
-			if(movementController != null) {
-				movementController.Stop = true;
-			}
+			// if(movementController != null) {
+			// 	movementController.Stop = true;
+			// }
 			shoot = StartCoroutine(Shoot());
 		}
-		else if(!check.TargetInRange) {
+		else if(!check.TargetInRange && Shooting) {
 			Shooting = false;
-			shot = false;
-			if(movementController != null) {
-				movementController.Stop = false;
-			}
+			// if(movementController != null) {
+			// 	movementController.Stop = false;
+			// }
 			if(shoot == null) {
 				return;
 			}
@@ -57,6 +56,7 @@ public class ShootAtTarget : MonoBehaviour {
 			else if(playerPos.x < check.transform.position.x) {
 				offset = new Vector3(-offsetRadius, 0);
 			}
+			yield return new WaitForEndOfFrame();
 			SpawnProjectile();
 			SceneManagement.Instance.MoveToScene(projectileInstance, Scenes.LevelSakura);
 			yield return new WaitForSeconds(fireRate);
@@ -69,12 +69,12 @@ public class ShootAtTarget : MonoBehaviour {
 		}
 		else {
 			projectileInstance = ObjectPoolManager.Instance.RetrieveFromObjectPool(Projectiles.Basic);
-			projectileInstance.transform.position = check.transform.position + offset;
+			projectileInstance.transform.position = transform.position + offset;
 			projectileInstance.SetActive(true);
 		}
 	}
 
 	private void InstantiateProjectile() {
-		projectileInstance = Instantiate(projectilePrefab, check.transform.position + offset, Quaternion.identity);
+		projectileInstance = Instantiate(projectilePrefab, transform.position + offset, Quaternion.identity);
 	}
 }

@@ -40,4 +40,30 @@ public class AudioManager : MonoBehaviour {
 		}		
 		s.source.Play();
 	}
+
+	private void Pause(string name, bool enabled) {
+		Sound s = Array.Find(sounds, sound => sound.name == name);
+		if(s == null) {
+			print(name + " not found");
+			return;
+		}		
+		if(enabled) {
+			s.source.Pause();
+		}
+		else {
+			s.source.UnPause();
+		}
+	} 
+
+	public void OnPause(object src, EventArgs e) {
+		Pause("Background Music", true);
+		Pause("Ambient Sounds", true);
+		Play("Pause");
+	}
+
+	public void OnUnPause(object src, EventArgs e) {
+		Pause("Background Music", false);
+		Pause("Ambient Sounds", false);
+		Play("Pause");
+	}
 }

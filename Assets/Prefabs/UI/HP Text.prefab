@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224447034325669032}
   - component: {fileID: 222129495946976892}
   - component: {fileID: 114087996313124434}
+  - component: {fileID: 114192314846876536}
   m_Layer: 5
   m_Name: HP Text
   m_TagString: Untagged
@@ -63,6 +64,17 @@ MonoBehaviour:
   m_Text: 'Hello
 
 '
+--- !u!114 &114192314846876536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1274846954155988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecd84ca604e9c49c193aff1b8436662b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222129495946976892
 CanvasRenderer:
   m_ObjectHideFlags: 1

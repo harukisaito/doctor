@@ -6,14 +6,16 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
-	// [SerializeField] private GameObject transitionImage;
-	[SerializeField] private Text time;
-	[SerializeField] private Text hp;
+	[SerializeField] private GameObject pauseImagePrefab;
 
 	private Vector3 hpScale;
 	private Vector2 originalPos;
 
+	private GameObject pauseImage;
+
 	private Image healthBar;
+	private Text hp;
+	private Text time;
 
 	private float oneUnit;
 
@@ -32,6 +34,9 @@ public class UIManager : MonoBehaviour {
 		SceneManagement.Instance.LoadScene(Scenes.LevelSakura, true);
 		ManagerCamera.Instance.ActivateCamera(true);
 		AudioManager.Instance.Play("UI Click");
+		pauseImage = Instantiate(pauseImagePrefab);
+		pauseImage.SetActive(false);
+		SceneManagement.Instance.MoveToScene(pauseImage, Scenes.LevelSakura);
 	}
 
 	public void Quit() {
@@ -40,8 +45,10 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void OnFinishedLoadingEndMenu(object src, EventArgs e) {
+		hp = HpText.Instance.GetComponent<Text>();
+		time = TimeText.Instance.GetComponent<Text>();
 		DisplayTime();
-		hp.text = GameManager.Instance.Player.HP.ToString();
+		hp.text = GameManager.Instance.Player.HP.ToString() + " / 5";
 	}
 
 	public void OnPlayerDeath(object src, EventArgs e) {
@@ -92,6 +99,19 @@ public class UIManager : MonoBehaviour {
 
 		originalPos = healthBar.rectTransform.localPosition;
 		oneUnit = 100;
+	}
+
+	public void OnPause(object src, EventArgs e) {
+		if(pauseImage == null) {
+			pauseImage = Instantiate(pauseImagePrefab);
+			SceneManagement.Instance.MoveToScene(pauseImage, Scenes.LevelSakura);
+			pauseImage.transform.SetParent(LevelCanvas.Instance.transform, false);
+		}
+		pauseImage.SetActive(true);
+	}
+
+	public void OnUnPause(object src, EventArgs e) {
+		pauseImage.SetActive(false);
 	}
 
 }

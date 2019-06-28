@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -169,5 +170,12 @@ public class MovementInputController : MonoBehaviour {
 			attacked = false;
 			attackCoolDown = 0;
 		}
+	}
+
+	public void OnPause(object src, EventArgs e) {
+		EnableInput = false;
+	}
+	public void OnUnPause(object src, EventArgs e) {
+		EnableInput = true;
 	}
 }

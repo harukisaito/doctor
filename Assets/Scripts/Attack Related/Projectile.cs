@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour {
 	}
 
 	private void Update() {
-		transform.localPosition += direction * speed * Time.deltaTime;
+		transform.position += direction * speed * Time.deltaTime;
 		lifeTime += Time.deltaTime;
 		if(lifeTime > 5) {
 			lifeTime = 0;
@@ -30,6 +30,7 @@ public class Projectile : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		AudioManager.Instance.Play("Projectile");
+		ParticleManager.Instance.SpawnParticles(Particles.ProjectileDestrucion, transform.position, Quaternion.identity);
 		AddToPool();
 	}
 

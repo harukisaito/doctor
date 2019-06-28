@@ -26,17 +26,12 @@ public class DamageToEntity : MonoBehaviour {
 			entity = other.GetComponent<Entity>();
 			
 			if(entity == null) {
-				SpawnParticlesProjectile(other);
 				return;
 			}
 
 			entity.TakeDamage(damage);
 
 			SpawnParticles(other);
-
-		}
-		else if(other.CompareTag("Untagged")) {
-			// Debug.LogWarning("CHECK THE TAG OF THE OTHER OBJECT");
 		}
 	}
 

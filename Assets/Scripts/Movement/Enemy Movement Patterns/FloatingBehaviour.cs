@@ -16,6 +16,9 @@ public class FloatingBehaviour : MonoBehaviour {
 
 	private void Update() {
 		angle += Time.deltaTime * frequency;
+		if(angle > 360) {
+			angle -= 360;
+		}
 		float posY = Mathf.Sin(angle);
 		posY *= amplitude;
 		transform.localPosition = new Vector2(transform.localPosition.x, posY + startPosY);
