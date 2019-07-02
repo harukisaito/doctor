@@ -10,6 +10,10 @@ I did all of the
 
 but I didnt make the sounds and music myself.
 
+![](https://media.giphy.com/media/JmVIdPdAc0U9rGa6Vc/giphy.gif)
+![](https://media.giphy.com/media/hSWKcFD8ZvycGaMsu3/giphy.gif)
+![](https://media.giphy.com/media/ThugAhcKyJXZnr4yob/giphy.gif)
+![](https://media.giphy.com/media/Xd0ytUOqKZ4GLvJZVk/giphy.gif)
 
 
 ## Getting Started
