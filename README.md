@@ -18,7 +18,7 @@ but I didnt make the sounds and music myself.
 
 ## Getting Started
 
-Download the executable ![here](https://github.com/harukisaito/doctor/releases/download/1.0/Doctor.1.zip) and enjoy playing! <3 :rocket:
+Download the executable [here](https://github.com/harukisaito/doctor/releases/download/1.0/Doctor.1.zip) and enjoy playing! <3 :rocket:
 
 ## Special Thanks to
 
