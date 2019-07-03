@@ -1,3 +1,4 @@
+![level-sakura-github](https://user-images.githubusercontent.com/45998884/60607155-09c81c80-9dbd-11e9-876a-d3f1bec35d25.png)
 # Doctor
 
 My first 2D platformer in Unity. The Concept was a doctor fighting against diseases but it quickly turned into a regular 2D platformer with nothing special. The Player is now a bird? fighting against virus-like creatures. 
