@@ -148,7 +148,7 @@ public class MovementInputController : MonoBehaviour {
 	private void AttackInput() {
 		float value = Input.GetAxis("Attack");
 		if(!IsDucking) {
-			if(value > 0 && attackCoolDown == 0) {
+			if(value < 0 && attackCoolDown == 0) {
 				attacked = true;
 				if(groundCheck.IsGrounded) {
 					attackController.Attack(AttackPattern.GroundAttack);

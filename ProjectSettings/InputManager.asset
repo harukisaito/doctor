@@ -51,7 +51,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
-    axis: 5
+    axis: 4
     joyNum: 0
   - serializedVersion: 3
     m_Name: Sprint
@@ -67,7 +67,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
-    axis: 4
+    axis: 3
     joyNum: 0
   - serializedVersion: 3
     m_Name: Fire3
@@ -250,9 +250,9 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: joystick button 16
+    positiveButton: joystick button 0
     altNegativeButton: 
-    altPositiveButton: joystick button 17
+    altPositiveButton: joystick button 1
     gravity: 1000
     dead: 0.001
     sensitivity: 1000

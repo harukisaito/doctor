@@ -34,7 +34,7 @@ public class Player : Entity {
 
 	public override void TakeDamage(int damage) {
 		if(!IsInvincible) {
-			// hp -= damage;
+			hp -= damage;
 			OnPlayerDamage();
 			AudioManager.Instance.Play("Player Damage");
 			if(hp <= 0) {

@@ -592,11 +592,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveLeftKey: 337
   moveRightKey: 338
-  jumpKey: 346
-  sprintKey: 343
+  jumpKey: 330
+  sprintKey: 332
   floatKey: 335
-  duckKey: 347
-  dashKey: 348
+  duckKey: 331
+  dashKey: 332
   attackKey: 344
 --- !u!114 &114032121641753014
 MonoBehaviour:
