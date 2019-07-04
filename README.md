@@ -19,7 +19,7 @@ but I didnt make the sounds and music myself.
 
 ## Getting Started
 
-Download the executable [here](https://github.com/harukisaito/doctor/releases/download/1.0/Doctor.1.zip) and enjoy playing! <3 :rocket:
+Download the executable for Mac [here](https://github.com/harukisaito/doctor/releases/download/1.0/Doctor.1.zip) and for Windows [here](https://github.com/harukisaito/doctor/releases/download/1.1/Doctor-Win.zip) and enjoy playing! <3 :rocket:
 
 ## Special Thanks to
 
