@@ -21,7 +21,9 @@ but I didnt make the sounds and music myself.
 
 Download the executable
 
-[for Mac](https://github.com/harukisaito/doctor/releases/download/1.0/Doctor.1.zip) and
+[for Mac](https://github.com/harukisaito/doctor/releases/download/1.0/Doctor.1.zip) 
+
+or
 
 [for Windows](https://github.com/harukisaito/doctor/releases/download/1.1/Doctor-Win.zip) and enjoy playing! <3 :rocket:
 
